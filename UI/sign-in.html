@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login Form</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <form method="POST" action="dashboard.html">
+            <div class="container">
+                <div class="imgcontainer">
+                    <img src="avatar.png" alt="Avatar" class="avatar">
+                </div>
+                <label for="email">Username or Email</label>
+                <input type="text" id="username" placeholder="JohnDeo" required><br/>
+                
+                <label for="pword">Password</label>
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="left font12"><a href="forget-password.html">Forget Password</a></div>
+                <button id="login" type="submit">Sign in</button>
+                <div class="center font12">Don't have an account? <a href="sign-up.html">Sign up</a></div><br/>
+                <div class="error font12">
+                </div>
+            </div>
+        </form>
+        <script src="js/signin.js"></script>
+    </body>
+</html>
