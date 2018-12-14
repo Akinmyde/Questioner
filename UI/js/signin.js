@@ -1,5 +1,5 @@
-const username = document.getElementsByClassName('username')[0];
-const password = document.getElementsByClassName('password')[0];
+const username = document.getElementById('username');
+const password = document.getElementById('password');
 const error = document.getElementsByClassName('error')[0];
 error.style.display = 'none';
 
