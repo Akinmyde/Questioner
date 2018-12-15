@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+  <div class="container">
+      <label for="topic">Topic</label>
+      <input type="text" id="topic" placeholder="Andela Bootcamp" required>
+
+      <label for="topic">Location</label>
+      <input type="text" id="location" placeholder="Epic Tower" required>
+
+      <label for="topic">Hapening on</label>
+      <input type="date" id="date" placeholder="Epic Tower" required>
+      
+      <div class="image-upload">
+        <label for="upload">
+          <img title="Click upload a file" src="icon.png"/>
+          <!-- <img src="https://goo.gl/pB9rpQ"/> -->
+        </label>
+       <input id="upload" type="file"/>
+      </div>
+    <img class="image" src="">
+    <button id="btnmeetup" type="submit">Add meetup</button><br/>
+    <div class="error font12"></div>
+  </div>
+  
+  <script src="js/admin.js"></script>
+</body>
+</html>

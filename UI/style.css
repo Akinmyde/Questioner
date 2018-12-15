@@ -2,7 +2,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input[type=email], input[type=password], input[type=text] {
+input[type=email], input[type=password], input[type=text],  input[type=date] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -12,7 +12,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 button {
-  background-color: #4caf50;
+  background-color: blue;
   color: white;
   padding: 8px;
   margin: 8px 0;
@@ -43,6 +43,12 @@ button:hover {
   border-radius: 50%;
 }
 
+.image {
+  width: 100%;
+  padding: 10px 0px;
+  display: none;
+}
+
 .container {
   margin: 5% auto;
   width: 330px;
@@ -69,26 +75,23 @@ button:hover {
 .error {
   color: red;
   text-align: center;
+  display: none;
 }
 
 .font12 {
   font-size: 12px;
 }
 
+.image-upload > input
+{
+    display: none;
+}
 
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+    margin: 0px 120px
+}
 
-
-/* @media screen and (max-width: 300px) {
-  .psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
-  .reg {
-      display: block;
-      float: none;
-  }
-} */
 
