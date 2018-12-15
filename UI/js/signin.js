@@ -5,14 +5,9 @@ error.style.display = 'none';
 
 document.getElementById('login').addEventListener('click', (e) => {
   e.preventDefault()
-  if (username.value === '') {
+  if (username.value === '' || password.value === '') {
     return (
-      error.innerHTML = 'Username is empty',
-      error.style.display = 'block'
-    )
-  } if (password.value === '') {
-    return (
-      error.innerHTML = 'Password is empty',
+      error.innerHTML = 'All fields are required',
       error.style.display = 'block'
     )
   } if(username.value.toLowerCase() !== 'andela' && password.value !== 'testing') {
