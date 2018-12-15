@@ -6,8 +6,20 @@
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+  <header>
+    <div class="header">
+      <a href="#default" class="logo">CompanyLogo</a>
+      <div class="header-right">
+        <a  href="#home">Home</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+        <a class="active" href="#Dashboard">Dashboard</a>
+      </div>
+    </div>
+  </header>
   <div class="container" id="add-meetup">
       <label for="topic">Topic</label>
       <input type="text" id="topic" placeholder="Andela Bootcamp" required>
@@ -30,11 +42,7 @@
     <div class="error font12"></div>
   </div>
 
-    <div class="container flex" id="meetups">
-      <img class="image sm" src="andela.jpg">
-      <h1>Jesus</h1>
-    </div>
-  
+  <script src="js/index.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>
