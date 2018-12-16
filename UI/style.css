@@ -66,6 +66,17 @@ button:hover {
   box-shadow: 0 3px 2px #8080806e;
 }
 
+.container.sm {
+  margin: 5% auto;
+  width: 150px;
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 15px;
+  opacity: 0.9;
+  border: 1px solid gray;
+  box-shadow: 0 3px 2px #8080806e;
+}
+
 .d-flex {
   display: flex;
   flex-direction: row;
@@ -174,6 +185,11 @@ footer {
 .column {
   width: 50%;
   padding: 50px;
+}
+
+.col-3 {
+  width: 30.33%;
+  padding: 10px 50px;
 }
 
 /* Clear floats after the columns */
