@@ -1,5 +1,6 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: whitesmoke;
 }
 
 input[type=email], input[type=password], input[type=text],  input[type=date] {
@@ -50,8 +51,7 @@ button:hover {
 
 .image.sm {
   width: 50%;
-  padding: 10px 0px;
-  height: 100%;
+  padding: 0px 0px;
 }
 
 
@@ -66,17 +66,21 @@ button:hover {
   box-shadow: 0 3px 2px #8080806e;
 }
 
-.container.flex {
-  width: 1000px;
+.d-flex {
   display: flex;
-  background-color: white;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 2rem;
 }
 
-.container.flex > div {
-  background-color: #f1f1f1;
-  margin: 10px;
-  padding: 20px;
-  font-size: 30px;
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #696767;;
+  color: white;
+  /* text-align: center; */
 }
 
 .center {
@@ -108,7 +112,7 @@ button:hover {
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: white;
   padding: 20px 10px;
 }
 
@@ -147,6 +151,13 @@ button:hover {
   float: right;
 }
 
+#banner {
+  background: url(../UI/bgimage.jpg) no-repeat center;
+  background-size: cover;
+  margin: 0;
+  height: 600px;
+}
+
 /*media queries for responsiveness - when the screen is 500px wide or less */ 
 @media screen and (max-width: 500px) {
   .header a {
@@ -159,4 +170,14 @@ button:hover {
   }
 }
 
+/* Create two equal columns that floats next to each other */
+.column {
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
 
+/* Clear floats after the columns */
+.row {
+  display: flex
+}
