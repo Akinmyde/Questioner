@@ -5,10 +5,22 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <header>
+            <div class="header">
+                <a href="index.html" class="logo"><img class="image sm" src="image/logo1.png"></a>
+                <div class="header-right">
+                <a href="index.html">Home</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="index.html#about">About</a>
+                <a href="meetup.html">Meetups</a>
+                <a class="active" href="#">Sign up</a>
+                </div>
+            </div>
+        </header>
         <form action="">
             <div class="container">
                 <div class="imgcontainer">
-                    <img src="avatar.png" alt="Avatar" class="avatar">
+                    <img src="image/avatar.png" alt="Avatar" class="avatar">
                 </div>
                 <label for="email">Email</label>
                 <input type="email" id="email" placeholder="JohnDeo@gmail.com" required> 
@@ -28,6 +40,9 @@
                 </div>
             </div>
         </form>
+        <footer>
+            <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
+        </footer>
         <script src="js/signup.js"></script>
     </body>
 </html>
