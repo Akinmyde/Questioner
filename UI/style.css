@@ -174,7 +174,7 @@ footer {
 }
 
 #banner {
-  background: url(../UI/bgimage.jpg) no-repeat center;
+  background: url(../UI/image/bgimage.jpg) no-repeat center;
   background-size: cover;
   margin: 0;
   height: 600px;
