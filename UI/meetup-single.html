@@ -23,51 +23,65 @@
   <div class="flex full">
     <div id="meetup">
       <img class="image card-image" src="image/andela.jpg">
-      <h4><a href="question.html">Andela's Bootcamp</a></h4>
+      <h4><a href="meetup-single.html">Andela's Bootcamp</a></h4>
       <h6 class="font12">@Epic Tower</h6>
       <span class="text-holder">
         <ul class="details font12">
           <li>Feb 29 2017</li>
           <li>30 Questions</li>
         </ul>
-        <button type="button" class="font12 sm">Ask Question</button>
+        <button type="button" class="font12 sm" id="btnshow">Add Question</button>
       </span>
     </div>
-    <div class="center no-border"><h1>Questions</h1></div>
-      <div id="questions">
-        <h4><a href="">What do i need to do to succeed in the bootcamp</a></h4>
-        <p class="font16">by Akinremi Olumide</p>
-        <span class="text-holder">
-          <ul class="details font12">
-            <li>Feb 29 2017</li>
-            <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">100</span></a></li>
-            <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
-          </ul>
-          <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
-        </span>
-        <hr>
-        <h4><a href="">Please i need to know more about the bootcamp</a></h4>
-        <p class="font16">by Akinremi Olumide</p>
-        <span class="text-holder">
-          <ul class="details font12">
-            <li>Feb 29 2017</li>
-            <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">50</span></a></li>
-            <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
-          </ul>
-          <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
-        </span>
-        <hr>
-        <h4><a href="">Please i need to know more about the bootcamp</a></h4>
-        <p class="font16">by Akinremi Olumide</p>
-        <span class="text-holder">
-          <ul class="details font12">
-            <li>Feb 29 2017</li>
-            <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">20</span></a></li>
-            <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
-          </ul>
-          <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
-        </span>
-      </div>
+    <div class="center no-border">
+      <h1 id="title">Questions</h1>
+    </div>
+    <div id="questions">
+      <h4><a href="">What do i need to do to succeed in the bootcamp</a></h4>
+      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
+      <p class="font16">by Akinremi Olumide</p>
+      <span class="text-holder">
+        <ul class="details font12">
+          <li>Feb 29 2017</li>
+          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">100</span></a></li>
+          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
+        </ul>
+        <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
+      </span>
+      <hr>
+      <h4><a href="">Please i need to know more about the bootcamp</a></h4>
+      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
+      <p class="font16">by Akinremi Olumide</p>
+      <span class="text-holder">
+        <ul class="details font12">
+          <li>Feb 29 2017</li>
+          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">50</span></a></li>
+          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
+        </ul>
+        <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
+      </span>
+      <hr>
+      <h4><a href="">Please i need to know more about the bootcamp</a></h4>
+      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
+      <p class="font16">by Akinremi Olumide</p>
+      <span class="text-holder">
+        <ul class="details font12">
+          <li>Feb 29 2017</li>
+          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">20</span></a></li>
+          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
+        </ul>
+        <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
+      </span>
+    </div>
+  </div>
+  <div class="container" id="add-question">
+    <label for="title">Title</label>
+    <input id="questiontitle" type="text">
+    <label for="title">Body</label>
+    <textarea id="body" cols="54" rows="4"></textarea>
+    <div class="center">
+      <button type="button" id="btnadd" class="font12 md">Add Question</button>
+      <button type="button" id="btncancel" class="font12 md">Cancel</button>
     </div>
   </div>
   <footer>
