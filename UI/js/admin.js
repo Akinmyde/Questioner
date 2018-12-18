@@ -1,12 +1,44 @@
-const image = document.getElementsByClassName('image')[0];
+const image = document.getElementById('image');
 const error = document.getElementsByClassName('error')[0];
 const topic = document.getElementById('topic');
 const eventLocation = document.getElementById('location');
 const date = document.getElementById('date');
-const upload = document.getElementById('upload');
-const btnmeetup = document.getElementById('btnmeetup');
+const createView = document.getElementById('create');
+const linkCreate = document.getElementById('linkCreate');
+const linkMeetups = document.getElementById('linkMeetups');
+const meetupsView = document.getElementById('meetups');
+const classActive = document.getElementsByClassName('active');
+const deleteMeetup = document.getElementsByClassName('delete');
 
-upload.addEventListener('change', () => {
+meetupsView.style.display = 'none';
+linkCreate.addEventListener('click', (e) => {
+  e.preventDefault();
+  for (let i = 0; i < classActive.length; i++) {
+    classActive[i].className = ''
+  }
+  linkCreate.className = 'active';
+  meetupsView.style.display = 'none';
+  createView.style.display = 'block';
+});
+
+linkMeetups.addEventListener('click', (e) => {
+  e.preventDefault();
+  for (let i = 0; i < classActive.length; i++) {
+    classActive[i].className = ''
+  }
+  linkMeetups.className = 'active';
+  meetupsView.style.display = 'flex';
+  createView.style.display = 'none';
+})
+
+for (let i = 0; i < deleteMeetup.length;  i++) {
+  deleteMeetup[i].addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log(deleteMeetup[i].parentNode.parentNode.parentNode.parentNode.style.display = 'none');
+  })
+}
+
+document.getElementById('upload').addEventListener('change', () => {
   image.style.display = 'none';
   error.style.display = 'none';
   const file = event.target.files[0];
@@ -29,7 +61,7 @@ upload.addEventListener('change', () => {
   }
 });
 
-btnmeetup.addEventListener('click', (e) => {
+document.getElementById('btnmeetup').addEventListener('click', (e) => {
   error.style.display = 'none'
   e.preventDefault();
   if (topic.value === '' || eventLocation.value === '' || date.value === '') {
