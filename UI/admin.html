@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Page Title</title>
   <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
   <header>
@@ -15,10 +16,12 @@
         <a href="index.html#contact">Contact</a>
         <a href="index.html#about">About</a>
         <a class="active" href="#Dashboard">Dashboard</a>
+        <a id="linkMeetups" href="#">All meetups</a>
+        <a id="linkCreate" href="#">Create meetup</a>
       </div>
     </div>
   </header>
-  <div class="container" id="add-meetup">
+  <div class="container" id="create">
       <label for="topic">Topic</label>
       <input type="text" id="topic" placeholder="Andela Bootcamp" required>
 
@@ -34,9 +37,83 @@
         </label>
        <input id="upload" type="file"/>
       </div>
-    <img class="image" src="">
+    <img class="image" id="image" src="">
     <button id="btnmeetup" type="submit">Add meetup</button><br/>
     <div class="error font12"></div>
+  </div>
+  <div class="flex" id="meetups">
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>30 Questions</li>
+          <li title="view"><a href="#"><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>10 Questions</li>
+          <li title="view"><a href=""><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>7 Questions</li>
+          <li title="view"><a href=""><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>2 Questions</li>
+          <li title="view"><a href=""><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>2 Questions</li>
+          <li title="view"><a href=""><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
+    <div>
+      <img class="image" src="image/andela.jpg">
+      <h4><a href="">Andela's Bootcamp</a></h4>
+      <span class="text-holder">
+        <ul class="details">
+          <li>Feb 29 2017</li>
+          <li>2 Questions</li>
+          <li title="view"><a href=""><i class="fas fa-arrow-right"></i></a></li>
+          <li title="delete"><a href="" class="delete"><i class="fas fa-trash"></i></a></li>
+        </ul>
+      </span>
+    </div>
   </div>
   <footer>
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
