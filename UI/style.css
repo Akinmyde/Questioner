@@ -24,6 +24,19 @@ button {
   font-size: 18px;
 }
 
+.sm {
+  width: 15%
+}
+
+.md {
+  width: 25%
+}
+
+textarea {
+  margin-left: 33%;
+  margin-right: 33%;
+}
+
 button:hover {
   opacity: 0.8;
 }
@@ -49,9 +62,9 @@ button:hover {
   padding: 10px 0px;
 }
 
-.image.sm {
-  width: 50%;
-  padding: 0px 0px;
+.card-image {
+  object-fit: cover;
+  height: 300px;
 }
 
 
@@ -76,6 +89,16 @@ h4 {
   letter-spacing: 1px !important;
   text-transform: capitalize !important;
   color: #000000 !important;
+  margin: 0px;
+  padding-top: 20px
+}
+
+h6 {
+  margin: 0;
+}
+
+p {
+  margin-bottom: 0;
 }
 
 .text-holder {
@@ -86,6 +109,7 @@ h4 {
 .details {
   margin-bottom: 12px;
   padding: 0px;
+  margin-top: 8px;
 }
 
 .details li:first-child {
@@ -213,14 +237,25 @@ a {
 .flex {
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 50px;
-  padding-top: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background: white;
 }
 
 .flex.no-border > div {
   width: 40%;
   border: 0px;
   box-shadow: 0 0px 0px;
+}
+
+.flex.full > div {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.flex.full > div:last-child {
+  margin-bottom: 100px;
 }
 
 .flex > div {
@@ -236,6 +271,13 @@ a {
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 50px;
+}
+
+.no-border {
+  border: 0px gray !important;
+  box-shadow: 0 0px 0px !important;
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 @media screen and (max-width: 992px) {
