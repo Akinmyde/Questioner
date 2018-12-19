@@ -4,19 +4,19 @@ const topic = document.getElementById('topic');
 const eventLocation = document.getElementById('location');
 const date = document.getElementById('date');
 const createView = document.getElementById('create');
-const linkCreate = document.getElementById('linkCreate');
+const dashboard = document.getElementById('dashboard');
 const linkMeetups = document.getElementById('linkMeetups');
 const meetupsView = document.getElementById('meetups');
 const classActive = document.getElementsByClassName('active');
 const deleteMeetup = document.getElementsByClassName('delete');
 
 meetupsView.style.display = 'none';
-linkCreate.addEventListener('click', (e) => {
+dashboard.addEventListener('click', (e) => {
   e.preventDefault();
   for (let i = 0; i < classActive.length; i++) {
     classActive[i].className = ''
   }
-  linkCreate.className = 'active';
+  dashboard.className = 'active';
   meetupsView.style.display = 'none';
   createView.style.display = 'block';
 });
@@ -24,7 +24,7 @@ linkCreate.addEventListener('click', (e) => {
 linkMeetups.addEventListener('click', (e) => {
   e.preventDefault();
   for (let i = 0; i < classActive.length; i++) {
-    classActive[i].className = ''
+    classActive[i].className = '';
   }
   linkMeetups.className = 'active';
   meetupsView.style.display = 'flex';
@@ -34,7 +34,7 @@ linkMeetups.addEventListener('click', (e) => {
 for (let i = 0; i < deleteMeetup.length;  i++) {
   deleteMeetup[i].addEventListener('click', (e) => {
     e.preventDefault();
-    console.log(deleteMeetup[i].parentNode.parentNode.parentNode.parentNode.style.display = 'none');
+    deleteMeetup[i].parentNode.parentNode.style.display = 'none';
   })
 }
 
