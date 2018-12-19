@@ -80,6 +80,7 @@ document.getElementById('btnadd').addEventListener('click', () => {
 
   span.appendChild(navlink);
 
+  questions.append(hr);
   questions.appendChild(hr);
   questions.appendChild(h4);
   questions.appendChild(par1);

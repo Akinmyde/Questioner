@@ -2,7 +2,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input[type=email], input[type=password], input[type=text],  input[type=date] {
+input[type=email], input[type=password], input[type=text],  input[type=date], textarea {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -61,6 +61,11 @@ button:hover {
   padding: 10px 0px;
 }
 
+.image.sm {
+  width: 50%;
+  padding: 0px 0px;
+}
+
 .card-image {
   object-fit: cover;
   height: 300px;
@@ -99,6 +104,11 @@ h6 {
 
 p {
   margin-bottom: 0;
+}
+
+p.lg {
+  margin-bottom: 35px;
+  padding-top: 20px
 }
 
 .text-holder {
@@ -168,6 +178,11 @@ footer {
   font-size: 16px
 }
 
+.font22 {
+  font-size: 22px;
+  color: blue;
+}
+
 .image-upload > input
 {
     display: none;
@@ -192,8 +207,8 @@ footer {
   float: left;
   text-align: center;
   padding: 12px;
-  font-size: 18px; 
-  line-height: 25px;
+  font-size: 15px; 
+  line-height: 12px;
   border-radius: 4px;
 }
 
@@ -202,11 +217,11 @@ a {
   text-decoration: none;
 }
 
-/* Style the logo link  */
-.header a.logo {
-  font-size: 25px;
-  font-weight: bold;
+/* Style the logo link  */ 
+.logo {
+  padding-top: 0px !important;
 }
+
 
 /* Change the background color on mouse-over */
 .header a:hover {
@@ -287,6 +302,21 @@ a {
   .container {
     width: 50%
   }
+  .sm {
+    width: 25%
+  }
+  .md {
+    width: 35%
+  }
+  .image.sm {
+    width: 35%;
+  }
+  .header a {
+    font-size: 14px;
+  }
+  .logo {
+    padding-top: 8px !important;
+  }
 }
 @media screen and (max-width: 600px) {
   .flex > div {
@@ -295,4 +325,25 @@ a {
   .container {
     width: 70%
   }
+  .sm {
+    width: 25%
+  }
+  .md {
+    width: 35%
+  }
+  .image.sm {
+    width: 30%;
+  }
+  .header a {
+    font-size: 9px;
+  }
+  .logo {
+    padding-top: 8px !important;
+  }
 }
+
+/* @media screen and (max-width: 400px) {
+  .logo {
+    display: none;
+  }
+} */
