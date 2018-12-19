@@ -74,7 +74,7 @@ button:hover {
 
 .container {
   margin: 5% auto;
-  margin-top: 0px;
+  margin-top: 5%;
   width: 30%;
   padding: 20px 40px;
   background-color: white;
@@ -304,7 +304,7 @@ a {
     margin-bottom: 70px;
   }
   .container {
-    width:50%;
+    width:85%;
     font-size: 14px
   }
   .image.sm {
