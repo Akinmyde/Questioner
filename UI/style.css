@@ -90,7 +90,8 @@ button:hover {
 }
 
 h4 {
-  font: normal 700 18px/24px "Raleway", sans-serif !important;
+  /* font: normal 700 18px/24px "Raleway", sans-serif !important; */
+  font-size: 16px;
   letter-spacing: 1px !important;
   text-transform: capitalize !important;
   color: #000000 !important;
@@ -100,6 +101,7 @@ h4 {
 
 h6 {
   margin: 0;
+  font-size: 12px
 }
 
 p {
@@ -120,6 +122,7 @@ p.lg {
   margin-bottom: 12px;
   padding: 0px;
   margin-top: 8px;
+  font-size: 12px
 }
 
 .details li:first-child {
@@ -298,6 +301,7 @@ a {
 @media screen and (max-width: 992px) {
   .flex > div {
     flex: 100%;
+    margin-bottom: 70px;
   }
   .container {
     width:50%;
@@ -315,14 +319,27 @@ a {
   .md {
     width: 15%;
   }
-  .font12 {
-    font-size: 14px;
+  .details li {
+    font-size: 30px;
+  }
+  .sm {
+    width: 25%;
+    font-size: 30px
+  }
+  h6 {
+    font-size: 12px
   }
   h4 {
-    font: normal 700 20px/24px "Raleway", sans-serif !important;
+    font-size: 31px;
+  }
+  .font22 {
+    font-size: 44px;
+  }
+  footer {
+    font-size: 35px;
   }
 }
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .flex > div {
     flex: 100%;
   }
@@ -344,13 +361,7 @@ a {
   .logo {
     padding-top: 8px !important;
   }
-  .font12 {
-    font-size: 14px;
-  }
-  h4 {
-    font: normal 700 20px/24px "Raleway", sans-serif !important;
-  }
-}
+} */
 
 /* @media screen and (max-width: 400px) {
   .logo {
