@@ -297,16 +297,11 @@ a {
 
 @media screen and (max-width: 992px) {
   .flex > div {
-    flex: 50%;
+    flex: 100%;
   }
   .container {
-    width: 50%
-  }
-  .sm {
-    width: 25%
-  }
-  .md {
-    width: 35%
+    width:50%;
+    font-size: 14px
   }
   .image.sm {
     width: 35%;
@@ -316,6 +311,15 @@ a {
   }
   .logo {
     padding-top: 8px !important;
+  }
+  .md {
+    width: 15%;
+  }
+  .font12 {
+    font-size: 14px;
+  }
+  h4 {
+    font: normal 700 20px/24px "Raleway", sans-serif !important;
   }
 }
 @media screen and (max-width: 600px) {
@@ -339,6 +343,12 @@ a {
   }
   .logo {
     padding-top: 8px !important;
+  }
+  .font12 {
+    font-size: 14px;
+  }
+  h4 {
+    font: normal 700 20px/24px "Raleway", sans-serif !important;
   }
 }
 
