@@ -30,11 +30,12 @@ button {
 .md {
   width: 25%
 }
-/* 
+
 textarea {
-  margin-left: 33%;
-  margin-right: 33%;
-} */
+  /* margin-left: 33%;
+  margin-right: 33%; */
+  line-height: 40px
+}
 
 button:hover {
   opacity: 0.8;
@@ -304,7 +305,7 @@ a {
     margin-bottom: 70px;
   }
   .container {
-    width:85%;
+    width:65%;
     font-size: 14px
   }
   .image.sm {
