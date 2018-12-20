@@ -1,37 +1,23 @@
 const db = require('../db/meetups');
 
 const createMeetup = (req, res) => {
-  if (!req.body.topic) {
-    return res.send({
-      status: 400,
-      error: 'topic is required',
-    });
-  }
-  if (!req.body.location) {
-    return res.send({
-      status: 400,
-      error: 'location is required',
-    });
-  }
-  if (!req.body.happeningOn) {
-    return res.send({
-      status: 400,
-      error: 'happeningOn is required',
-    });
-  }
   const newMeetup = {
     id: db.length + 1,
     createdOn: Date.now(),
     topic: req.body.topic,
+    location: req.body.location,
     happeningOn: req.body.happeningOn,
     images: req.body.images || null,
     tags: req.body.tags || null,
   };
-  db.push(newMeetup);
-  return res.status(201).send({
-    status: 201,
-    data: newMeetup,
-  });
+  if (newMeetup.topic && newMeetup.location && newMeetup.happeningOn) {
+    db.push(newMeetup);
+    return res.status(201).send({
+      status: 201,
+      data: newMeetup,
+    });
+  }
+  return res.status(400).send({ error: 'meetup not created' });
 };
 
 module.exports = { createMeetup };
