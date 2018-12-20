@@ -1,0 +1,370 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=email], input[type=password], input[type=text],  input[type=date], textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: blue;
+  color: white;
+  padding: 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.sm {
+  width: 15%
+}
+
+.md {
+  width: 25%
+}
+/* 
+textarea {
+  margin-left: 33%;
+  margin-right: 33%;
+} */
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+.avatar {
+  width: 20%;
+  border-radius: 50%;
+}
+
+.image {
+  width: 100%;
+  padding: 10px 0px;
+}
+
+.image.sm {
+  width: 50%;
+  padding: 0px 0px;
+}
+
+.card-image {
+  object-fit: cover;
+  height: 300px;
+}
+
+
+.container {
+  margin: 5% auto;
+  margin-top: 5%;
+  width: 30%;
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 15px;
+  opacity: 0.9;
+  border: 1px solid gray;
+  box-shadow: 0 3px 2px #8080806e;
+  margin-bottom: 100px;
+}
+
+.container.sm {
+  width: 50%;
+}
+
+h4 {
+  /* font: normal 700 18px/24px "Raleway", sans-serif !important; */
+  font-size: 16px;
+  letter-spacing: 1px !important;
+  text-transform: capitalize !important;
+  color: #000000 !important;
+  margin: 0px;
+  padding-top: 20px
+}
+
+h6 {
+  margin: 0;
+  font-size: 12px
+}
+
+p {
+  margin-bottom: 0;
+}
+
+p.lg {
+  margin-bottom: 35px;
+  padding-top: 20px
+}
+
+.text-holder {
+  /* padding: 23px 30px 70px 30px; */
+  padding: 0px;
+}
+
+.details {
+  margin-bottom: 12px;
+  padding: 0px;
+  margin-top: 8px;
+  font-size: 12px
+}
+
+.details li:first-child {
+  margin-left: 0;
+}
+
+.details li {
+  list-style: none;
+  line-height: 28px;
+  padding: 0px;
+  display: inline-block;
+  position: relative;
+  margin: 0 10px;
+}
+
+.container.md {
+  margin: 5% auto;
+  width: 250px;
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 15px;
+  opacity: 0.9;
+  border: 1px solid gray;
+  box-shadow: 0 3px 2px #8080806e;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #696767;;
+  color: white;
+  /* text-align: center; */
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+.font12 {
+  font-size: 12px;
+}
+
+.font16 {
+  font-size: 16px
+}
+
+.font22 {
+  font-size: 22px;
+  color: blue;
+}
+
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+    margin: 0px 120px
+}
+
+/* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: white;
+  padding: 20px 10px;
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  font-size: 15px; 
+  line-height: 12px;
+  border-radius: 4px;
+}
+
+a {
+  color: black;;
+  text-decoration: none;
+}
+
+/* Style the logo link  */ 
+.logo {
+  padding-top: 0px !important;
+}
+
+
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: blue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+#banner {
+  background: url(../UI/image/bgimage.jpg) no-repeat center;
+  background-size: cover;
+  margin: 0;
+  height: 600px;
+}
+
+/* Create two equal columns that floats next to each other */
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background: white;
+}
+
+.flex.no-border > div {
+  width: 40%;
+  border: 0px;
+  box-shadow: 0 0px 0px;
+}
+
+.flex.full > div {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.flex.full > div:last-child {
+  margin-bottom: 100px;
+}
+
+.flex > div {
+  width: 25%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  text-align: center;
+  /* line-height: 7px; */
+  font-size: 10px;
+  border: 1px solid gray;
+  box-shadow: 0 3px 2px #8080806e;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 50px;
+}
+
+.no-border {
+  border: 0px gray !important;
+  box-shadow: 0 0px 0px !important;
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+@media screen and (max-width: 992px) {
+  .flex > div {
+    flex: 100%;
+    margin-bottom: 70px;
+  }
+  .container {
+    width:85%;
+    font-size: 14px
+  }
+  .image.sm {
+    width: 35%;
+  }
+  .header a {
+    font-size: 14px;
+  }
+  .logo {
+    padding-top: 8px !important;
+  }
+  .md {
+    width: 15%;
+  }
+  .details li {
+    font-size: 30px;
+  }
+  .sm {
+    width: 25%;
+    font-size: 30px
+  }
+  h6 {
+    font-size: 12px
+  }
+  h4 {
+    font-size: 31px;
+  }
+  .font22 {
+    font-size: 44px;
+  }
+  footer {
+    font-size: 35px;
+  }
+}
+/* @media screen and (max-width: 600px) {
+  .flex > div {
+    flex: 100%;
+  }
+  .container {
+    width: 70%
+  }
+  .sm {
+    width: 25%
+  }
+  .md {
+    width: 35%
+  }
+  .image.sm {
+    width: 30%;
+  }
+  .header a {
+    font-size: 9px;
+  }
+  .logo {
+    padding-top: 8px !important;
+  }
+} */
+
+/* @media screen and (max-width: 400px) {
+  .logo {
+    display: none;
+  }
+} */
