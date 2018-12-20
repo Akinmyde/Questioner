@@ -1,0 +1,32 @@
+{
+  "name": "questioner",
+  "version": "1.0.0",
+  "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set DEBUG=app & nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akinmyde/Questioner.git"
+  },
+  "author": "Akinremi Olumide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akinmyde/Questioner/issues"
+  },
+  "homepage": "https://github.com/Akinmyde/Questioner#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.1",
+    "debug": "^4.1.0",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9"
+  }
+}
