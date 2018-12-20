@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Questioner | Forget Password</>
+        <title>Questioner | Forget Password</title>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
@@ -9,22 +9,18 @@
             <div class="header">
                 <a href="index.html" class="logo"><img class="image sm" src="image/logo1.png"></a>
                 <div class="header-right">
-                <a href="index.html">Home</a>
                 <a href="index.html#contact">Contact</a>
                 <a href="index.html#about">About</a>
                 <a href="meetup.html">Meetups</a>
-                <a href="sign-in.html">Sign in</a>
+                <a class="active" href="#">Sign in</a>
                 </div>
             </div>
         </header>
-        <form action="">
+        <form method="POST" action="dashboard.html">
             <div class="container">
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required> 
-                </div>
-                                
-                <button id="forget" type="submit">Reset Password</button><br/>
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="JohnDeo@gmail.com" required><br/>
+                <button id="forget" type="submit">Sign in</button>
                 <div class="error font12">
                 </div>
             </div>
