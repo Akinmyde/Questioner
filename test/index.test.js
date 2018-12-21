@@ -62,6 +62,9 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 200, data: meetups });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
