@@ -4,7 +4,7 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha **/*.text.js --exit",
+    "test": "mocha **/*.test.js --exit",
     "start": "set DEBUG=app & nodemon app.js"
   },
   "repository": {
