@@ -14,10 +14,38 @@ const createMeetup = (req, res) => {
     db.push(newMeetup);
     return res.status(201).send({
       status: 201,
-      data: newMeetup,
+      data: [newMeetup],
     });
   }
   return res.status(400).send({ error: 'meetup not created' });
 };
 
-module.exports = { createMeetup };
+const getAllMeetup = (req, res) => {
+  if (db.length > 0) {
+    return res.status(200).send({
+      status: 200,
+      data: db,
+    });
+  }
+  return res.status(404).send({
+    status: 404,
+    error: 'Nothing found',
+  });
+};
+
+const getMeetupById = (req, res) => {
+  const { id } = req.params;
+  const find = db.find(x => x.id.toString() === id);
+  if (find) {
+    return res.status(200).send({
+      status: 200,
+      data: [find],
+    });
+  }
+  return res.status(404).send({
+    status: 404,
+    error: 'meetup not found',
+  });
+};
+
+module.exports = { createMeetup, getAllMeetup, getMeetupById };
