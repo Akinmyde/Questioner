@@ -3,7 +3,7 @@
 const request = require('supertest');
 const expect = require('expect');
 const app = require('../app');
-const meetups = require('../db/meetups');
+const { meetup } = require('../db/index.db');
 
 request.agent(app.listen());
 
@@ -63,7 +63,7 @@ describe('Questioner Server', () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 200, data: meetups });
+          expect(res.body).toEqual({ status: 200, data: meetup });
         })
         .end((err) => {
           if (err) return done(err);
@@ -93,6 +93,51 @@ describe('Questioner Server', () => {
         .expect((res) => {
           expect(res.body).toEqual({ status: 404, error: 'meetup not found' });
         })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+  // test create a question
+  describe('POST /question', () => {
+    const acceptedData = {
+      id: 1,
+      createdOn: Date,
+      createdBy: 21, // represents the user asking the question
+      meetup: 11, // represents the meetup the question is for
+      title: 'What Do I Need To Do To Succeed In The Bootcamp',
+      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
+      vote: 0,
+    };
+    const nonAcceptedData = {
+      id: 1,
+      createdOn: Date,
+      createdBy: 21, // represents the user asking the question
+      meetup: 11, // represents the meetup the question is for
+      // title: 'What Do I Need To Do To Succeed In The Bootcamp',
+      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
+      vote: 0,
+    };
+    it('should respond with status code 201 created', (done) => {
+      request(app)
+        .post('/api/v1/questions')
+        .send(acceptedData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with status code 400 not created', (done) => {
+      request(app)
+        .post('/api/v1/questions')
+        .send(nonAcceptedData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
         .end((err) => {
           if (err) return done(err);
           return done();
