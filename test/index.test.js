@@ -175,4 +175,33 @@ describe('Questioner Server', () => {
         });
     });
   });
+
+  // test for patch question:id/downvote
+  describe('PATCH /question/:id/downvote', () => {
+    it('should respond with status code 200', (done) => {
+      request(app)
+        .patch('/api/v1/questions/1/downvote')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and message question not found', (done) => {
+      request(app)
+        .patch('/api/v1/questions/4/downvote')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'question not found' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });
