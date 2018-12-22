@@ -68,6 +68,29 @@ const createQuestion = (req, res) => {
   return res.status(400).send({ error: 'meetup not created' });
 };
 
+const upVote = (req, res) => {
+  const { id } = req.params;
+  const find = question.find(x => x.id.toString() === id);
+  if (find) {
+    find.vote += 1;
+    return res.status(200).send({
+      status: 204,
+      data: [
+        {
+          meetup: find.meetup,
+          title: find.title,
+          body: find.body,
+          votes: find.vote,
+        },
+      ],
+    });
+  }
+  return res.status(404).send({
+    status: 404,
+    error: 'question not found',
+  });
+};
+
 module.exports = {
-  createMeetup, getAllMeetup, getMeetupById, createQuestion,
+  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote,
 };
