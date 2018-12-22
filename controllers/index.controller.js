@@ -1,8 +1,8 @@
-const db = require('../db/meetups');
+const { question, meetup } = require('../db/index.db');
 
 const createMeetup = (req, res) => {
   const newMeetup = {
-    id: db.length + 1,
+    id: meetup.length + 1,
     createdOn: Date.now(),
     topic: req.body.topic,
     location: req.body.location,
@@ -11,7 +11,7 @@ const createMeetup = (req, res) => {
     tags: req.body.tags || null,
   };
   if (newMeetup.topic && newMeetup.location && newMeetup.happeningOn) {
-    db.push(newMeetup);
+    meetup.push(newMeetup);
     return res.status(201).send({
       status: 201,
       data: [newMeetup],
@@ -21,10 +21,10 @@ const createMeetup = (req, res) => {
 };
 
 const getAllMeetup = (req, res) => {
-  if (db.length > 0) {
+  if (question.length > 0) {
     return res.status(200).send({
       status: 200,
-      data: db,
+      data: meetup,
     });
   }
   return res.status(404).send({
@@ -35,7 +35,7 @@ const getAllMeetup = (req, res) => {
 
 const getMeetupById = (req, res) => {
   const { id } = req.params;
-  const find = db.find(x => x.id.toString() === id);
+  const find = meetup.find(x => x.id.toString() === id);
   if (find) {
     return res.status(200).send({
       status: 200,
@@ -48,4 +48,26 @@ const getMeetupById = (req, res) => {
   });
 };
 
-module.exports = { createMeetup, getAllMeetup, getMeetupById };
+const createQuestion = (req, res) => {
+  const newQuestion = {
+    id: question.length + 1,
+    createdOn: Date,
+    createdBy: 2,
+    meetup: 2,
+    title: req.body.title,
+    body: req.body.body,
+    vote: 0,
+  };
+  if (newQuestion.title && newQuestion.body) {
+    question.push(newQuestion);
+    return res.status(201).send({
+      status: 201,
+      data: [newQuestion],
+    });
+  }
+  return res.status(400).send({ error: 'meetup not created' });
+};
+
+module.exports = {
+  createMeetup, getAllMeetup, getMeetupById, createQuestion,
+};
