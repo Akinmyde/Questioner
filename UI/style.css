@@ -1,5 +1,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: whitesmoke;
+  margin: 0;
 }
 
 input[type=email], input[type=password], input[type=text],  input[type=date], textarea {
@@ -32,8 +34,6 @@ button {
 }
 
 textarea {
-  /* margin-left: 33%;
-  margin-right: 33%; */
   line-height: 40px
 }
 
@@ -196,14 +196,15 @@ footer {
 {
     width: 80px;
     cursor: pointer;
-    margin: 0px 120px
+    margin: 0px 40%;
 }
 
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
   background-color: white;
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
+  box-shadow: 0 0 4px 2px #e1e1e1;
 }
 
 /* Style the header links */
@@ -212,7 +213,7 @@ footer {
   text-align: center;
   padding: 12px;
   font-size: 15px; 
-  line-height: 12px;
+  line-height: 30px;
   border-radius: 4px;
 }
 
@@ -223,7 +224,7 @@ a {
 
 /* Style the logo link  */ 
 .logo {
-  padding-top: 0px !important;
+  padding: 0 !important;
 }
 
 
@@ -242,6 +243,7 @@ a {
 /* Float the link section to the right */
 .header-right {
   float: right;
+  display: block;
 }
 
 #banner {
@@ -258,7 +260,8 @@ a {
   flex-wrap: wrap;
   padding-bottom: 10px;
   padding-top: 10px;
-  background: white;
+  background: whitesmoke;
+  margin-top: 2rem;
 }
 
 .flex.no-border > div {
@@ -283,13 +286,45 @@ a {
   padding-right: 10px;
   border-radius: 15px;
   text-align: center;
-  /* line-height: 7px; */
-  font-size: 10px;
+  font-size: 12px;
   border: 1px solid gray;
   box-shadow: 0 3px 2px #8080806e;
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 50px;
+  background: white;
+}
+
+.view {
+  color: blue;
+  font-size: 16px;
+}
+
+.delete {
+  color: red;
+  font-size: 16px
+}
+
+.upvote {
+  color: green;
+  font-size: 16px
+}
+
+.downvote {
+  color: red;
+  font-size: 16px
+}
+
+.comment {
+  color: blue;
+  font-size: 16px
+}
+
+.show-menu, .hide-menu {
+  color: blue;
+  font-size: 30px !important;
+  display: none;
+  float: right !important;
 }
 
 .no-border {
@@ -297,75 +332,62 @@ a {
   box-shadow: 0 0px 0px !important;
   border-radius: 0px !important;
   margin-bottom: 0px !important;
+  background: whitesmoke !important;
 }
 
 @media screen and (max-width: 992px) {
   .flex > div {
-    flex: 100%;
-    margin-bottom: 70px;
+    flex: 50%;
   }
   .container {
     width:65%;
-    font-size: 14px
   }
   .image.sm {
     width: 35%;
   }
-  .header a {
-    font-size: 14px;
-  }
   .logo {
     padding-top: 8px !important;
   }
   .md {
-    width: 15%;
+    width: 35%;
   }
-  .details li {
-    font-size: 30px;
+  .image-upload img
+  {
+      width: 25%;
   }
   .sm {
-    width: 25%;
-    font-size: 30px
+    width: 30%;
   }
   h6 {
     font-size: 12px
   }
-  h4 {
-    font-size: 31px;
-  }
-  .font22 {
-    font-size: 44px;
-  }
-  footer {
-    font-size: 35px;
-  }
 }
-/* @media screen and (max-width: 600px) {
+
+@media screen and (max-width: 600px) {
+  .show-menu, .hide-menu {
+    padding: 12px !important;
+    width: 30px !important;
+  }
+  .show-menu {
+    display: block;
+  }
+  .header-right {
+    display: none;
+    float: left;
+  }
+  .header a{
+    text-align: center;
+    width: 100%;
+  }
+  .header a:first-child{
+    width: 50%;
+    text-align: left;
+  }
   .flex > div {
     flex: 100%;
   }
-  .container {
-    width: 70%
-  }
-  .sm {
-    width: 25%
-  }
-  .md {
-    width: 35%
-  }
-  .image.sm {
-    width: 30%;
-  }
-  .header a {
-    font-size: 9px;
-  }
-  .logo {
-    padding-top: 8px !important;
-  }
-} */
+} 
 
-/* @media screen and (max-width: 400px) {
-  .logo {
-    display: none;
-  }
-} */
+@media screen and (max-width: 400px) {
+
+}
