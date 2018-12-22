@@ -118,6 +118,34 @@ const downVote = (req, res) => {
   });
 };
 
+const rsvps = (req, res) => {
+  const { id } = req.params;
+  const find = meetup.find(x => x.id.toString() === id);
+  if (find) {
+    const { status } = req.body;
+    if (status === 'yes' || status === 'no' || status === 'maybe') {
+      return res.status(201).send({
+        status: 201,
+        data: [
+          {
+            meetup: find.id,
+            topic: find.topic,
+            status,
+          },
+        ],
+      });
+    }
+    return res.status(400).send({
+      status: 400,
+      error: 'not created',
+    });
+  }
+  return res.status(404).send({
+    status: 404,
+    error: 'meetup not found',
+  });
+};
+
 module.exports = {
-  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote,
+  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps,
 };
