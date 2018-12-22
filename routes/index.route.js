@@ -19,4 +19,7 @@ router.route('/api/v1/questions/:id/upvote')
 router.route('/api/v1/questions/:id/downvote')
   .patch(controller.downVote);
 
+router.route('/api/v1/meetups/:id/rsvps')
+  .post(controller.rsvps);
+
 module.exports = router;
