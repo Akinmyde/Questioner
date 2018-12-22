@@ -204,4 +204,52 @@ describe('Questioner Server', () => {
         });
     });
   });
+
+  // test for post meetup/:id/rsvp
+  describe('POST /meetups/:id/rsvp', () => {
+    const acceptedData = {
+      status: 'yes' || 'no' || 'maybe',
+    };
+    const nonAcceptedData = {
+      status: '' || 'YES' || 'Maybe',
+    };
+    it('should respond with status code 201', (done) => {
+      request(app)
+        .post('/api/v1/meetups/1/rsvps')
+        .send(acceptedData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with status code 400 not created', (done) => {
+      request(app)
+        .post('/api/v1/meetups/1/rsvps')
+        .send(nonAcceptedData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and message meetup not found', (done) => {
+      request(app)
+        .post('/api/v1/meetups/4/rsvps')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'meetup not found' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });
