@@ -13,4 +13,7 @@ router.route('/api/v1/meetups/:id')
 router.route('/api/v1/questions')
   .post(controller.createQuestion);
 
+router.route('/api/v1/questions/:id/upvote')
+  .patch(controller.upVote);
+
 module.exports = router;
