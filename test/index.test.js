@@ -206,12 +206,12 @@ describe('Questioner Server', () => {
   });
 
   // test for post meetup/:id/rsvp
-  describe('POST /meetups/:id/rsvp', () => {
+  describe('POST /meetups/:id/rsvps', () => {
     const acceptedData = {
-      status: 'yes' || 'no' || 'maybe',
+      response: 'yes' || 'no' || 'maybe',
     };
     const nonAcceptedData = {
-      status: '' || 'YES' || 'Maybe',
+      response: '' || 'YES' || 'Maybe',
     };
     it('should respond with status code 201', (done) => {
       request(app)
