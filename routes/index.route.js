@@ -10,4 +10,7 @@ router.route('/api/v1/meetups')
 router.route('/api/v1/meetups/:id')
   .get(controller.getMeetupById);
 
+router.route('/api/v1/question')
+  .post(controller.createQuestion);
+
 module.exports = router;
