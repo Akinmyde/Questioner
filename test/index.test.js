@@ -119,6 +119,7 @@ describe('Questioner Server', () => {
       body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
       vote: 0,
     };
+
     it('should respond with status code 201 created', (done) => {
       request(app)
         .post('/api/v1/questions')
@@ -131,6 +132,7 @@ describe('Questioner Server', () => {
           return done();
         });
     });
+
     it('should respond with status code 400 not created', (done) => {
       request(app)
         .post('/api/v1/questions')
@@ -138,6 +140,35 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+
+  // test for patch question:id/upvote
+  describe('PATCH /question/:id/upvote', () => {
+    it('should respond with 204', (done) => {
+      request(app)
+        .patch('/api/v1/questions/1/upvote')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and message question not found', (done) => {
+      request(app)
+        .patch('/api/v1/questions/4/upvote')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'question not found' });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
