@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questioner | Meetup</title>
   <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
@@ -10,8 +11,11 @@
 <body>
   <header>
     <div class="header">
-      <a href="index.html" class="logo"><img class="image sm" src="image/logo1.png"></a>
+      <a href="index.html" class="logo"><img class="image sm" src="image/logo.png"></a>
+      <a href="" class="show-menu"><i class="fas fa-bars"></i></a>
+      <a href="" class="hide-menu"><i class="fas fa-times"></i></a>
       <div class="header-right">
+        <a href=""></a>
         <a href="index.html#contact">Contact</a>
         <a href="index.html#about">About</a>
         <a class="active" href="meetup.html">Meetups</a>
@@ -42,10 +46,10 @@
       <span class="text-holder">
         <ul class="details">
           <li>Feb 29 2017</li>
-          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">100</span></a></li>
-          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
+          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num"> 100</span></a></li>
+          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num"> 5</span></a></li>
+          <li><a class="comment" href="comment.html"><i class="fas fa-comment"></i> 5</span></a></li>
         </ul>
-        <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
       </span>
       <hr>
       <h4><a href="">Please i need to know more about the bootcamp</a></h4>
@@ -54,10 +58,10 @@
       <span class="text-holder">
         <ul class="details">
           <li>Feb 29 2017</li>
-          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">100</span></a></li>
-          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">5</span></a></li>
+          <li><a class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num"> 100</span></a></li>
+          <li><a class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num"> 5</span></a></li>
+          <li><a class="comment" href="comment.html"><i class="fas fa-comment"></i> 5</span></a></li>
         </ul>
-        <a href="comment.html"><button type="button" class="font12 sm">Comments</button></a>
       </span>
     </div>
   </div>
@@ -75,5 +79,6 @@
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
   </footer>
   <script src="js/meetup.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>
