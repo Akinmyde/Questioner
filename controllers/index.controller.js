@@ -1,4 +1,6 @@
-const { question, meetup } = require('../db/index.db');
+const {
+  question, meetup, Rsvp, User,
+} = require('../db/index.db');
 
 const createMeetup = (req, res) => {
   const newMeetup = {
@@ -122,15 +124,22 @@ const rsvps = (req, res) => {
   const { id } = req.params;
   const find = meetup.find(x => x.id.toString() === id);
   if (find) {
-    const { status } = req.body;
-    if (status === 'yes' || status === 'no' || status === 'maybe') {
+    const { response } = req.body;
+    if (response === 'yes' || response === 'no' || response === 'maybe') {
+      const rsvp = {
+        id: Rsvp.length + 1,
+        meetup: find.id,
+        user: User[0].id,
+        response,
+      };
+      Rsvp.push(rsvp);
       return res.status(201).send({
         status: 201,
         data: [
           {
             meetup: find.id,
             topic: find.topic,
-            status,
+            status: response,
           },
         ],
       });

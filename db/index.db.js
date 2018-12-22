@@ -1,3 +1,28 @@
+const User = [
+  {
+    id: 1,
+    firstname: 'John',
+    lastname: 'Doe',
+    othername: 'Mike',
+    email: 'JohnDoe@gmail.com',
+    phoneNumber: '0812345566',
+    username: 'John',
+    registered: '12/12/12',
+    isAdmin: false,
+  },
+  {
+    id: 1,
+    firstname: 'Jane',
+    lastname: 'Doe',
+    othername: 'Ruth',
+    email: 'JaneDoe@gmail.com',
+    phoneNumber: '08123434466',
+    username: 'Jane',
+    registered: '12/12/12',
+    isAdmin: false,
+  },
+];
+
 const meetup = [
   {
     id: 1,
@@ -40,4 +65,15 @@ const question = [
   },
 ];
 
-module.exports = { meetup, question };
+const Rsvp = [
+  {
+    id: 1,
+    meetup: 1,
+    user: 1,
+    response: 'yes',
+  },
+];
+
+module.exports = {
+  meetup, question, User, Rsvp,
+};
