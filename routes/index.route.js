@@ -16,4 +16,7 @@ router.route('/api/v1/questions')
 router.route('/api/v1/questions/:id/upvote')
   .patch(controller.upVote);
 
+router.route('/api/v1/questions/:id/downvote')
+  .patch(controller.downVote);
+
 module.exports = router;
