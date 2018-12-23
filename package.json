@@ -4,8 +4,10 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\" --exit",
-    "start": "set DEBUG=app & nodemon app.js"
+    "test": "mocha --exit",
+    "start": "set DEBUG=app & nodemon app.js",
+    "cover": "_mocha --exit",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -23,12 +25,15 @@
   },
   "devDependencies": {
     "chalk": "^2.4.1",
+    "coveralls": "^3.0.2",
     "debug": "^4.1.0",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "expect": "^23.6.0",
+    "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
     "supertest": "^3.3.0"
