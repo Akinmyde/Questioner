@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-
+// \"./{,!(node_modules)/**/}*.test.js\" --exit
 const request = require('supertest');
 const expect = require('expect');
 const app = require('../app');
