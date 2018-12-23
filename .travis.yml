@@ -1,5 +1,4 @@
 language: node_js
 node_js:
   _ "node"
-script:
-  - nyc npm test && nyc report --reporter=text-lcov | coveralls
+after_success: .coveralls.yml
