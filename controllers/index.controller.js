@@ -121,27 +121,17 @@ const downVote = (req, res) => {
 };
 
 const rsvps = (req, res) => {
-  const { id } = req.params;
-  const find = meetup.find(x => x.id.toString() === id);
+  const find = meetup.find(x => x.id.toString() === req.params.id);
   if (find) {
     const { response } = req.body;
     if (response === 'yes' || response === 'no' || response === 'maybe') {
       const rsvp = {
-        id: Rsvp.length + 1,
-        meetup: find.id,
-        user: User[0].id,
-        response,
+        id: Rsvp.length + 1, meetup: find.id, user: User[0].id, response,
       };
       Rsvp.push(rsvp);
       return res.status(201).send({
         status: 201,
-        data: [
-          {
-            meetup: find.id,
-            topic: find.topic,
-            status: response,
-          },
-        ],
+        data: [{ meetup: find.id, topic: find.topic, status: response }],
       });
     }
     return res.status(400).send({
