@@ -145,6 +145,25 @@ const rsvps = (req, res) => {
   });
 };
 
+const getQuestionById = (req, res) => {
+  const find = question.find(x => x.id.toString() === req.params.id);
+  if (find) {
+    return res.status(200).send({
+      status: 200,
+      data: [{
+        title: find.title,
+        body: find.body,
+        votes: find.vote,
+        createdOn: find.createdOn,
+      }],
+    });
+  }
+  return res.status(404).send({
+    status: 404,
+    error: 'question not found',
+  });
+};
+
 module.exports = {
-  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps,
+  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps, getQuestionById,
 };
