@@ -1,9 +1,9 @@
 /* eslint-env mocha */
-// \"./{,!(node_modules)/**/}*.test.js\" --exit
+
 const request = require('supertest');
 const expect = require('expect');
 const app = require('../app');
-const { meetup } = require('../db/index.db');
+const db = require('../models/index.models');
 const Middleware = require('../middlewares/index.middlewares');
 
 request.agent(app.listen());
@@ -64,7 +64,7 @@ describe('Questioner Server', () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 200, data: meetup });
+          expect(res.body).toEqual({ status: 200, data: db.meetups });
         })
         .end((err) => {
           if (err) return done(err);
