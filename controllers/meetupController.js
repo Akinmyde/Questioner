@@ -3,23 +3,23 @@ const { dateFormater } = require('../helpers/index.helpers');
 
 class MeetupController {
   static createMeetup(req, res) {
+    const id = db.meetups.length + 1;
+    const createdOn = dateFormater();
+    const {
+      topic, location, happeningOn, images, tags,
+    } = req.body;
     const newMeetup = {
-      id: db.meetups.length + 1,
-      createdOn: dateFormater(),
-      topic: req.body.topic,
-      location: req.body.location,
-      happeningOn: req.body.happeningOn,
-      images: req.body.images || null,
-      tags: req.body.tags || null,
+      id, createdOn, topic, location, happeningOn, images, tags,
     };
-    if (newMeetup.topic && newMeetup.location && newMeetup.happeningOn) {
+    const findTopic = db.meetups.find(x => x.topic === newMeetup.topic);
+    if (!findTopic) {
       db.meetups.push(newMeetup);
       return res.status(201).send({
         status: 201,
         data: [newMeetup],
       });
     }
-    return res.status(400).send({ error: 'meetup not created' });
+    return res.status(400).send({ status: 400, error: 'not created' });
   }
 
   static getAllMeetup(req, res) {
@@ -51,23 +51,22 @@ class MeetupController {
   }
 
   static createQuestion(req, res) {
+    const id = db.questions.length + 1;
+    const createdOn = dateFormater();
+    const votes = 0;
+    const { title, body } = req.body;
     const newQuestion = {
-      id: db.questions.length + 1,
-      createdOn: dateFormater(),
-      createdBy: db.users[0].id,
-      meetup: db.meetups[0].id,
-      title: req.body.title,
-      body: req.body.body,
-      votes: 0,
+      id, createdOn, createdBy: db.users[0].id, meetup: db.meetups[0].id, title, body, votes,
     };
-    if (newQuestion.title && newQuestion.body) {
+    const findQuestion = db.questions.find(x => x.title.toLowerCase() === title.toLowerCase());
+    if (!findQuestion) {
       db.questions.push(newQuestion);
       return res.status(201).send({
         status: 201,
         data: [newQuestion],
       });
     }
-    return res.status(400).send({ error: 'meetup not created' });
+    return res.status(400).send({ status: 400, error: 'question not created' });
   }
 
   static upVote(req, res) {

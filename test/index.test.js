@@ -4,7 +4,7 @@ const request = require('supertest');
 const expect = require('expect');
 const app = require('../app');
 const db = require('../models/index.models');
-const Middleware = require('../middlewares/index.middlewares');
+const { dateFormater } = require('../helpers/index.helpers');
 
 request.agent(app.listen());
 
@@ -12,19 +12,10 @@ request.agent(app.listen());
 describe('Questioner Server', () => {
   // test create a meetup
   describe('POST /meetups', () => {
-    const acceptedData = {
-      id: 1,
-      createdOn: Date.now(),
+    const testData = {
+      id: 3,
+      createdOn: dateFormater(),
       topic: 'Andela\'s Bootcamp',
-      happeningOn: '12/12/2018',
-      location: 'Epic tower',
-      images: ['image'],
-      tags: ['programmer, developer'],
-    };
-    const nonAcceptedData = {
-      id: 1,
-      createdOn: Date.now(),
-      // topic: 'Andela\'s Bootcamp',
       happeningOn: '12/12/2018',
       location: 'Epic tower',
       images: ['image'],
@@ -33,10 +24,13 @@ describe('Questioner Server', () => {
     it('should respond with status code 201 created', (done) => {
       request(app)
         .post('/api/v1/meetups')
-        .send(acceptedData)
+        .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 201, data: [testData] });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
@@ -45,10 +39,13 @@ describe('Questioner Server', () => {
     it('should respond with status code 400 not created', (done) => {
       request(app)
         .post('/api/v1/meetups')
-        .send(nonAcceptedData)
+        .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 400, error: 'not created' });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
@@ -101,46 +98,42 @@ describe('Questioner Server', () => {
     });
   });
   // test create a question
-  describe('POST /question', () => {
-    const acceptedData = {
-      id: 1,
-      createdOn: Date,
-      createdBy: 21, // represents the user asking the question
-      meetup: 11, // represents the meetup the question is for
-      title: 'What Do I Need To Do To Succeed In The Bootcamp',
+  describe('POST /questions', () => {
+    const testData = {
+      id: db.questions.length + 1,
+      createdOn: dateFormater(),
+      createdBy: db.users[0].id,
+      meetup: db.meetups[0].id,
+      title: 'How Do I Succeed In The Bootcamp',
       body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
-      vote: 0,
+      votes: 0,
     };
-    const nonAcceptedData = {
-      id: 1,
-      createdOn: Date,
-      createdBy: 21, // represents the user asking the question
-      meetup: 11, // represents the meetup the question is for
-      // title: 'What Do I Need To Do To Succeed In The Bootcamp',
-      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
-      vote: 0,
-    };
-
     it('should respond with status code 201 created', (done) => {
       request(app)
         .post('/api/v1/questions')
-        .send(acceptedData)
+        .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 201, data: [testData] });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
         });
     });
 
-    it('should respond with status code 400 not created', (done) => {
+    it('should respond with status code 400 question not created', (done) => {
       request(app)
         .post('/api/v1/questions')
-        .send(nonAcceptedData)
+        .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 400, error: 'question not created' });
+        })
         .end((err) => {
           if (err) return done(err);
           return done();
@@ -290,7 +283,7 @@ describe('Questioner Server', () => {
       email: 'test@gmail.com',
       username: 'test',
       password: 'test',
-      registered: Middleware.dateFormater(),
+      registered: dateFormater(),
     };
     it('should respond with status code 201', (done) => {
       request(app)
