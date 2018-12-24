@@ -67,7 +67,7 @@ export default class Middleware {
     const error = {};
 
     if (!title || (title && validator.isEmpty(title))) {
-      error.password = 'title is required';
+      error.title = 'title is required';
     }
 
     if (!body || (body && validator.isEmpty(body))) {
