@@ -31,7 +31,9 @@ class UserController {
   static signIn(req, res) {
     const { email, password } = req.body;
 
-    const userFound = db.users.find(x => (x.email === email) && (x.password === password));
+    const userFound = db.users.find(
+      x => (x.email === email || x.username === email) && (x.password === password),
+    );
     if (userFound) {
       return res.status(200).send({
         status: 200,

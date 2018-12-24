@@ -25,7 +25,9 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "express": "^4.16.4",
-    "morgan": "^1.9.1"
+    "lodash.isempty": "^4.4.0",
+    "morgan": "^1.9.1",
+    "validator": "^10.10.0"
   },
   "devDependencies": {
     "babel-register": "^6.26.0",
