@@ -1,4 +1,4 @@
-class Middleware {
+class Helpers {
   static dateFormater() {
     const date = new Date();
     const year = date.getFullYear();
@@ -8,4 +8,4 @@ class Middleware {
   }
 }
 
-export default Middleware;
+export default Helpers;
