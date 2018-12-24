@@ -190,6 +190,22 @@ const signUp = (req, res) => {
   });
 };
 
+const signIn = (req, res) => {
+  const { email, password } = req.body;
+
+  const userFound = User.find(x => (x.email === email) && (x.password === password));
+  if (userFound) {
+    return res.status(200).send({
+      status: 200,
+      message: 'authenticated',
+    });
+  }
+  return res.status(401).send({
+    status: 401,
+    error: 'authentication failed',
+  })
+}
+
 module.exports = {
-  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps, getQuestionById, signUp,
+  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps, getQuestionById, signUp, signIn,
 };

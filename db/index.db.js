@@ -9,7 +9,7 @@ const User = [
     username: 'John',
     registered: '12/12/12',
     isAdmin: false,
-    password: '',
+    password: 'test',
   },
   {
     id: 2,
