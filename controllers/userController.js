@@ -1,5 +1,7 @@
-const db = require('../models/index.models');
-const { dateFormater } = require('../helpers/index.helpers');
+import db from '../models/index.models';
+import helpers from '../helpers/index.helpers';
+
+const { dateFormater } = helpers;
 
 class UserController {
   static signUp(req, res) {
@@ -43,4 +45,4 @@ class UserController {
   }
 }
 
-module.exports = UserController;
+export default UserController;

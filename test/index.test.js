@@ -1,11 +1,12 @@
 /* eslint-env mocha */
 
-const request = require('supertest');
-const expect = require('expect');
-const app = require('../app');
-const db = require('../models/index.models');
-const { dateFormater } = require('../helpers/index.helpers');
+import request from 'supertest';
+import expect from 'expect';
+import app from '../app';
+import db from '../models/index.models';
+import helper from '../helpers/index.helpers';
 
+const { dateFormater } = helper;
 request.agent(app.listen());
 
 // Testing for Questioner Server
