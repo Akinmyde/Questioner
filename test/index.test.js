@@ -4,6 +4,7 @@ const request = require('supertest');
 const expect = require('expect');
 const app = require('../app');
 const { meetup } = require('../db/index.db');
+const Middleware = require('../middlewares/index.middlewares');
 
 request.agent(app.listen());
 
@@ -274,6 +275,47 @@ describe('Questioner Server', () => {
         .expect(404)
         .expect((res) => {
           expect(res.body).toEqual({ status: 404, error: 'question not found' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+
+  // test for post sign-up
+  describe('POST /auth/sign-up', () => {
+    const user = {
+      id: 3,
+      email: 'test@gmail.com',
+      username: 'test',
+      password: 'test',
+      registered: Middleware.dateFormater(),
+    };
+    it('should respond with status code 201', (done) => {
+      request(app)
+        .post('/api/v1/auth/sign-up')
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 201, data: [user] });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 409 and message user already exists', (done) => {
+      request(app)
+        .post('/api/v1/auth/sign-up')
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(409)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 409, error: 'user already exists' });
         })
         .end((err) => {
           if (err) return done(err);

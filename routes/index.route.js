@@ -25,4 +25,8 @@ router.route('/api/v1/questions/:id/downvote')
 router.route('/api/v1/meetups/:id/rsvps')
   .post(controller.rsvps);
 
+router.route('/api/v1/auth/sign-up')
+  .post(controller.signUp);
+
+
 module.exports = router;

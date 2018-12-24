@@ -1,6 +1,7 @@
 const {
   question, meetup, Rsvp, User,
 } = require('../db/index.db');
+const Middleware = require('../middlewares/index.middlewares');
 
 const createMeetup = (req, res) => {
   const newMeetup = {
@@ -164,6 +165,31 @@ const getQuestionById = (req, res) => {
   });
 };
 
+const signUp = (req, res) => {
+  const { email, password, username } = req.body;
+  const newUser = {
+    id: User.length + 1,
+    email,
+    username,
+    password,
+    registered: Middleware.dateFormater(),
+  };
+
+  const userFound = User.find(x => x.email.toString() === email);
+  if (userFound) {
+    return res.status(409).send({
+      status: 409,
+      error: 'user already exists',
+    });
+  }
+
+  User.push(newUser);
+  return res.status(201).send({
+    status: 201,
+    data: [newUser],
+  });
+};
+
 module.exports = {
-  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps, getQuestionById,
+  createMeetup, getAllMeetup, getMeetupById, createQuestion, upVote, downVote, rsvps, getQuestionById, signUp,
 };
