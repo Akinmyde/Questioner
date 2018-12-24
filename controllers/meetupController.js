@@ -1,11 +1,11 @@
 const db = require('../models/index.models');
-const Middleware = require('../middlewares/index.middlewares');
+const { dateFormater } = require('../helpers/index.helpers');
 
 class MeetupController {
   static createMeetup(req, res) {
     const newMeetup = {
       id: db.meetups.length + 1,
-      createdOn: Middleware.dateFormater(),
+      createdOn: dateFormater(),
       topic: req.body.topic,
       location: req.body.location,
       happeningOn: req.body.happeningOn,
@@ -53,7 +53,7 @@ class MeetupController {
   static createQuestion(req, res) {
     const newQuestion = {
       id: db.questions.length + 1,
-      createdOn: Middleware.dateFormater(),
+      createdOn: dateFormater(),
       createdBy: db.users[0].id,
       meetup: db.meetups[0].id,
       title: req.body.title,

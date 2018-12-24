@@ -1,5 +1,5 @@
 const db = require('../models/index.models');
-const Middleware = require('../middlewares/index.middlewares');
+const { dateFormater } = require('../helpers/index.helpers');
 
 class UserController {
   static signUp(req, res) {
@@ -9,7 +9,7 @@ class UserController {
       email,
       username,
       password,
-      registered: Middleware.dateFormater(),
+      registered: dateFormater(),
     };
 
     const userFound = db.users.find(x => x.email.toString() === email);
