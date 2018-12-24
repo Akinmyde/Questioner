@@ -1,35 +1,27 @@
 const express = require('express');
-const controller = require('../controllers/index.controller');
+const meetupController = require('../controllers/meetupController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-router.route('/api/v1/meetups')
-  .post(controller.createMeetup)
-  .get(controller.getAllMeetup);
+router.post('/api/v1/meetups', meetupController.createMeetup);
 
-router.route('/api/v1/meetups/:id')
-  .get(controller.getMeetupById);
+router.get('/api/v1/meetups', meetupController.getAllMeetup);
 
-router.route('/api/v1/questions')
-  .post(controller.createQuestion);
+router.get('/api/v1/meetups/:id', meetupController.getMeetupById);
 
-router.route('/api/v1/questions/:id')
-  .get(controller.getQuestionById);
+router.post('/api/v1/questions', meetupController.createQuestion);
 
-router.route('/api/v1/questions/:id/upvote')
-  .patch(controller.upVote);
+router.get('/api/v1/questions/:id', meetupController.getQuestionById);
 
-router.route('/api/v1/questions/:id/downvote')
-  .patch(controller.downVote);
+router.patch('/api/v1/questions/:id/upvote', meetupController.upVote);
 
-router.route('/api/v1/meetups/:id/rsvps')
-  .post(controller.rsvps);
+router.patch('/api/v1/questions/:id/downvote', meetupController.downVote);
 
-router.route('/api/v1/auth/sign-up')
-  .post(controller.signUp);
+router.post('/api/v1/meetups/:id/rsvps', meetupController.rsvps);
 
-router.route('/api/v1/auth/sign-in')
-  .post(controller.signIn);
+router.post('/api/v1/auth/sign-up', userController.signUp);
 
+router.post('/api/v1/auth/sign-in', userController.signIn);
 
 module.exports = router;
