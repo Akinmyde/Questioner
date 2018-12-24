@@ -8,4 +8,4 @@ class Middleware {
   }
 }
 
-module.exports = Middleware;
+export default Middleware;

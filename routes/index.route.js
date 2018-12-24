@@ -1,6 +1,6 @@
-const express = require('express');
-const meetupController = require('../controllers/meetupController');
-const userController = require('../controllers/userController');
+import express from 'express';
+import meetupController from '../controllers/meetupController';
+import userController from '../controllers/userController';
 
 const router = express.Router();
 
@@ -24,4 +24,4 @@ router.post('/api/v1/auth/sign-up', userController.signUp);
 
 router.post('/api/v1/auth/sign-in', userController.signIn);
 
-module.exports = router;
+export default router;

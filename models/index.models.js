@@ -79,4 +79,4 @@ db.rsvps = [
   },
 ];
 
-module.exports = db;
+export default db;

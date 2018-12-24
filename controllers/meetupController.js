@@ -1,5 +1,7 @@
-const db = require('../models/index.models');
-const { dateFormater } = require('../helpers/index.helpers');
+import db from '../models/index.models';
+import helpers from '../helpers/index.helpers';
+
+const { dateFormater } = helpers;
 
 class MeetupController {
   static createMeetup(req, res) {
@@ -164,4 +166,4 @@ class MeetupController {
   }
 }
 
-module.exports = MeetupController;
+export default MeetupController;
