@@ -9,9 +9,10 @@ const User = [
     username: 'John',
     registered: '12/12/12',
     isAdmin: false,
+    password: 'test',
   },
   {
-    id: 1,
+    id: 2,
     firstname: 'Jane',
     lastname: 'Doe',
     othername: 'Ruth',
@@ -20,6 +21,7 @@ const User = [
     username: 'Jane',
     registered: '12/12/12',
     isAdmin: false,
+    password: '',
   },
 ];
 
