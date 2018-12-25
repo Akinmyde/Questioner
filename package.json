@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --require babel-register --exit",
     "start": "babel-node app.js",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
+    "test-coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon app.js --exec babel-node"
   },
   "repository": {

@@ -12,10 +12,6 @@ app.use(bodyParser.json());
 
 app.use(router);
 
-app.get('/', (req, res) => {
-  res.send('Hey Welcome');
-});
-
 if (!module.parent) {
   app.listen(port, () => {
     console.log(`listening on port ${chalk.blue(port)}`);
