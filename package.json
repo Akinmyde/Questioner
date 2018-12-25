@@ -24,6 +24,7 @@
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
+    "coveralls": "^3.0.2",
     "express": "^4.16.4",
     "lodash.isempty": "^4.4.0",
     "morgan": "^1.9.1",
