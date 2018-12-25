@@ -6,8 +6,7 @@
   "scripts": {
     "test": "mocha --require babel-register --exit",
     "start": "babel-node app.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
-    "test-coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon app.js --exec babel-node"
   },
   "repository": {
@@ -32,7 +31,6 @@
   },
   "devDependencies": {
     "babel-register": "^6.26.0",
-    "coveralls": "^3.0.2",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",

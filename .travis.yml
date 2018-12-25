@@ -3,9 +3,10 @@ node_js:
   _ "stable"
 install:
   - npm install
-env:
-  global:
-    - CC_TEST_REPORTER_ID=3a75dcb4c4cecc15938f6b9d85c5347dbe4e96a5663fb0fc2df9ec03539eabe7
+addons
+  code_climate:
+    repo_token:
+      secure: '3a75dcb4c4cecc15938f6b9d85c5347dbe4e96a5663fb0fc2df9ec03539eabe7'
 before_script:
   - chmod 0777 ./node_modules/.bin/mocha
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
