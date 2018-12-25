@@ -4,4 +4,3 @@
 <a href="https://codeclimate.com/github/Akinmyde/Questioner/test_coverage"><img src="https://api.codeclimate.com/v1/badges/1293144f78e1201ccc00/test_coverage" /></a>
 # Questioner
 Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.
-<!-- nyc npm test && nyc report --reporter=text-lcov | coveralls -->
