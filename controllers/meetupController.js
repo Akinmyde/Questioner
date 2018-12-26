@@ -25,15 +25,9 @@ class MeetupController {
   }
 
   static getAllMeetup(req, res) {
-    if (db.meetups.length > 0) {
-      return res.status(200).send({
-        status: 200,
-        data: db.meetups,
-      });
-    }
-    return res.status(404).send({
-      status: 404,
-      error: 'Nothing found',
+    return res.status(200).send({
+      status: 200,
+      data: db.meetups,
     });
   }
 
@@ -100,8 +94,6 @@ class MeetupController {
     if (questionFound) {
       if (questionFound.votes > 0) {
         questionFound.votes -= 1;
-      } else {
-        questionFound.vote = 0;
       }
       return res.status(200).send({
         status: 204,

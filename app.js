@@ -12,10 +12,8 @@ app.use(bodyParser.json());
 
 app.use(router);
 
-if (!module.parent) {
-  app.listen(port, () => {
-    console.log(`listening on port ${chalk.blue(port)}`);
-  });
-}
+app.listen(port, () => {
+  console.log(`listening on port ${chalk.blue(port)}`);
+});
 
 export default app;
