@@ -7,7 +7,7 @@ export default class Middleware {
     const { id } = req.params;
     const verifyId = isInt(id);
 
-    if (!verifyId) {
+    if (!verifyId && id !== 'upcoming') {
       return res.status(400).send({
         status: 400,
         error: 'Invalid parameter',

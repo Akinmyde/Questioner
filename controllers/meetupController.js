@@ -8,10 +8,10 @@ class MeetupController {
     const id = db.meetups.length + 1;
     const createdOn = dateFormater();
     const {
-      topic, location, happeningOn, images, tags,
+      topic, location, happeningOn, tags,
     } = req.body;
     const newMeetup = {
-      id, createdOn, topic, location, happeningOn, images, tags,
+      id, createdOn, topic, location, happeningOn, tags,
     };
     const findTopic = db.meetups.find(x => x.topic === newMeetup.topic);
     if (!findTopic) {
@@ -33,6 +33,27 @@ class MeetupController {
 
   static getMeetupById(req, res) {
     const { id } = req.params;
+    if (id === 'upcoming') {
+      let today = dateFormater();
+      today = new Date().getTime();
+
+      const upcomingMeetups = db.meetups.map((e) => {
+        e.happeningOn = new Date(e.happeningOn).getTime();
+        return e;
+      }).filter(upcoming => upcoming.happeningOn - today > 0);
+
+      if (upcomingMeetups.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: upcomingMeetups,
+        });
+      }
+      return res.status(404).send({
+        status: 404,
+        error: 'no upcoming meetups',
+      });
+    }
+
     const meetupFound = db.meetups.find(x => x.id.toString() === id);
     if (meetupFound) {
       return res.status(200).send({
