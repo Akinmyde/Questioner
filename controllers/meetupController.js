@@ -53,7 +53,6 @@ class MeetupController {
         error: 'no upcoming meetups',
       });
     }
-
     const meetupFound = db.meetups.find(x => x.id.toString() === id);
     if (meetupFound) {
       return res.status(200).send({
