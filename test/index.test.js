@@ -19,7 +19,6 @@ describe('Questioner Server', () => {
       topic: 'Andela\'s Bootcamp',
       happeningOn: '12/12/2018',
       location: 'Epic tower',
-      images: ['image'],
       tags: ['programmer, developer'],
     };
     it('should respond with status code 201 created', (done) => {
@@ -64,6 +63,20 @@ describe('Questioner Server', () => {
         .expect((res) => {
           expect(res.body).toEqual({ status: 200, data: db.meetups });
         })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+  // test for /meetups/upcoming
+  describe('GET /meetups/upcoming', () => {
+    it('should respond with 200 and all upcoming meetup', (done) => {
+      request(app)
+        .get('/api/v1/meetups/upcoming')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
         .end((err) => {
           if (err) return done(err);
           return done();
