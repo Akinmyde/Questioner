@@ -1,7 +1,7 @@
 import db from '../models/index.models';
 import helpers from '../helpers/index.helpers';
 
-const { dateFormater } = helpers;
+const { dateFormater, findArrayById } = helpers;
 
 class MeetupController {
   static createMeetup(req, res) {
@@ -33,7 +33,7 @@ class MeetupController {
 
   static getMeetupById(req, res) {
     const { id } = req.params;
-    const meetupFound = db.meetups.find(x => x.id.toString() === id);
+    const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       return res.status(200).send({
         status: 200,
@@ -67,7 +67,8 @@ class MeetupController {
 
   static upVote(req, res) {
     const { id } = req.params;
-    const questionFound = db.questions.find(x => x.id.toString() === id);
+    const questionFound = findArrayById(db.questions, id);
+    findArrayById(db.questions, id);
     if (questionFound) {
       questionFound.votes += 1;
       return res.status(200).send({
@@ -90,7 +91,7 @@ class MeetupController {
 
   static downVote(req, res) {
     const { id } = req.params;
-    const questionFound = db.questions.find(x => x.id.toString() === id);
+    const questionFound = findArrayById(db.questions, id);
     if (questionFound) {
       if (questionFound.votes > 0) {
         questionFound.votes -= 1;
@@ -114,7 +115,8 @@ class MeetupController {
   }
 
   static rsvps(req, res) {
-    const meetupFound = db.meetups.find(x => x.id.toString() === req.params.id);
+    const { id } = req.params;
+    const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       const { response } = req.body;
       if (response === 'yes' || response === 'no' || response === 'maybe') {
@@ -139,7 +141,8 @@ class MeetupController {
   }
 
   static getQuestionById(req, res) {
-    const questionFound = db.questions.find(x => x.id.toString() === req.params.id);
+    const { id } = req.params;
+    const questionFound = findArrayById(db.questions, id);
     if (questionFound) {
       return res.status(200).send({
         status: 200,
