@@ -3,10 +3,17 @@ node_js:
   _ "stable"
 install:
   - npm install
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 env:
   global:
     - CC_TEST_REPORTER_ID=3a75dcb4c4cecc15938f6b9d85c5347dbe4e96a5663fb0fc2df9ec03539eabe7
 script:
-  - npm test
+  - nyc npm test && nyc report --reporter=text-lcov | coveralls
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
   - npm run coveralls
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
