@@ -6,6 +6,10 @@ class Helpers {
     const day = date.getDate();
     return `${day}-${month}-${year}`;
   }
+
+  static findArrayById(arr, id) {
+    return arr.find(x => x.id.toString() === id);
+  }
 }
 
 export default Helpers;
