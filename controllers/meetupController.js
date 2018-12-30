@@ -43,27 +43,15 @@ class MeetupController {
       }).filter(upcoming => upcoming.happeningOn - today > 0);
 
       if (upcomingMeetups.length > 0) {
-        return res.status(200).send({
-          status: 200,
-          data: upcomingMeetups,
-        });
+        return res.status(200).send({ status: 200, data: upcomingMeetups });
       }
-      return res.status(404).send({
-        status: 404,
-        error: 'no upcoming meetups',
-      });
+      return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
     }
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
-      return res.status(200).send({
-        status: 200,
-        data: [meetupFound],
-      });
+      return res.status(200).send({ status: 200, data: [meetupFound] });
     }
-    return res.status(404).send({
-      status: 404,
-      error: 'meetup not found',
-    });
+    return res.status(404).send({ status: 404, error: 'meetup not found' });
   }
 
   static createQuestion(req, res) {

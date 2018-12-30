@@ -11,5 +11,4 @@ class Helpers {
     return arr.find(x => x.id.toString() === id);
   }
 }
-
 export default Helpers;
