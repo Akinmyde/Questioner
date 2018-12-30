@@ -17,7 +17,7 @@ db.users = [
   {
     id: 2,
     firstname: 'Jane',
-    lastname: 'Doe',
+    lastname: 'Janet',
     othername: 'Ruth',
     email: 'JaneDoe@gmail.com',
     phoneNumber: '08123434466',
