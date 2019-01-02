@@ -4,21 +4,12 @@ node_js:
 cache:
   directories:
     - "node_modules"
-install:
-  - npm install
-env:
-  global:
-    - CC_TEST_REPORTER_ID=3a75dcb4c4cecc15938f6b9d85c5347dbe4e96a5663fb0fc2df9ec03539eabe7
-before_script:
-  - npm install
-  - npm install -g nyc
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+addons:
+  code_climate
+    repo_token: c7f045c3298c8c7c5fa7bc5546bd86cca597c34316af881193482ba5a5f43895
 script:
-  - nyc npm test && nyc report --reporter=text-lcov | coveralls
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - npm test
 after_success:
-  - npm run coveralls
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - npm run coverage
+  - npm run report-coverage
+  - npm run codeclimate-report
