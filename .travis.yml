@@ -1,15 +1,20 @@
 language: node_js
 node_js:
   _ "stable"
+cache:
+  directories:
+    - "node_modules"
 install:
   - npm install
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 env:
   global:
     - CC_TEST_REPORTER_ID=3a75dcb4c4cecc15938f6b9d85c5347dbe4e96a5663fb0fc2df9ec03539eabe7
+before_script:
+  - npm install
+  - npm install -g nyc
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
   - nyc npm test && nyc report --reporter=text-lcov | coveralls
 after_script:
