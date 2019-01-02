@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node app.js",
+    "test": "export NODE_ENV=test SECRET=testsecret || SET \"NODE_ENV=test\" SECRET=testsecret &&  nyc --reporter=html --reporter=text mocha test/ --exit --compilers js:babel-core/register",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "serve": "nodemon app.js --exec babel-node",
-    "test1": "SET \"NODE_ENV=test\" SECRET=testsecret &&  nyc --reporter=html --reporter=text mocha test/ --exit --compilers js:babel-core/register"
+    "serve": "nodemon app.js --exec babel-node"
   },
   "repository": {
     "type": "git",
