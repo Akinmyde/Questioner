@@ -33,25 +33,40 @@ class MeetupController {
 
   static getMeetupById(req, res) {
     const { id } = req.params;
-    if (id === 'upcoming') {
-      let today = dateFormater();
-      today = new Date().getTime();
+    // if (id === 'upcoming') {
+    //   let today = dateFormater();
+    //   today = new Date().getTime();
 
-      const upcomingMeetups = db.meetups.map((e) => {
-        e.happeningOn = new Date(e.happeningOn).getTime();
-        return e;
-      }).filter(upcoming => upcoming.happeningOn - today > 0);
+    //   const upcomingMeetups = db.meetups.map((e) => {
+    //     e.happeningOn = new Date(e.happeningOn).getTime();
+    //     return e;
+    //   }).filter(upcoming => upcoming.happeningOn - today > 0);
 
-      if (upcomingMeetups.length > 0) {
-        return res.status(200).send({ status: 200, data: upcomingMeetups });
-      }
-      return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
-    }
+    //   if (upcomingMeetups.length > 0) {
+    //     return res.status(200).send({ status: 200, data: upcomingMeetups });
+    //   }
+    //   return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
+    // }
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       return res.status(200).send({ status: 200, data: [meetupFound] });
     }
     return res.status(404).send({ status: 404, error: 'meetup not found' });
+  }
+
+  static getUpcomingMeetupus(req, res) {
+    let today = dateFormater();
+    today = new Date().getTime();
+
+    const upcomingMeetups = db.meetups.map((e) => {
+      e.happeningOn = new Date(e.happeningOn).getTime();
+      return e;
+    }).filter(upcoming => upcoming.happeningOn - today > 0);
+
+    if (upcomingMeetups.length > 0) {
+      return res.status(200).send({ status: 200, data: upcomingMeetups });
+    }
+    return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
   }
 
   static createQuestion(req, res) {
