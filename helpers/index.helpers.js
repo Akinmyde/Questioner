@@ -8,7 +8,7 @@ class Helpers {
   }
 
   static findArrayById(arr, id) {
-    return arr.find(x => x.id.toString() === id);
+    return arr.find(newArr => newArr.id.toString() === id);
   }
 }
 export default Helpers;
