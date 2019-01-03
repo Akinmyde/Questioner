@@ -9,6 +9,8 @@ router.post('/api/v1/meetups', Middleware.createMeetupValidator, meetupControlle
 
 router.get('/api/v1/meetups', meetupController.getAllMeetup);
 
+router.get('/api/v1/meetups/upcoming', meetupController.getUpcomingMeetupus);
+
 router.get('/api/v1/meetups/:id', Middleware.validateParams, meetupController.getMeetupById);
 
 router.post('/api/v1/questions', Middleware.createQuestionController, meetupController.createQuestion);

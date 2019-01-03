@@ -13,7 +13,7 @@ class MeetupController {
     const newMeetup = {
       id, createdOn, topic, location, happeningOn, tags,
     };
-    const findTopic = db.meetups.find(x => x.topic === newMeetup.topic);
+    const findTopic = db.meetups.find(meetup => meetup.topic === newMeetup.topic);
     if (!findTopic) {
       db.meetups.push(newMeetup);
       return res.status(201).send({
@@ -33,25 +33,26 @@ class MeetupController {
 
   static getMeetupById(req, res) {
     const { id } = req.params;
-    if (id === 'upcoming') {
-      let today = dateFormater();
-      today = new Date().getTime();
-
-      const upcomingMeetups = db.meetups.map((e) => {
-        e.happeningOn = new Date(e.happeningOn).getTime();
-        return e;
-      }).filter(upcoming => upcoming.happeningOn - today > 0);
-
-      if (upcomingMeetups.length > 0) {
-        return res.status(200).send({ status: 200, data: upcomingMeetups });
-      }
-      return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
-    }
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       return res.status(200).send({ status: 200, data: [meetupFound] });
     }
     return res.status(404).send({ status: 404, error: 'meetup not found' });
+  }
+
+  static getUpcomingMeetupus(req, res) {
+    let today = dateFormater();
+    today = new Date().getTime();
+
+    const upcomingMeetups = db.meetups.map((meetup) => {
+      meetup.happeningOn = new Date(meetup.happeningOn).getTime();
+      return meetup;
+    }).filter(upcoming => upcoming.happeningOn - today > 0);
+
+    if (upcomingMeetups.length > 0) {
+      return res.status(200).send({ status: 200, data: upcomingMeetups });
+    }
+    return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
   }
 
   static createQuestion(req, res) {
@@ -62,7 +63,8 @@ class MeetupController {
     const newQuestion = {
       id, createdOn, createdBy: db.users[0].id, meetup: db.meetups[0].id, title, body, votes,
     };
-    const findQuestion = db.questions.find(x => x.title.toLowerCase() === title.toLowerCase());
+    const findQuestion = db.questions
+      .find(question => question.title.toLowerCase() === title.toLowerCase());
     if (!findQuestion) {
       db.questions.push(newQuestion);
       return res.status(201).send({

@@ -6,8 +6,7 @@ export default class Middleware {
   static validateParams(req, res, next) {
     const { id } = req.params;
     const verifyId = isInt(id);
-
-    if (!verifyId && id !== 'upcoming') {
+    if (!verifyId) {
       return res.status(400).send({
         status: 400,
         error: 'Invalid parameter',
