@@ -6,10 +6,7 @@ import Middleware from '../middlewares/index.middleswares';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.status(200).send({
-    status: 200,
-    message: 'Welcome to my questioner app endpoint',
-  });
+  res.status(200).send('Welcome to my questioner app endpoint');
 });
 
 router.post('/api/v1/meetups', Middleware.createMeetupValidator, meetupController.createMeetup);
