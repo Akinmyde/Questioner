@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/Akinmyde/Questioner.svg?branch=server)](https://travis-ci.com/Akinmyde/Questioner)
-[![Coverage Status](https://coveralls.io/repos/github/Akinmyde/Questioner/badge.svg?branch=server&service=github)](https://coveralls.io/github/Akinmyde/Questioner)
+[![Coverage Status](https://coveralls.io/repos/github/Akinmyde/Questioner/badge.svg?branch=server&kill_cache=1")](https://coveralls.io/github/Akinmyde/Questioner)
 <a href="https://codeclimate.com/github/Akinmyde/Questioner/maintainability"><img src="https://api.codeclimate.com/v1/badges/1293144f78e1201ccc00/maintainability" /></a>
 <a href="https://codeclimate.com/github/Akinmyde/Questioner/test_coverage"><img src="https://api.codeclimate.com/v1/badges/1293144f78e1201ccc00/test_coverage" /></a>
 # Questioner
@@ -44,6 +44,8 @@ Find below, the links to the various page for the UI
 - Downvote a question: `PATCH https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/downvote`
 - Upvote a question: `PATCH https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/upvote`
 - Respond to meetup rsvp: `POST https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>/rsvps`
+- Add a comment to a question: `POST https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/comments`
+- Get all comment related to a question: `GET https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/comments`
 - Get a single question: `GET https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>`
 - Sign up: `POST https://akinmyde-questioner.herokuapp.com/api/v1/auth/signup`
 - Sign in: `POST https://akinmyde-questioner.herokuapp.com/api/v1/auth/login`
