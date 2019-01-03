@@ -106,9 +106,7 @@ class MeetupController {
     const { id } = req.params;
     const questionFound = findArrayById(db.questions, id);
     if (questionFound) {
-      if (questionFound.votes > 0) {
-        questionFound.votes -= 1;
-      }
+      questionFound.votes -= 1;
       return res.status(200).send({
         status: 204,
         data: [
