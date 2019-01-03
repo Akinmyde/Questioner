@@ -4,7 +4,7 @@ class Helpers {
     const year = date.getFullYear();
     const month = date.getMonth();
     const day = date.getDate();
-    return `${day}-${month}-${year}`;
+    return `${day}-${month + 1}-${year}`;
   }
 
   static findArrayById(arr, id) {

@@ -33,19 +33,19 @@ db.users = [
 db.meetups = [
   {
     id: 1,
-    createdOn: '2018-10-12',
+    createdOn: '10-12-2018',
     topic: 'Andela Bootcamp',
     location: 'Epic Tower',
-    happeningOn: '2018-12-12',
+    happeningOn: '12-12-2018',
     images: 'url',
     Tags: ['Developers', 'Programmer'],
   },
   {
     id: 2,
-    createdOn: '2018-10-12',
+    createdOn: '10-12-2018',
     topic: 'NodeJs',
     location: 'Epic Tower',
-    happeningOn: '2019-12-12',
+    happeningOn: '12-12-2019',
     images: 'url',
     Tags: ['Javascript', 'Html/css'],
   },

@@ -41,13 +41,16 @@ class MeetupController {
   }
 
   static getUpcomingMeetupus(req, res) {
-    let today = dateFormater();
-    today = new Date().getTime();
+    const today = Date.now();
+    const upcomingMeetups = [];
 
-    const upcomingMeetups = db.meetups.map((meetup) => {
-      meetup.happeningOn = new Date(meetup.happeningOn).getTime();
-      return meetup;
-    }).filter(upcoming => upcoming.happeningOn - today > 0);
+    db.meetups.forEach((meetup) => {
+      const happeningOnDate = new Date(meetup.happeningOn);
+      if (happeningOnDate.getTime() > today) {
+        upcomingMeetups.push(meetup);
+      }
+      return upcomingMeetups;
+    });
 
     if (upcomingMeetups.length > 0) {
       return res.status(200).send({ status: 200, data: upcomingMeetups });
