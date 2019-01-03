@@ -11,6 +11,21 @@ request.agent(app.listen());
 
 // Testing for Questioner Server
 describe('Questioner Server', () => {
+  describe('Get /', () => {
+    it('should respond with status code 200', (done) => {
+      request(app)
+        .get('/')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 200, message: 'Welcome to my questioner app endpoint' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
   // test create a meetup
   describe('POST /meetups', () => {
     const testData = {
@@ -344,14 +359,14 @@ describe('Questioner Server', () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 200, message: 'authenticated' });
+          expect(res.body).toEqual({ status: 200, message: 'Login was successfull' });
         })
         .end((err) => {
           if (err) return done(err);
           return done();
         });
     });
-    it('should respond with 401 and message authentication failed', (done) => {
+    it('should respond with 401 and message login failed', (done) => {
       request(app)
         .post('/api/v1/auth/sign-in')
         .send({
@@ -362,7 +377,7 @@ describe('Questioner Server', () => {
         .expect('Content-Type', /json/)
         .expect(401)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 401, error: 'authentication failed' });
+          expect(res.body).toEqual({ status: 401, error: 'Login failed' });
         })
         .end((err) => {
           if (err) return done(err);

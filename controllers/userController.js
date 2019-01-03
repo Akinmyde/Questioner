@@ -32,17 +32,17 @@ class UserController {
     const { email, password } = req.body;
 
     const userFound = db.users.find(
-      x => (x.email === email || x.username === email) && (x.password === password),
+      user => (user.email === email || user.username === email) && (user.password === password),
     );
     if (userFound) {
       return res.status(200).send({
         status: 200,
-        message: 'authenticated',
+        message: 'Login was successfull',
       });
     }
     return res.status(401).send({
       status: 401,
-      error: 'authentication failed',
+      error: 'Login failed',
     });
   }
 }
