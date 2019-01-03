@@ -181,6 +181,25 @@ class MeetupController {
       error: 'question not found',
     });
   }
+
+  static Addcomment(req, res) {
+    const questionId = req.params.id;
+    const questionFound = findArrayById(db.questions, questionId);
+    if (questionFound) {
+      const id = db.comments.length + 1;
+      const createdOn = dateFormater();
+      const { body } = req.body;
+      const newComment = {
+        id, createdBy: 1, questionId: questionFound.id, body, createdOn,
+      };
+      db.comments.push(newComment);
+      return res.status(201).send({
+        status: 201,
+        data: [newComment],
+      });
+    }
+    return res.status(400).send({ status: 400, error: 'comment not created' });
+  }
 }
 
 export default MeetupController;

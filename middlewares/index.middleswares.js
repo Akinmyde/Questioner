@@ -61,7 +61,7 @@ export default class Middleware {
     });
   }
 
-  static createQuestionController(req, res, next) {
+  static createQuestionValidator(req, res, next) {
     const { title, body } = req.body;
     const error = {};
 
@@ -107,5 +107,17 @@ export default class Middleware {
       status: 400,
       error,
     });
+  }
+
+  static addCommentValidator(req, res, next) {
+    const { body } = req.body;
+
+    if (!body || (body && validator.isEmpty(body))) {
+      return res.status(400).send({
+        status: 400,
+        error: 'comment body is required',
+      });
+    }
+    return next();
   }
 }

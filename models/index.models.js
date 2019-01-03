@@ -81,4 +81,15 @@ db.rsvps = [
   },
 ];
 
+db.comments = [
+  {
+    id: 1,
+    createdBy: 1,
+    questionId: 1,
+    body: 'This is an important question',
+    createdOn: '12-12-12',
+    updatedOn: null,
+  },
+];
+
 export default db;
