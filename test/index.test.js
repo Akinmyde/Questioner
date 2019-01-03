@@ -17,9 +17,6 @@ describe('Questioner Server', () => {
         .get('/')
         .set('Accept', 'application/json')
         .expect(200)
-        .expect((res) => {
-          expect(res.body).toEqual({ status: 200, message: 'Welcome to my questioner app endpoint' });
-        })
         .end((err) => {
           if (err) return done(err);
           return done();
