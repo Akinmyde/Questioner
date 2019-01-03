@@ -38,6 +38,7 @@ Find below, the links to the various page for the UI
 - Create meetup: `POST https://akinmyde-questioner.herokuapp.com/api/v1/meetups`
 - Get all meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups`
 - Get a single meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>`
+- Delete a single meetup: `DELETE https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>`
 - Get all upcoming meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups/upcoming`
 - Create question for a meetup: `POST https://akinmyde-questioner.herokuapp.com/api/v1/questions`
 - Downvote a question: `PATCH https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/downvote`
@@ -68,4 +69,4 @@ Find below, the links to the various page for the UI
 - Wait for approval.
 
 #### Author
-[Akinremi Olumide J.]
+Akinremi Olumide J.
