@@ -13,6 +13,7 @@ db.users = [
     registered: '12/12/12',
     isAdmin: false,
     password: 'test',
+    updatedOn: Date.now(),
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ db.users = [
     registered: '12/12/12',
     isAdmin: false,
     password: '',
+    updatedOn: Date.now(),
   },
 ];
 
