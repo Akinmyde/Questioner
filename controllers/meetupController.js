@@ -24,6 +24,17 @@ class MeetupController {
     return res.status(400).send({ status: 400, error: 'not created' });
   }
 
+  static deleteMeetup(req, res) {
+    const { id } = req.params;
+    const meetupFound = findArrayById(db.meetups, id);
+    if (meetupFound) {
+      const deletedMeetup = db.meetups.filter(meetup => meetup !== meetupFound);
+      db.meetups = deletedMeetup;
+      return res.status(200).send({ status: 200, message: 'Meetup was deleted successfully' });
+    }
+    return res.status(404).send({ status: 404, error: 'meetup not found' });
+  }
+
   static getAllMeetup(req, res) {
     return res.status(200).send({
       status: 200,

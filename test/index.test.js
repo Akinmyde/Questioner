@@ -382,4 +382,34 @@ describe('Questioner Server', () => {
         });
     });
   });
+
+  // Delete a meetup record
+  describe('DELETE /meetups/:id', () => {
+    it('should respond with 200', (done) => {
+      request(app)
+        .delete('/api/v1/meetups/1')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 200, message: 'Meetup was deleted successfully' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and message meetup not found', (done) => {
+      request(app)
+        .delete('/api/v1/meetups/4')
+        .set('Accept', 'application/json')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'meetup not found' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });
