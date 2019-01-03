@@ -221,4 +221,24 @@ describe('Middleware test', () => {
         });
     });
   });
+
+  describe('Validate add comment', () => {
+    it('should return status code 400 if body not provided', (done) => {
+      request(app)
+        .post('/api/v1/questions/1/comments')
+        .send({
+          body: '',
+        })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 400, error: 'comment body is required' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });

@@ -412,4 +412,45 @@ describe('Questioner Server', () => {
         });
     });
   });
+
+  // test create a meetup
+  describe('POST /questions/<questionId>/comments', () => {
+    const testData = {
+      id: 2,
+      createdBy: 1,
+      questionId: 1,
+      body: 'This is an important question',
+      createdOn: dateFormater(),
+    };
+    it('should respond with status code 201 and Data', (done) => {
+      request(app)
+        .post('/api/v1/questions/1/comments')
+        .send(testData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 201, data: [testData] });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with status code 400 not created', (done) => {
+      request(app)
+        .post('/api/v1/questions/10/comments')
+        .send(testData)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 400, error: 'comment not created' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });
