@@ -64,23 +64,38 @@ describe('Questioner Server', () => {
         });
     });
   });
-  // test to get all meetups
-  describe('GET /meetups', () => {
-    it('should respond with 200 and all meetups', (done) => {
-      request(app)
-        .get('/api/v1/meetups')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body).toEqual({ status: 200, data: db.meetups });
-        })
-        .end((err) => {
-          if (err) return done(err);
-          return done();
-        });
-    });
-  });
+  // // test to get all meetups
+  // describe('GET /meetups', () => {
+  //   it('should respond with 200 and all meetups', (done) => {
+  //     request(app)
+  //       .get('/api/v1/meetups')
+  //       .set('Accept', 'application/json')
+  //       .expect('Content-Type', /json/)
+  //       .expect(200)
+  //       .expect((res) => {
+  //         expect(res.body).toEqual({ status: 200, data: db.meetups });
+  //       })
+  //       .end((err) => {
+  //         if (err) return done(err);
+  //         return done();
+  //       });
+  //   });
+  //   it('should respond with 404 and no meetup yet', (done) => {
+  //     db.meetups = [];
+  //     request(app)
+  //       .get('/api/v1/meetups')
+  //       .set('Accept', 'application/json')
+  //       .expect('Content-Type', /json/)
+  //       .expect(404)
+  //       .expect((res) => {
+  //         expect(res.body).toEqual({ status: 404, error: 'no meetup yet' });
+  //       })
+  //       .end((err) => {
+  //         if (err) return done(err);
+  //         return done();
+  //       });
+  //   });
+  // });
   // test for /meetups/upcoming
   describe('GET /meetups/upcoming', () => {
     it('should respond with 200', (done) => {
@@ -446,6 +461,85 @@ describe('Questioner Server', () => {
         .expect(400)
         .expect((res) => {
           expect(res.body).toEqual({ status: 400, error: 'comment not created' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+
+  // test to get all comment
+  describe('GET /api/v1/questions/:id/comments', () => {
+    it('should respond with 200 and all comment', (done) => {
+      request(app)
+        .get('/api/v1/questions/1/comments')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 200, data: [db.comments] });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+  it('should respond with 200 and message no comment yet', (done) => {
+    request(app)
+      .get('/api/v1/questions/2/comments')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toEqual({ status: 200, error: 'no comment yet' });
+      })
+      .end((err) => {
+        if (err) return done(err);
+        return done();
+      });
+  });
+  it('should respond with 404 and message question not found', (done) => {
+    request(app)
+      .get('/api/v1/questions/10/comments')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body).toEqual({ status: 404, error: 'question not found' });
+      })
+      .end((err) => {
+        if (err) return done(err);
+        return done();
+      });
+  });
+
+  // test to get all meetups
+  describe('GET /meetups', () => {
+    it('should respond with 200 and all meetups', (done) => {
+      request(app)
+        .get('/api/v1/meetups')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 200, data: db.meetups });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and no meetup yet', (done) => {
+      db.meetups = [];
+      request(app)
+        .get('/api/v1/meetups')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'no meetup yet' });
         })
         .end((err) => {
           if (err) return done(err);

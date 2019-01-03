@@ -36,10 +36,13 @@ class MeetupController {
   }
 
   static getAllMeetup(req, res) {
-    return res.status(200).send({
-      status: 200,
-      data: db.meetups,
-    });
+    if (db.meetups.length > 0) {
+      return res.status(200).send({
+        status: 200,
+        data: db.meetups,
+      });
+    }
+    return res.status(404).send({ status: 404, error: 'no meetup yet' });
   }
 
   static getMeetupById(req, res) {
@@ -199,6 +202,23 @@ class MeetupController {
       });
     }
     return res.status(400).send({ status: 400, error: 'comment not created' });
+  }
+
+  static getAllComment(req, res) {
+    const questionId = req.params.id;
+    const questionFound = findArrayById(db.questions, questionId);
+    if (questionFound) {
+      const commentFound = db.comments.filter(comment => comment
+        .questionId.toString() === questionFound.id.toString());
+      if (commentFound.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: [commentFound],
+        });
+      }
+      return res.status(200).send({ status: 200, error: 'no comment yet' });
+    }
+    return res.status(404).send({ status: 404, error: 'question not found' });
   }
 }
 

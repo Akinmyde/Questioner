@@ -25,6 +25,8 @@ router.get('/api/v1/questions/:id', Middleware.validateParams, meetupController.
 
 router.post('/api/v1/questions/:id/comments', Middleware.validateParams, Middleware.addCommentValidator, meetupController.Addcomment);
 
+router.get('/api/v1/questions/:id/comments', meetupController.getAllComment);
+
 router.patch('/api/v1/questions/:id/upvote', Middleware.validateParams, meetupController.upVote);
 
 router.patch('/api/v1/questions/:id/downvote', Middleware.validateParams, meetupController.downVote);
