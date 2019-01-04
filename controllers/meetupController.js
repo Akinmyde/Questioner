@@ -193,7 +193,7 @@ class MeetupController {
       const createdOn = dateFormater();
       const { body } = req.body;
       const newComment = {
-        id, createdBy: 1, questionId: questionFound.id, body, createdOn,
+        id, createdBy: db.users[0].id, questionId: questionFound.id, body, createdOn,
       };
       db.comments.push(newComment);
       return res.status(201).send({
