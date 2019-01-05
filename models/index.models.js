@@ -60,6 +60,8 @@ db.questions = [
     title: 'What Do I Need To Do To Succeed In The Bootcamp',
     body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
     votes: 0,
+    upvote: 0,
+    downvote: 0,
   },
   {
     id: 2,
@@ -69,6 +71,8 @@ db.questions = [
     title: 'Please I Need To Know More About The Bootcamp',
     body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
     votes: 0,
+    upvote: 0,
+    downvote: 0,
   },
 ];
 

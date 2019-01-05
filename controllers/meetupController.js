@@ -98,6 +98,7 @@ class MeetupController {
     findArrayById(db.questions, id);
     if (questionFound) {
       questionFound.votes += 1;
+      questionFound.upvote += 1;
       return res.status(200).send({
         status: 204,
         data: [
@@ -106,6 +107,8 @@ class MeetupController {
             title: questionFound.title,
             body: questionFound.body,
             votes: questionFound.votes,
+            upvotes: questionFound.upvote,
+            downvote: questionFound.downvote,
           },
         ],
       });
@@ -121,6 +124,7 @@ class MeetupController {
     const questionFound = findArrayById(db.questions, id);
     if (questionFound) {
       questionFound.votes -= 1;
+      questionFound.downvote += 1;
       return res.status(200).send({
         status: 204,
         data: [
@@ -129,6 +133,8 @@ class MeetupController {
             title: questionFound.title,
             body: questionFound.body,
             votes: questionFound.votes,
+            upvotes: questionFound.upvote,
+            downvote: questionFound.downvote,
           },
         ],
       });
