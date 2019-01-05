@@ -13,9 +13,6 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - npm test
-cache:
-  directories:
-    - "node_modules"
 after_success:
   - npm run coveralls
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
