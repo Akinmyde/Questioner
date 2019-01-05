@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  _ "stable"
+  _ "8.12.0"
 install:
   - npm install
 env:
@@ -16,4 +16,5 @@ script:
   - codeclimate-test-reporter < ./coverage/lcov.info
 after_success:
   - npm run coveralls
+  - npm run codeclimate-report
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
