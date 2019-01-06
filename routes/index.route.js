@@ -19,6 +19,8 @@ router.delete('/api/v1/meetups/:id', Middleware.validateParams, meetupController
 
 router.get('/api/v1/meetups/:id', Middleware.validateParams, meetupController.getMeetupById);
 
+router.get('/api/v1/meetups/:id/questions', Middleware.validateParams, meetupController.getMeetupQuestions);
+
 router.post('/api/v1/questions', Middleware.createQuestionValidator, meetupController.createQuestion);
 
 router.get('/api/v1/questions/:id', Middleware.validateParams, meetupController.getQuestionById);

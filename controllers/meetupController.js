@@ -92,6 +92,15 @@ class MeetupController {
     return res.status(400).send({ status: 400, error: 'question not created' });
   }
 
+  static getMeetupQuestions(req, res) {
+    const { id } = req.params;
+    const questionFound = db.questions.filter(question => question.meetup.toString() === id);
+    if (questionFound.length > 0) {
+      return res.status(200).send({ status: 200, data: [questionFound] });
+    }
+    return res.status(404).send({ status: 404, error: 'questions not found for this meetup' });
+  }
+
   static upVote(req, res) {
     const { id } = req.params;
     const questionFound = findArrayById(db.questions, id);

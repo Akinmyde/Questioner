@@ -64,38 +64,6 @@ describe('Questioner Server', () => {
         });
     });
   });
-  // // test to get all meetups
-  // describe('GET /meetups', () => {
-  //   it('should respond with 200 and all meetups', (done) => {
-  //     request(app)
-  //       .get('/api/v1/meetups')
-  //       .set('Accept', 'application/json')
-  //       .expect('Content-Type', /json/)
-  //       .expect(200)
-  //       .expect((res) => {
-  //         expect(res.body).toEqual({ status: 200, data: db.meetups });
-  //       })
-  //       .end((err) => {
-  //         if (err) return done(err);
-  //         return done();
-  //       });
-  //   });
-  //   it('should respond with 404 and no meetup yet', (done) => {
-  //     db.meetups = [];
-  //     request(app)
-  //       .get('/api/v1/meetups')
-  //       .set('Accept', 'application/json')
-  //       .expect('Content-Type', /json/)
-  //       .expect(404)
-  //       .expect((res) => {
-  //         expect(res.body).toEqual({ status: 404, error: 'no meetup yet' });
-  //       })
-  //       .end((err) => {
-  //         if (err) return done(err);
-  //         return done();
-  //       });
-  //   });
-  // });
   // test for /meetups/upcoming
   describe('GET /meetups/upcoming', () => {
     it('should respond with 200', (done) => {
@@ -513,6 +481,35 @@ describe('Questioner Server', () => {
         if (err) return done(err);
         return done();
       });
+  });
+
+  // test to get all questions for a meetup
+  describe('GET /api/v1/meetups/:id/questions', () => {
+    it('should respond with 200 and all questios related to the meetup', (done) => {
+      request(app)
+        .get('/api/v1/meetups/1/questions')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should respond with 404 and questions not found for this meetup', (done) => {
+      request(app)
+        .get('/api/v1/meetups/10/questions')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'questions not found for this meetup' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
   });
 
   // test to get all meetups
