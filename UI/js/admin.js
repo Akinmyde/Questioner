@@ -34,7 +34,7 @@ linkMeetups.addEventListener('click', (e) => {
 for (let i = 0; i < deleteMeetup.length;  i++) {
   deleteMeetup[i].addEventListener('click', (e) => {
     e.preventDefault();
-    deleteMeetup[i].parentNode.parentNode.style.display = 'none';
+    deleteMeetup[i].parentNode.parentNode.parentNode.parentNode.style.display = 'none';
   })
 }
 
