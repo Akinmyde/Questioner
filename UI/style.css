@@ -91,7 +91,6 @@ button:hover {
 }
 
 h4 {
-  /* font: normal 700 18px/24px "Raleway", sans-serif !important; */
   font-size: 16px;
   letter-spacing: 1px !important;
   text-transform: capitalize !important;
@@ -115,7 +114,6 @@ p.lg {
 }
 
 .text-holder {
-  /* padding: 23px 30px 70px 30px; */
   padding: 0px;
 }
 
@@ -199,7 +197,6 @@ footer {
     margin: 0px 40%;
 }
 
-/* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
   background-color: white;
@@ -256,8 +253,6 @@ a {
   margin: 0;
   height: 600px;
 }
-
-/* Create two equal columns that floats next to each other */
 
 .flex {
   display: flex;
