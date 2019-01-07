@@ -1,6 +1,8 @@
 import express from 'express';
 import meetupController from '../controllers/meetupController';
 import userController from '../controllers/userController';
+import commentControllers from '../controllers/commentController';
+import questionController from '../controllers/questionController';
 import Middleware from '../middlewares/index.middleswares';
 
 const router = express.Router();
@@ -21,19 +23,19 @@ router.get('/api/v1/meetups/:id', Middleware.validateParams, meetupController.ge
 
 router.get('/api/v1/meetups/:id/questions', Middleware.validateParams, meetupController.getMeetupQuestions);
 
-router.post('/api/v1/questions', Middleware.createQuestionValidator, meetupController.createQuestion);
+router.post('/api/v1/questions', Middleware.createQuestionValidator, questionController.createQuestion);
 
-router.get('/api/v1/questions/:id', Middleware.validateParams, meetupController.getQuestionById);
+router.get('/api/v1/questions/:id', Middleware.validateParams, questionController.getQuestionById);
 
-router.post('/api/v1/questions/:id/comments', Middleware.validateParams, Middleware.addCommentValidator, meetupController.Addcomment);
+router.post('/api/v1/questions/:id/comments', Middleware.validateParams, Middleware.addCommentValidator, commentControllers.Addcomment);
 
-router.get('/api/v1/questions/:id/comments', meetupController.getAllComment);
+router.get('/api/v1/questions/:id/comments', commentControllers.getAllComment);
 
-router.patch('/api/v1/questions/:id/upvote', Middleware.validateParams, meetupController.upVote);
+router.patch('/api/v1/questions/:id/upvote', Middleware.validateParams, questionController.upVoteQuestion);
 
-router.patch('/api/v1/questions/:id/downvote', Middleware.validateParams, meetupController.downVote);
+router.patch('/api/v1/questions/:id/downvote', Middleware.validateParams, questionController.downVoteQuestion);
 
-router.post('/api/v1/meetups/:id/rsvps', Middleware.validateParams, meetupController.rsvps);
+router.post('/api/v1/meetups/:id/rsvps', Middleware.validateParams, meetupController.rsvpsMeetup);
 
 router.post('/api/v1/auth/sign-up', Middleware.validateUserSignup, userController.signUp);
 

@@ -7,11 +7,11 @@ class MeetupController {
   static createMeetup(req, res) {
     const id = db.meetups.length + 1;
     const createdOn = dateFormater();
-    const {
-      topic, location, happeningOn, tags,
-    } = req.body;
+    const { topic, location, happeningOn } = req.body;
+    const tags = req.body.tags || null;
+    const images = req.body.images || null;
     const newMeetup = {
-      id, createdOn, topic, location, happeningOn, tags,
+      id, createdOn, topic, location, happeningOn, tags, images,
     };
     const findTopic = db.meetups.find(meetup => meetup.topic === newMeetup.topic);
     if (!findTopic) {
@@ -72,26 +72,6 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
   }
 
-  static createQuestion(req, res) {
-    const id = db.questions.length + 1;
-    const createdOn = dateFormater();
-    const votes = 0;
-    const { title, body } = req.body;
-    const newQuestion = {
-      id, createdOn, createdBy: db.users[0].id, meetup: db.meetups[0].id, title, body, votes,
-    };
-    const findQuestion = db.questions
-      .find(question => question.title.toLowerCase() === title.toLowerCase());
-    if (!findQuestion) {
-      db.questions.push(newQuestion);
-      return res.status(201).send({
-        status: 201,
-        data: [newQuestion],
-      });
-    }
-    return res.status(400).send({ status: 400, error: 'question not created' });
-  }
-
   static getMeetupQuestions(req, res) {
     const { id } = req.params;
     const questionFound = db.questions.filter(question => question.meetup.toString() === id);
@@ -101,60 +81,7 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'questions not found for this meetup' });
   }
 
-  static upVote(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    findArrayById(db.questions, id);
-    if (questionFound) {
-      questionFound.votes += 1;
-      questionFound.upvote += 1;
-      return res.status(200).send({
-        status: 204,
-        data: [
-          {
-            meetup: questionFound.meetup,
-            title: questionFound.title,
-            body: questionFound.body,
-            votes: questionFound.votes,
-            upvotes: questionFound.upvote,
-            downvote: questionFound.downvote,
-          },
-        ],
-      });
-    }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
-  }
-
-  static downVote(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    if (questionFound) {
-      questionFound.votes -= 1;
-      questionFound.downvote += 1;
-      return res.status(200).send({
-        status: 204,
-        data: [
-          {
-            meetup: questionFound.meetup,
-            title: questionFound.title,
-            body: questionFound.body,
-            votes: questionFound.votes,
-            upvotes: questionFound.upvote,
-            downvote: questionFound.downvote,
-          },
-        ],
-      });
-    }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
-  }
-
-  static rsvps(req, res) {
+  static rsvpsMeetup(req, res) {
     const { id } = req.params;
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
@@ -178,62 +105,6 @@ class MeetupController {
       status: 404,
       error: 'meetup not found',
     });
-  }
-
-  static getQuestionById(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    if (questionFound) {
-      return res.status(200).send({
-        status: 200,
-        data: [{
-          title: questionFound.title,
-          body: questionFound.body,
-          votes: questionFound.vote,
-          createdOn: questionFound.createdOn,
-        }],
-      });
-    }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
-  }
-
-  static Addcomment(req, res) {
-    const questionId = req.params.id;
-    const questionFound = findArrayById(db.questions, questionId);
-    if (questionFound) {
-      const id = db.comments.length + 1;
-      const createdOn = dateFormater();
-      const { body } = req.body;
-      const newComment = {
-        id, createdBy: db.users[0].id, questionId: questionFound.id, body, createdOn,
-      };
-      db.comments.push(newComment);
-      return res.status(201).send({
-        status: 201,
-        data: [newComment],
-      });
-    }
-    return res.status(400).send({ status: 400, error: 'comment not created' });
-  }
-
-  static getAllComment(req, res) {
-    const questionId = req.params.id;
-    const questionFound = findArrayById(db.questions, questionId);
-    if (questionFound) {
-      const commentFound = db.comments.filter(comment => comment
-        .questionId.toString() === questionFound.id.toString());
-      if (commentFound.length > 0) {
-        return res.status(200).send({
-          status: 200,
-          data: [commentFound],
-        });
-      }
-      return res.status(200).send({ status: 200, error: 'no comment yet' });
-    }
-    return res.status(404).send({ status: 404, error: 'question not found' });
   }
 }
 
