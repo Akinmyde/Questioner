@@ -7,11 +7,11 @@ class MeetupController {
   static createMeetup(req, res) {
     const id = db.meetups.length + 1;
     const createdOn = dateFormater();
-    const { topic, location, happeningOn } = req.body;
-    const tags = req.body.tags || null;
-    const images = req.body.images || null;
+    const {
+      topic, location, happeningOn, tags,
+    } = req.body;
     const newMeetup = {
-      id, createdOn, topic, location, happeningOn, tags, images,
+      id, createdOn, topic, location, happeningOn, tags,
     };
     const findTopic = db.meetups.find(meetup => meetup.topic === newMeetup.topic);
     if (!findTopic) {
