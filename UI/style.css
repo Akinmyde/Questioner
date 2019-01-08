@@ -265,7 +265,7 @@ a {
   background-size: cover;
   margin: 0;
   height: 600px;
-  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/new-banner.jpeg);
+  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/bgimage.jpeg);
   display: flex;
   justify-content: center;
   align-items: center;
