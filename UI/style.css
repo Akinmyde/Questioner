@@ -30,7 +30,16 @@ button {
 }
 
 .md {
-  width: 25%
+  background-color: blue;
+  color: white;
+  padding: 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 25%;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
 }
 
 textarea {
@@ -59,7 +68,8 @@ button:hover {
 
 .image {
   width: 100%;
-  padding: 10px 0px;
+  padding: 0px 0px;
+  border-radius: 0px;
 }
 
 .image.sm {
@@ -72,7 +82,6 @@ button:hover {
   height: 300px;
 }
 
-
 .container {
   margin: 5% auto;
   margin-top: 5%;
@@ -81,8 +90,7 @@ button:hover {
   background-color: white;
   border-radius: 15px;
   opacity: 0.9;
-  border: 1px solid gray;
-  box-shadow: 0 3px 2px #8080806e;
+  box-shadow: 0 0 4px 2px #e1e1e1;
   margin-bottom: 100px;
 }
 
@@ -151,11 +159,11 @@ p.lg {
 footer {
   position: fixed;
   left: 0;
+  padding: 20px 0px;
   bottom: 0;
   width: 100%;
   background-color: #696767;;
   color: white;
-  /* text-align: center; */
 }
 
 .center {
@@ -163,7 +171,11 @@ footer {
 }
 
 .left {
-  text-align: left;
+  text-align: left!important;
+}
+
+.right {
+  text-align: right;
 }
 
 .error {
@@ -177,7 +189,8 @@ footer {
 }
 
 .font16 {
-  font-size: 16px
+  font-size: 16px;
+  line-height: 32px;  
 }
 
 .font22 {
@@ -210,7 +223,7 @@ footer {
   text-align: center;
   padding: 12px;
   font-size: 15px; 
-  line-height: 30px;
+  line-height: 15px;
   border-radius: 4px;
 }
 
@@ -248,10 +261,25 @@ a {
 }
 
 #banner {
-  background: url(../UI/image/bgimage.jpg) no-repeat center;
+  /* background: url(../UI/image/bgimage.jpg) no-repeat center; */
   background-size: cover;
   margin: 0;
   height: 600px;
+  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/bgimage.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+  font-size: xx-large;
+}
+
+.banner-button {
+  display: flex;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
 }
 
 .flex {
@@ -261,6 +289,7 @@ a {
   padding-top: 10px;
   background: whitesmoke;
   margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
 .flex.no-border > div {
@@ -275,7 +304,7 @@ a {
   margin-bottom: 20px;
 }
 
-.flex.full > div:last-child {
+.flex-buttom-space {
   margin-bottom: 100px;
 }
 
@@ -283,18 +312,23 @@ a {
   width: 25%;
   padding-left: 10px;
   padding-right: 10px;
-  border-radius: 15px;
+  border-radius: 10px;
   text-align: center;
   font-size: 12px;
-  border: 1px solid gray;
-  box-shadow: 0 3px 2px #8080806e;
+  box-shadow: 0 0 4px 2px #e1e1e1;
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 50px;
   background: white;
 }
 
-.view {
+.flex.meetup-card > div {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 0px;
+}
+
+.location {
   color: blue;
   font-size: 16px;
 }
