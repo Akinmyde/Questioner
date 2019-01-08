@@ -82,15 +82,18 @@ button:hover {
   height: 300px;
 }
 
+.space {
+  padding-top: 18px; 
+  padding-bottom: 18px;
+}
+
 .container {
   margin: 5% auto;
   margin-top: 5%;
   width: 30%;
   padding: 20px 40px;
   background-color: white;
-  border-radius: 15px;
   opacity: 0.9;
-  box-shadow: 0 0 4px 2px #e1e1e1;
   margin-bottom: 100px;
 }
 
@@ -265,7 +268,7 @@ a {
   background-size: cover;
   margin: 0;
   height: 600px;
-  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/new-banner.jpeg);
+  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/bgimage.jpeg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -312,10 +315,8 @@ a {
   width: 25%;
   padding-left: 10px;
   padding-right: 10px;
-  border-radius: 10px;
   text-align: center;
   font-size: 12px;
-  box-shadow: 0 0 4px 2px #e1e1e1;
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 50px;
