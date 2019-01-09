@@ -8,9 +8,9 @@ class UserController {
     const { email, password, username } = req.body;
     const newUser = {
       id: db.users.length + 1,
-      email,
-      username,
-      password,
+      email: email.trim(),
+      username: username.trim(),
+      password: password.trim(),
       registered: dateFormater(),
     };
 
@@ -30,9 +30,10 @@ class UserController {
 
   static signIn(req, res) {
     const { email, password } = req.body;
-
     const userFound = db.users.find(
-      user => (user.email === email || user.username === email) && (user.password === password),
+      user => (user.email === email.trim()
+      || user.username === email.trim())
+      && (user.password === password.trim()),
     );
     if (userFound) {
       return res.status(200).send({

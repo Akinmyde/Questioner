@@ -38,7 +38,7 @@ db.meetups = [
     location: 'Epic Tower',
     happeningOn: '12-12-2018',
     images: 'url',
-    Tags: ['Developers', 'Programmer'],
+    Tags: ['developers', 'programmer'],
   },
   {
     id: 2,
@@ -47,7 +47,7 @@ db.meetups = [
     location: 'Epic Tower',
     happeningOn: '12-12-2019',
     images: 'url',
-    Tags: ['Javascript', 'Html/css'],
+    Tags: ['javascript', 'html/css'],
   },
 ];
 

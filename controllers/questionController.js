@@ -1,7 +1,7 @@
 import db from '../models/index.models';
 import helpers from '../helpers/index.helpers';
 
-const { dateFormater, findArrayById } = helpers;
+const { dateFormater, findArrayById, regex } = helpers;
 
 class QuestionController {
   static createQuestion(req, res) {
@@ -10,7 +10,13 @@ class QuestionController {
     const votes = 0;
     const { title, body } = req.body;
     const newQuestion = {
-      id, createdOn, createdBy: db.users[0].id, meetup: db.meetups[0].id, title, body, votes,
+      id,
+      createdOn,
+      createdBy: db.users[0].id,
+      meetup: db.meetups[0].id,
+      title: regex(title),
+      body: body.trim(),
+      votes,
     };
     const findQuestion = db.questions
       .find(question => question.title.toLowerCase() === title.toLowerCase());

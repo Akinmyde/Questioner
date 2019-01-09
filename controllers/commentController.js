@@ -1,7 +1,7 @@
 import db from '../models/index.models';
 import helpers from '../helpers/index.helpers';
 
-const { dateFormater, findArrayById } = helpers;
+const { dateFormater, findArrayById, regex } = helpers;
 
 class CommentController {
   static Addcomment(req, res) {
@@ -12,7 +12,11 @@ class CommentController {
       const createdOn = dateFormater();
       const { body } = req.body;
       const newComment = {
-        id, createdBy: db.users[0].id, questionId: questionFound.id, body, createdOn,
+        id,
+        createdBy: db.users[0].id,
+        questionId: questionFound.id,
+        body: regex(body),
+        createdOn,
       };
       db.comments.push(newComment);
       return res.status(201).send({

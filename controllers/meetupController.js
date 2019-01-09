@@ -1,7 +1,7 @@
 import db from '../models/index.models';
 import helpers from '../helpers/index.helpers';
 
-const { dateFormater, findArrayById } = helpers;
+const { dateFormater, findArrayById, regex } = helpers;
 
 class MeetupController {
   static createMeetup(req, res) {
@@ -11,7 +11,12 @@ class MeetupController {
       topic, location, happeningOn, tags,
     } = req.body;
     const newMeetup = {
-      id, createdOn, topic, location, happeningOn, tags,
+      id,
+      createdOn,
+      topic: regex(topic),
+      location: regex(location),
+      happeningOn,
+      tags,
     };
     const findTopic = db.meetups.find(meetup => meetup.topic === newMeetup.topic);
     if (!findTopic) {
@@ -21,7 +26,7 @@ class MeetupController {
         data: [newMeetup],
       });
     }
-    return res.status(400).send({ status: 400, error: 'not created' });
+    return res.status(400).send({ status: 400, error: 'meetup already created' });
   }
 
   static deleteMeetup(req, res) {
@@ -86,14 +91,15 @@ class MeetupController {
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       const { response } = req.body;
-      if (response === 'yes' || response === 'no' || response === 'maybe') {
+      const formatedResponse = regex(response);
+      if (formatedResponse === 'yes' || formatedResponse.trim() === 'no' || formatedResponse.trim() === 'maybe') {
         const rsvp = {
-          id: db.rsvps.length + 1, meetup: db.rsvps.id, user: db.users[0].id, response,
+          id: db.rsvps.length + 1, meetup: db.rsvps.id, user: db.users[0].id, formatedResponse,
         };
         db.rsvps.push(rsvp);
         return res.status(201).send({
           status: 201,
-          data: [{ meetup: meetupFound.id, topic: meetupFound.topic, status: response }],
+          data: [{ meetup: meetupFound.id, topic: meetupFound.topic, status: formatedResponse }],
         });
       }
       return res.status(400).send({
