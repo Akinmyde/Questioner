@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node app.js",
-    "test": "mocha --require babel-register --exit",
+    "test": "mocha server/test/**/*.test.js --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon app.js --exec babel-node"
   },
