@@ -3,7 +3,16 @@ import helpers from '../helpers/index.helpers';
 
 const { dateFormater, findArrayById, regex } = helpers;
 
+/* This class contains the logic for comments */
 class CommentController {
+  /**
+ * @description - this method create a comment
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static Addcomment(req, res) {
     const questionId = req.params.id;
     const questionFound = findArrayById(db.questions, questionId);
@@ -27,6 +36,14 @@ class CommentController {
     return res.status(400).send({ status: 400, error: 'comment not created' });
   }
 
+  /**
+ * @description - this method get all comment
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static getAllComment(req, res) {
     const questionId = req.params.id;
     const questionFound = findArrayById(db.questions, questionId);

@@ -9,7 +9,7 @@ meetupRouter.post('/api/v1/meetups', Middleware.createMeetupValidator, meetupCon
 
 meetupRouter.get('/api/v1/meetups', meetupController.getAllMeetup);
 
-meetupRouter.get('/api/v1/meetups/upcoming', meetupController.getUpcomingMeetupus);
+meetupRouter.get('/api/v1/meetups/upcoming', meetupController.getUpcomingMeetups);
 
 meetupRouter.delete('/api/v1/meetups/:id', Middleware.validateParams, meetupController.deleteMeetup);
 

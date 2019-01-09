@@ -3,7 +3,16 @@ import helpers from '../helpers/index.helpers';
 
 const { dateFormater, findArrayById, regex } = helpers;
 
+/* This class contains the logic for Questions */
 class QuestionController {
+  /**
+ * @description - this method create a question
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static createQuestion(req, res) {
     const id = db.questions.length + 1;
     const createdOn = dateFormater();
@@ -30,6 +39,14 @@ class QuestionController {
     return res.status(400).send({ status: 400, error: 'question not created' });
   }
 
+  /**
+* @description - this method get a question by it's id
+*
+* @param {object} req - The request payload sent to the router
+* @param {object} res - The response payload sent back from the controller
+*
+* @returns {object} - status message and response
+*/
   static getQuestionById(req, res) {
     const { id } = req.params;
     const questionFound = findArrayById(db.questions, id);
@@ -50,6 +67,14 @@ class QuestionController {
     });
   }
 
+  /**
+ * @description - this method upvote a questiom
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static upVoteQuestion(req, res) {
     const { id } = req.params;
     const questionFound = findArrayById(db.questions, id);
@@ -77,6 +102,14 @@ class QuestionController {
     });
   }
 
+  /**
+* @description - this method downvote a questiom
+*
+* @param {object} req - The request payload sent to the router
+* @param {object} res - The response payload sent back from the controller
+*
+* @returns {object} - status message and response
+*/
   static downVoteQuestion(req, res) {
     const { id } = req.params;
     const questionFound = findArrayById(db.questions, id);
