@@ -1,0 +1,427 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: whitesmoke;
+  margin: 0;
+}
+
+input[type=email], input[type=password], input[type=text],  input[type=date], textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: blue;
+  color: white;
+  padding: 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.sm {
+  width: 18%
+}
+
+.md {
+  background-color: blue;
+  color: white;
+  padding: 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 25%;
+  border-radius: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+textarea {
+  line-height: 40px
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+.avatar {
+  width: 20%;
+  border-radius: 50%;
+}
+
+.image {
+  width: 100%;
+  padding: 0px 0px;
+  border-radius: 0px;
+}
+
+.image.sm {
+  width: 50%;
+  padding: 0px 0px;
+}
+
+.card-image {
+  object-fit: cover;
+  height: 300px;
+}
+
+.space {
+  padding-top: 18px; 
+  padding-bottom: 18px;
+}
+
+.container {
+  margin: 5% auto;
+  margin-top: 5%;
+  width: 30%;
+  padding: 20px 40px;
+  background-color: white;
+  opacity: 0.9;
+  margin-bottom: 100px;
+}
+
+.container.sm {
+  width: 50%;
+}
+
+h4 {
+  font-size: 16px;
+  letter-spacing: 1px !important;
+  text-transform: capitalize !important;
+  color: #000000 !important;
+  margin: 0px;
+  padding-top: 20px
+}
+
+h6 {
+  margin: 0;
+  font-size: 12px
+}
+
+p {
+  margin-bottom: 0;
+}
+
+p.lg {
+  margin-bottom: 35px;
+  padding-top: 20px
+}
+
+.text-holder {
+  padding: 0px;
+}
+
+.details {
+  margin-bottom: 12px;
+  padding: 0px;
+  margin-top: 8px;
+  font-size: 12px
+}
+
+.details li:first-child {
+  margin-left: 0;
+}
+
+.details li {
+  list-style: none;
+  line-height: 28px;
+  padding: 0px;
+  display: inline-block;
+  position: relative;
+  margin: 0 10px;
+}
+
+.container.md {
+  margin: 5% auto;
+  width: 250px;
+  padding: 20px 40px;
+  background-color: white;
+  border-radius: 15px;
+  opacity: 0.9;
+  border: 1px solid gray;
+  box-shadow: 0 3px 2px #8080806e;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  padding: 20px 0px;
+  bottom: 0;
+  width: 100%;
+  background-color: #696767;;
+  color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left!important;
+}
+
+.right {
+  text-align: right;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+.font12 {
+  font-size: 12px;
+}
+
+.font16 {
+  font-size: 16px;
+  line-height: 32px;  
+}
+
+.font22 {
+  font-size: 22px;
+  color: blue;
+}
+
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+    margin: 0px 40%;
+}
+
+.header {
+  overflow: hidden;
+  background-color: white;
+  padding: 20px 10px 10px;
+  box-shadow: 0 0 4px 2px #e1e1e1;
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  font-size: 15px; 
+  line-height: 15px;
+  border-radius: 4px;
+}
+
+a {
+  color: black;;
+  text-decoration: none;
+}
+
+/* Style the logo link  */ 
+.logo {
+  padding: 0 !important;
+}
+
+/* Change the background color on mouse-over */
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.header a:hover:first-child {
+  background-color: white;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: blue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+  display: block;
+}
+
+#banner {
+  /* background: url(../UI/image/bgimage.jpg) no-repeat center; */
+  background-size: cover;
+  margin: 0;
+  height: 600px;
+  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/bgimage.jpeg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+  font-size: xx-large;
+}
+
+.banner-button {
+  display: flex;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background: whitesmoke;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.flex.no-border > div {
+  width: 40%;
+  border: 0px;
+  box-shadow: 0 0px 0px;
+}
+
+.flex.full > div {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.flex-buttom-space {
+  margin-bottom: 100px;
+}
+
+.flex > div {
+  width: 25%;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 50px;
+  background: white;
+}
+
+.flex.meetup-card > div {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 0px;
+}
+
+.location {
+  color: blue;
+  font-size: 16px;
+}
+
+.delete {
+  color: red;
+  font-size: 16px
+}
+
+.upvote {
+  color: green;
+  font-size: 16px
+}
+
+.downvote {
+  color: red;
+  font-size: 16px
+}
+
+.comment {
+  color: blue;
+  font-size: 16px
+}
+
+.show-menu, .hide-menu {
+  color: blue;
+  font-size: 30px !important;
+  display: none;
+  float: right !important;
+}
+
+.no-border {
+  border: 0px gray !important;
+  box-shadow: 0 0px 0px !important;
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
+  background: whitesmoke !important;
+}
+
+@media screen and (max-width: 992px) {
+  .flex > div {
+    flex: 50%;
+  }
+  .container {
+    width:65%;
+  }
+  .image.sm {
+    width: 35%;
+  }
+  .logo {
+    padding-top: 8px !important;
+  }
+  .md {
+    width: 35%;
+  }
+  .image-upload img
+  {
+      width: 25%;
+  }
+  .sm {
+    width: 30%;
+  }
+  h6 {
+    font-size: 12px
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .show-menu, .hide-menu {
+    padding: 12px !important;
+    width: 30px !important;
+  }
+  .show-menu {
+    display: block;
+  }
+  .header-right {
+    display: none;
+    float: left;
+  }
+  .header a{
+    text-align: center;
+    width: 100%;
+  }
+  .header a:first-child{
+    width: 50%;
+    text-align: left;
+  }
+  .flex > div {
+    flex: 100%;
+  }
+} 
+
+@media screen and (max-width: 400px) {
+
+}

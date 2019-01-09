@@ -3,7 +3,16 @@ import helpers from '../helpers/index.helpers';
 
 const { dateFormater, findArrayById, regex } = helpers;
 
+/* This class contains the logic for Meetups */
 class MeetupController {
+  /**
+ * @description - this method create a meetup
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static createMeetup(req, res) {
     const id = db.meetups.length + 1;
     const createdOn = dateFormater();
@@ -29,6 +38,14 @@ class MeetupController {
     return res.status(400).send({ status: 400, error: 'meetup already created' });
   }
 
+  /**
+ * @description - this method delete a meetup
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static deleteMeetup(req, res) {
     const { id } = req.params;
     const meetupFound = findArrayById(db.meetups, id);
@@ -40,6 +57,14 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'meetup not found' });
   }
 
+  /**
+ * @description - this method get all meetup
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static getAllMeetup(req, res) {
     if (db.meetups.length > 0) {
       return res.status(200).send({
@@ -50,6 +75,14 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'no meetup yet' });
   }
 
+  /**
+ * @description - this method get a meetup by it's id
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static getMeetupById(req, res) {
     const { id } = req.params;
     const meetupFound = findArrayById(db.meetups, id);
@@ -59,7 +92,15 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'meetup not found' });
   }
 
-  static getUpcomingMeetupus(req, res) {
+  /**
+ * @description - this method get all upcoming meetups
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
+  static getUpcomingMeetups(req, res) {
     const today = Date.now();
     const upcomingMeetups = [];
 
@@ -77,6 +118,14 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
   }
 
+  /**
+ * @description - this method get a question for a meetup
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static getMeetupQuestions(req, res) {
     const { id } = req.params;
     const questionFound = db.questions.filter(question => question.meetup.toString() === id);
@@ -86,6 +135,14 @@ class MeetupController {
     return res.status(404).send({ status: 404, error: 'questions not found for this meetup' });
   }
 
+  /**
+ * @description - this method respond to meetup RSVP
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ */
   static rsvpsMeetup(req, res) {
     const { id } = req.params;
     const meetupFound = findArrayById(db.meetups, id);
