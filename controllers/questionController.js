@@ -15,7 +15,7 @@ class QuestionController {
       createdBy: db.users[0].id,
       meetup: db.meetups[0].id,
       title: regex(title),
-      body: regex(body),
+      body: body.trim(),
       votes,
     };
     const findQuestion = db.questions

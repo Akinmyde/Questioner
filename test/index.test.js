@@ -56,7 +56,7 @@ describe('Questioner Server', () => {
         .expect('Content-Type', /json/)
         .expect(400)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 400, error: 'not created' });
+          expect(res.body).toEqual({ status: 400, error: 'meetup already created' });
         })
         .end((err) => {
           if (err) return done(err);
@@ -396,7 +396,7 @@ describe('Questioner Server', () => {
     });
   });
 
-  // test create a meetup
+  // test create a comment
   describe('POST /questions/<questionId>/comments', () => {
     const testData = {
       id: 2,
@@ -537,6 +537,41 @@ describe('Questioner Server', () => {
         .expect(404)
         .expect((res) => {
           expect(res.body).toEqual({ status: 404, error: 'no meetup yet' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
+
+  // test to for 404 not found
+  describe('ALL *', () => {
+    it('it should return page not found', (done) => {
+      request(app)
+        .get('/api/v1/rubbish')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'Sorry, the page you tried cannot be found' });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('it should return page not found', (done) => {
+      const testData = {
+        test: 'test',
+      };
+      request(app)
+        .post('/api/v1/rubbish')
+        .send(testData)
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 404, error: 'Sorry, the page you tried cannot be found' });
         })
         .end((err) => {
           if (err) return done(err);
