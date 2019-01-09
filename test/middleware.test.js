@@ -20,7 +20,7 @@ describe('Middleware test', () => {
         .expect('Content-Type', /json/)
         .expect(400)
         .expect((res) => {
-          expect(res.body).toEqual({ error: { email: 'use a valid email' }, status: 400 });
+          expect(res.body).toEqual({ error: { email: 'not a valid email' }, status: 400 });
         })
         .end((err) => {
           if (err) return done(err);

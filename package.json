@@ -28,7 +28,7 @@
     "express": "^4.16.4",
     "lodash.isempty": "^4.4.0",
     "morgan": "^1.9.1",
-    "validator": "^10.10.0"
+    "validate.js": "^0.12.0"
   },
   "devDependencies": {
     "babel-register": "^6.26.0",
