@@ -4,10 +4,11 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node app.js",
+    "start": "babel-node server/app.js",
     "test": "mocha server/test/**/*.test.js --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "serve": "nodemon app.js --exec babel-node"
+    "serve": "nodemon app.js --exec babel-node",
+    "migration": "babel-node server/models/migration.db.js"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,11 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "lodash.isempty": "^4.4.0",
     "morgan": "^1.9.1",
+    "pg": "^7.7.1",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
