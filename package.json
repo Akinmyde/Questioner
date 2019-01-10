@@ -1,0 +1,49 @@
+{
+  "name": "questioner",
+  "version": "1.0.0",
+  "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
+  "main": "app.js",
+  "scripts": {
+    "start": "babel-node server/app.js",
+    "test": "mocha server/test/**/*.test.js --require babel-register --exit",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "serve": "nodemon app.js --exec babel-node",
+    "migration": "babel-node server/models/migration.db.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akinmyde/Questioner.git"
+  },
+  "author": "Akinremi Olumide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akinmyde/Questioner/issues"
+  },
+  "homepage": "https://github.com/Akinmyde/Questioner#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "coveralls": "^3.0.2",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "lodash.isempty": "^4.4.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.7.1",
+    "validate.js": "^0.12.0"
+  },
+  "devDependencies": {
+    "babel-register": "^6.26.0",
+    "codeclimate-test-reporter": "^0.5.1",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "expect": "^23.6.0",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
+    "supertest": "^3.3.0"
+  }
+}
