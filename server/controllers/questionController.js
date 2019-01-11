@@ -16,19 +16,17 @@ class QuestionController {
   static createQuestion(req, res) {
     const id = db.questions.length + 1;
     const createdOn = dateFormater();
-    const votes = 0;
     const { title, body } = req.body;
     const newQuestion = {
       id,
       createdOn,
-      createdBy: db.users[0].id,
+      user: db.users[0].id,
       meetup: db.meetups[0].id,
       title: regex(title),
       body: body.trim(),
-      votes,
     };
     const findQuestion = db.questions
-      .find(question => question.title.toLowerCase() === title.toLowerCase());
+      .find(question => question.title.toLowerCase() === newQuestion.title.toLowerCase());
     if (!findQuestion) {
       db.questions.push(newQuestion);
       return res.status(201).send({
@@ -36,7 +34,7 @@ class QuestionController {
         data: [newQuestion],
       });
     }
-    return res.status(400).send({ status: 400, error: 'question not created' });
+    return res.status(409).send({ status: 409, error: 'question already created' });
   }
 
   /**
@@ -83,7 +81,7 @@ class QuestionController {
       questionFound.votes += 1;
       questionFound.upvote += 1;
       return res.status(200).send({
-        status: 204,
+        status: 200,
         data: [
           {
             meetup: questionFound.meetup,
@@ -117,7 +115,7 @@ class QuestionController {
       questionFound.votes -= 1;
       questionFound.downvote += 1;
       return res.status(200).send({
-        status: 204,
+        status: 200,
         data: [
           {
             meetup: questionFound.meetup,

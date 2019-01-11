@@ -163,4 +163,30 @@ export default class Middleware {
     }
     return next();
   }
+
+  static valideateRsvp(req, res, next) {
+    const { response } = req.body;
+    if (!response || (response && validate.isEmpty(response))) {
+      return res.status(400).send({
+        status: 400,
+        error: 'response is required',
+      });
+    }
+
+    if (response && !validate.isString(response)) {
+      return res.status(400).send({
+        status: 400,
+        error: 'response must be a string',
+      });
+    }
+
+    if (response.toLowerCase() === 'yes' || response.toLowerCase() === 'no'
+      || response.toLowerCase() === 'maybe') {
+      return next();
+    }
+    return res.status(400).send({
+      status: 400,
+      error: 'response must be either yes, no or maybe',
+    });
+  }
 }

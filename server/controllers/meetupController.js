@@ -16,18 +16,17 @@ class MeetupController {
   static createMeetup(req, res) {
     const id = db.meetups.length + 1;
     const createdOn = dateFormater();
-    const {
-      topic, location, happeningOn, tags,
-    } = req.body;
+    const { topic, location, happeningOn } = req.body;
     const newMeetup = {
       id,
       createdOn,
       topic: regex(topic),
       location: regex(location),
       happeningOn,
-      tags,
+      tags: [],
     };
-    const findTopic = db.meetups.find(meetup => meetup.topic === newMeetup.topic);
+    const findTopic = db.meetups
+      .find(meetup => meetup.topic.toLowerCase() === newMeetup.topic.toLowerCase());
     if (!findTopic) {
       db.meetups.push(newMeetup);
       return res.status(201).send({
@@ -35,7 +34,7 @@ class MeetupController {
         data: [newMeetup],
       });
     }
-    return res.status(400).send({ status: 400, error: 'meetup already created' });
+    return res.status(409).send({ status: 409, error: 'meetup already created' });
   }
 
   /**
@@ -148,20 +147,16 @@ class MeetupController {
     const meetupFound = findArrayById(db.meetups, id);
     if (meetupFound) {
       const { response } = req.body;
-      const formatedResponse = regex(response);
-      if (formatedResponse === 'yes' || formatedResponse.trim() === 'no' || formatedResponse.trim() === 'maybe') {
-        const rsvp = {
-          id: db.rsvps.length + 1, meetup: db.rsvps.id, user: db.users[0].id, formatedResponse,
-        };
-        db.rsvps.push(rsvp);
-        return res.status(201).send({
-          status: 201,
-          data: [{ meetup: meetupFound.id, topic: meetupFound.topic, status: formatedResponse }],
-        });
-      }
-      return res.status(400).send({
-        status: 400,
-        error: 'not created',
+      const rsvp = {
+        id: db.rsvps.length + 1,
+        meetup: db.rsvps.id,
+        user: db.users[0].id,
+        response,
+      };
+      db.rsvps.push(rsvp);
+      return res.status(201).send({
+        status: 201,
+        data: [{ meetup: meetupFound.id, topic: meetupFound.topic, status: response }],
       });
     }
     return res.status(404).send({

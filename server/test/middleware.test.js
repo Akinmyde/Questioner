@@ -426,4 +426,54 @@ describe('Middleware test', () => {
         });
     });
   });
+
+  describe('Validate Rsvp', () => {
+    it('should return status code 400 if response not provided', (done) => {
+      request(app)
+        .post('/api/v1/meetups/1/rsvps')
+        .send({ response: '' })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ error: 'response is required', status: 400 });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it('should return status code 400 if response is not a string', (done) => {
+      request(app)
+        .post('/api/v1/meetups/1/rsvps')
+        .send({ response: ['yes'] })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ error: 'response must be a string', status: 400 });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it('should return status code 400 if response yes || no || maybe', (done) => {
+      request(app)
+        .post('/api/v1/meetups/1/rsvps')
+        .send({ response: 'yesss' })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ error: 'response must be either yes, no or maybe', status: 400 });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
 });

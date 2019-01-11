@@ -17,6 +17,6 @@ meetupRouter.get('/api/v1/meetups/:id', Middleware.validateParams, meetupControl
 
 meetupRouter.get('/api/v1/meetups/:id/questions', Middleware.validateParams, meetupController.getMeetupQuestions);
 
-meetupRouter.post('/api/v1/meetups/:id/rsvps', Middleware.validateParams, meetupController.rsvpsMeetup);
+meetupRouter.post('/api/v1/meetups/:id/rsvps', Middleware.validateParams, Middleware.valideateRsvp, meetupController.rsvpsMeetup);
 
 export default meetupRouter;

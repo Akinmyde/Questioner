@@ -31,7 +31,7 @@ describe('Questioner Server', () => {
       topic: 'Andela\'s Bootcamp',
       happeningOn: '12/12/2018',
       location: 'Epic tower',
-      tags: ['programmer, developer'],
+      tags: [],
     };
     it('should respond with status code 201 created', (done) => {
       request(app)
@@ -48,15 +48,15 @@ describe('Questioner Server', () => {
           return done();
         });
     });
-    it('should respond with status code 400 not created', (done) => {
+    it('should respond with status code 409 not created', (done) => {
       request(app)
         .post('/api/v1/meetups')
         .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(400)
+        .expect(409)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 400, error: 'meetup already created' });
+          expect(res.body).toEqual({ status: 409, error: 'meetup already created' });
         })
         .end((err) => {
           if (err) return done(err);
@@ -111,11 +111,10 @@ describe('Questioner Server', () => {
     const testData = {
       id: db.questions.length + 1,
       createdOn: dateFormater(),
-      createdBy: db.users[0].id,
+      user: db.users[0].id,
       meetup: db.meetups[0].id,
       title: 'How Do I Succeed In The Bootcamp',
       body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!',
-      votes: 0,
     };
     it('should respond with status code 201 created', (done) => {
       request(app)
@@ -133,15 +132,15 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('should respond with status code 400 question not created', (done) => {
+    it('should respond with status code 409 question not created', (done) => {
       request(app)
         .post('/api/v1/questions')
         .send(testData)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(400)
+        .expect(409)
         .expect((res) => {
-          expect(res.body).toEqual({ status: 400, error: 'question not created' });
+          expect(res.body).toEqual({ status: 409, error: 'question already created' });
         })
         .end((err) => {
           if (err) return done(err);
@@ -214,7 +213,7 @@ describe('Questioner Server', () => {
       response: 'yes' || 'no' || 'maybe',
     };
     const nonAcceptedData = {
-      response: '' || 'YES' || 'Maybe',
+      response: ['YES'],
     };
     it('should respond with status code 201', (done) => {
       request(app)
@@ -233,7 +232,6 @@ describe('Questioner Server', () => {
         .post('/api/v1/meetups/1/rsvps')
         .send(nonAcceptedData)
         .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
         .expect(400)
         .end((err) => {
           if (err) return done(err);
@@ -242,8 +240,8 @@ describe('Questioner Server', () => {
     });
     it('should respond with 404 and message meetup not found', (done) => {
       request(app)
-        .post('/api/v1/meetups/4/rsvps')
-        .set('Accept', 'application/json')
+        .post('/api/v1/meetups/5/rsvps')
+        .send(acceptedData)
         .expect('Content-Type', /json/)
         .expect(404)
         .expect((res) => {
