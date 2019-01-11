@@ -81,7 +81,7 @@ class QuestionController {
       questionFound.votes += 1;
       questionFound.upvote += 1;
       return res.status(200).send({
-        status: 204,
+        status: 200,
         data: [
           {
             meetup: questionFound.meetup,
@@ -115,7 +115,7 @@ class QuestionController {
       questionFound.votes -= 1;
       questionFound.downvote += 1;
       return res.status(200).send({
-        status: 204,
+        status: 200,
         data: [
           {
             meetup: questionFound.meetup,
