@@ -1,7 +1,13 @@
+import passwordHash from 'password-hash';
+import authentication from '../helpers/authentication/authenticate';
 import db from '../models/index.models';
-import helpers from '../helpers/index.helpers';
+import 'babel-polyfill';
+import User from '../models/userModel';
 
-const { dateFormater } = helpers;
+const { authToken } = authentication;
+
+
+// const { dateFormater } = helpers;
 
 /* This class contains the logic for Users */
 
@@ -14,29 +20,32 @@ class UserController {
 *
 * @returns {object} - status message and response
 */
-  static signUp(req, res) {
-    const { email, password, username } = req.body;
-    const newUser = {
-      id: db.users.length + 1,
-      email: email.trim(),
-      username: username.trim(),
-      password: password.trim(),
-      registered: dateFormater(),
-    };
-
-    const userFound = db.users.find(x => x.email.toString() === email);
-    if (userFound) {
-      return res.status(409).send({
-        status: 409,
-        error: 'user already exists',
+  static async signUp(req, res) {
+    try {
+      const { username, email, password } = req.body;
+      const user = User.create({
+        email: email.trim(),
+        username: username.trim(),
+        password: passwordHash.generate(password.trim()),
+        isAdmin: false,
       });
+      const { rows, constraint } = await user;
+      if (rows) {
+        const token = authToken(rows[0].id);
+        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }] });
+      }
+      if (constraint === 'users_email_key') {
+        return res.status(409).send({ status: 409, error: 'Email already exists' });
+      }
+      if (constraint === 'users_username_key') {
+        return res.status(409).send({ status: 409, error: 'Username already exists' });
+      }
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Unexpected database error occur' });
     }
-    db.users.push(newUser);
-    return res.status(201).send({
-      status: 201,
-      data: [newUser],
-    });
+    return res.status(500).send({ status: 500, error: 'Internal server error' });
   }
+
 
   /**
 * @description - this method sign-in a user

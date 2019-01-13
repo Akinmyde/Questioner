@@ -4,15 +4,15 @@ const tables = [
   `DROP TABLE IF EXISTS Users CASCADE;
     CREATE TABLE Users(
     id SERIAL PRIMARY KEY,
-    firstname VARCHAR(355),
-    lastname VARCHAR(355),
+    firstname VARCHAR(355) DEFAULT NULL,
+    lastname VARCHAR(355) DEFAULT NULL,
     email VARCHAR(355) UNIQUE NOT NULL,
-    phoneNumber VARCHAR(13),
+    phoneNumber VARCHAR(13) DEFAULT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    registered TIMESTAMP NOT NULL,
-    updateOn TIMESTAMP,
-    lastLogin TIMESTAMP,
+    password VARCHAR(250) NOT NULL,
+    registered TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
+    updateOn TIMESTAMP DEFAULT NULL,
+    lastLogin TIMESTAMP DEFAULT NULL,
     isAdmin BOOLEAN
   );`,
   `DROP TABLE IF EXISTS Meetups CASCADE;
@@ -56,4 +56,4 @@ const tables = [
     );`,
 ];
 
-tables.forEach(query => pool.query(query, error => console.log(error)));
+tables.forEach(query => pool.query(query, error => error));

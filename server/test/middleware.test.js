@@ -4,7 +4,6 @@ import request from 'supertest';
 import expect from 'expect';
 import app from '../app';
 
-
 request.agent(app.listen());
 
 describe('Middleware test', () => {

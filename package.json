@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node server/app.js",
-    "test": "mocha server/test/**/*.test.js --require babel-register --exit",
+    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
+    "test": "npm run pretest && mocha server/test/**/*.test.js --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon app.js --exec babel-node",
-    "migration": "babel-node server/models/migration.db.js"
+    "migration": "babel-node server/models/migration.js",
+    "database": "babel-node server/models/database.js"
   },
   "repository": {
     "type": "git",
@@ -22,14 +24,17 @@
   "homepage": "https://github.com/Akinmyde/Questioner#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "lodash.isempty": "^4.4.0",
     "morgan": "^1.9.1",
+    "password-hash": "^1.2.2",
     "pg": "^7.7.1",
     "validate.js": "^0.12.0"
   },
