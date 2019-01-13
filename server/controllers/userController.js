@@ -1,6 +1,5 @@
 import passwordHash from 'password-hash';
 import authentication from '../helpers/authentication/authenticate';
-import db from '../models/index.models';
 import 'babel-polyfill';
 import User from '../models/userModel';
 
@@ -23,16 +22,16 @@ class UserController {
   static async signUp(req, res) {
     try {
       const { username, email, password } = req.body;
-      const user = User.create({
-        email: email.trim(),
-        username: username.trim(),
-        password: passwordHash.generate(password.trim()),
+      const user = await User.create({
+        email,
+        username,
+        password: passwordHash.generate(password),
         isAdmin: false,
       });
-      const { rows, constraint } = await user;
+      const { rows, constraint } = user;
       if (rows) {
         const token = authToken(rows[0].id);
-        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }] });
+        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration wes successfull' });
       }
       if (constraint === 'users_email_key') {
         return res.status(409).send({ status: 409, error: 'Email already exists' });
@@ -55,23 +54,26 @@ class UserController {
 *
 * @returns {object} - status message and response
 */
-  static signIn(req, res) {
-    const { email, password } = req.body;
-    const userFound = db.users.find(
-      user => (user.email === email.trim()
-        || user.username === email.trim())
-        && (user.password === password.trim()),
-    );
-    if (userFound) {
-      return res.status(200).send({
-        status: 200,
-        message: 'Login was successfull',
-      });
+  static async signIn(req, res) {
+    try {
+      const { username, password } = req.body;
+      const user = await User.signIn({ username });
+      const { rows, rowCount } = user;
+
+      if (rowCount === 0) {
+        return res.status(404).send({
+          status: 404,
+          error: 'There is no user with this credentials',
+        });
+      }
+      if (passwordHash.verify(password.trim(), rows[0].password)) {
+        const token = authToken(rows[0].id);
+        return res.status(200).send({ status: 200, data: [{ token, user: rows[0], message: 'Login was successfull' }] });
+      }
+      return res.status(401).send({ status: 401, error: 'Invalid username or password' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Unexpected database error occur' });
     }
-    return res.status(401).send({
-      status: 401,
-      error: 'Login failed',
-    });
   }
 }
 

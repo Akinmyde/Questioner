@@ -10,7 +10,7 @@ describe('Middleware test', () => {
   describe('Validate User Signup', () => {
     it('should return status code 400 if email not provided', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: '',
           username: 'test',
@@ -29,7 +29,7 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if username not provided', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: 'test@gmail.com',
           username: '',
@@ -48,7 +48,7 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if password not provided', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: 'test@gmail.com',
           username: 'testmaster',
@@ -67,7 +67,7 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if password is not a string', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: 'test@gmail.com',
           username: 'testmaster',
@@ -86,7 +86,7 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if email is not a string', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: ['test@gmail.com'],
           username: 'testmaster',
@@ -105,7 +105,7 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if username is not a string', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-up')
+        .post('/api/v1/auth/signup')
         .send({
           email: 'test@gmail.com',
           username: ['testmaster'],
@@ -124,19 +124,19 @@ describe('Middleware test', () => {
     });
   });
 
-  describe('Validate User Signin', () => {
+  describe('Validate User Login', () => {
     it('should return status code 400 if username not provided', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-in')
+        .post('/api/v1/auth/login')
         .send({
-          email: '',
+          username: '',
           password: 'testing',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
         .expect((res) => {
-          expect(res.body).toEqual({ error: { email: 'username or email is required' }, status: 400 });
+          expect(res.body).toEqual({ error: { username: 'username or email is required' }, status: 400 });
         })
         .end((err) => {
           if (err) return done(err);
@@ -145,9 +145,9 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if password not provided', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-in')
+        .post('/api/v1/auth/login')
         .send({
-          email: 'testman@gmail.com',
+          username: 'testman@gmail.com',
           password: '',
         })
         .set('Accept', 'application/json')
@@ -163,16 +163,16 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if username is not a string', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-in')
+        .post('/api/v1/auth/login')
         .send({
-          email: ['testmaster'],
+          username: ['testmaster'],
           password: 'test',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
         .expect((res) => {
-          expect(res.body).toEqual({ error: { email: 'email must be a string' }, status: 400 });
+          expect(res.body).toEqual({ error: { username: 'email must be a string' }, status: 400 });
         })
         .end((err) => {
           if (err) return done(err);
@@ -181,9 +181,9 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if username is not a string', (done) => {
       request(app)
-        .post('/api/v1/auth/sign-in')
+        .post('/api/v1/auth/login')
         .send({
-          email: 'testmaster',
+          username: 'testmaster',
           password: ['test'],
         })
         .set('Accept', 'application/json')

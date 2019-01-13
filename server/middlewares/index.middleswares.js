@@ -21,14 +21,14 @@ export default class Middleware {
   }
 
   static validateUserSignin(req, res, next) {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     const error = {};
-    if (!email || (email && validate.isEmpty(email))) {
-      error.email = 'username or email is required';
+    if (!username || (username && validate.isEmpty(username))) {
+      error.username = 'username or email is required';
     }
 
-    if (email && !validate.isString(email)) {
-      error.email = 'email must be a string';
+    if (username && !validate.isString(username)) {
+      error.username = 'email must be a string';
     }
 
     if (!password || (password && validate.isEmpty(password))) {
