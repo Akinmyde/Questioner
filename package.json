@@ -5,12 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node server/app.js",
+    "migration": "babel-node server/migration/index.js",
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
-    "test": "npm run pretest && mocha server/test/**/*.test.js --require babel-register --exit",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 10000 --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "serve": "nodemon server/app.js --exec babel-node",
-    "migration": "babel-node server/models/migration.js",
-    "database": "babel-node server/models/database.js"
+    "serve": "nodemon server/app.js --exec babel-node"
   },
   "repository": {
     "type": "git",
@@ -23,8 +22,8 @@
   },
   "homepage": "https://github.com/Akinmyde/Questioner#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
@@ -39,7 +38,9 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "codeclimate-test-reporter": "^0.5.1",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",

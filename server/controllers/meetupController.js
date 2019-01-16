@@ -1,7 +1,7 @@
-import db from '../models/index.models';
-import helpers from '../helpers/index.helpers';
+import Meetup from '../models/meetupModel';
+import authentication from '../helpers/authenticate';
 
-const { dateFormater, findArrayById, regex } = helpers;
+const { decode } = authentication;
 
 /* This class contains the logic for Meetups */
 class MeetupController {
@@ -13,28 +13,29 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static createMeetup(req, res) {
-    const id = db.meetups.length + 1;
-    const createdOn = dateFormater();
-    const { topic, location, happeningOn } = req.body;
-    const newMeetup = {
-      id,
-      createdOn,
-      topic: regex(topic),
-      location: regex(location),
-      happeningOn,
-      tags: [],
-    };
-    const findTopic = db.meetups
-      .find(meetup => meetup.topic.toLowerCase() === newMeetup.topic.toLowerCase());
-    if (!findTopic) {
-      db.meetups.push(newMeetup);
-      return res.status(201).send({
-        status: 201,
-        data: [newMeetup],
-      });
+  static async createMeetup(req, res) {
+    try {
+      const { topic, location, happeningOn } = req.body;
+      const token = req.body.token || req.headers.token;
+      const decodedToken = await decode(token);
+      const { isAdmin } = decodedToken;
+      if (isAdmin) {
+        const meetup = await Meetup.create({
+          topic, location, happeningOn,
+        });
+        const { rows, constraint } = meetup;
+
+        if (rows) {
+          return res.status(201).send({ status: 201, data: [rows[0]], message: 'Meetup was created successfully' });
+        }
+        if (constraint === 'meetups_topic_key') {
+          return res.status(409).send({ status: 409, error: 'Meetup already exists' });
+        }
+      }
+      return res.status(401).send({ status: 401, error: 'Only an admin can create a meetup' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error occur' });
     }
-    return res.status(409).send({ status: 409, error: 'meetup already created' });
   }
 
   /**
@@ -45,15 +46,25 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static deleteMeetup(req, res) {
-    const { id } = req.params;
-    const meetupFound = findArrayById(db.meetups, id);
-    if (meetupFound) {
-      const deletedMeetup = db.meetups.filter(meetup => meetup !== meetupFound);
-      db.meetups = deletedMeetup;
-      return res.status(200).send({ status: 200, message: 'Meetup was deleted successfully' });
+  static async deleteMeetup(req, res) {
+    try {
+      const { token } = req.headers;
+      const decodedToken = await decode(token);
+
+      const { isAdmin } = decodedToken;
+      if (isAdmin) {
+        const { id } = req.params;
+        const meetup = await Meetup.delete(id);
+        const { rowCount } = meetup;
+        if (rowCount === 1) {
+          return res.status(200).send({ status: 200, data: [], message: 'Meetup was deleted successfully' });
+        }
+        return res.status(404).send({ status: 404, error: 'Meetup not found' });
+      }
+      return res.status(401).send({ status: 401, error: 'Only an admin can delete a meetup' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({ status: 404, error: 'meetup not found' });
   }
 
   /**
@@ -64,14 +75,21 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static getAllMeetup(req, res) {
-    if (db.meetups.length > 0) {
-      return res.status(200).send({
-        status: 200,
-        data: db.meetups,
-      });
+  static async getAllMeetup(req, res) {
+    try {
+      const meetups = await Meetup.getAll();
+      const { rows } = meetups;
+      if (rows.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+          message: 'All meetups was retrieved successfully',
+        });
+      }
+      return res.status(204).send({ status: 204, message: 'no meetup yet' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({ status: 404, error: 'no meetup yet' });
   }
 
   /**
@@ -82,13 +100,23 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static getMeetupById(req, res) {
-    const { id } = req.params;
-    const meetupFound = findArrayById(db.meetups, id);
-    if (meetupFound) {
-      return res.status(200).send({ status: 200, data: [meetupFound] });
+  static async getMeetupById(req, res) {
+    try {
+      const { id } = req.params;
+      const meetup = await Meetup.getById(id);
+
+      const { rows } = meetup;
+      if (rows.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+          message: 'Meetup was retrieved',
+        });
+      }
+      return res.status(404).send({ status: 404, error: 'meetup not found' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({ status: 404, error: 'meetup not found' });
   }
 
   /**
@@ -99,22 +127,26 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static getUpcomingMeetups(req, res) {
-    const today = Date.now();
-    const upcomingMeetups = [];
+  static async getUpcomingMeetups(req, res) {
+    try {
+      const meetups = await Meetup.getAll();
+      const today = new Date().getTime();
+      const upcomingMeetups = [];
 
-    db.meetups.forEach((meetup) => {
-      const happeningOnDate = new Date(meetup.happeningOn);
-      if (happeningOnDate.getTime() > today) {
-        upcomingMeetups.push(meetup);
+      meetups.rows.forEach((meetup) => {
+        const happeningOnDate = new Date(meetup.happeningon);
+        if (happeningOnDate.getTime() > today) {
+          upcomingMeetups.push(meetup);
+        }
+        return upcomingMeetups;
+      });
+      if (upcomingMeetups.length > 0) {
+        return res.status(200).send({ status: 200, data: upcomingMeetups, message: 'Upcoming meetups retrieved' });
       }
-      return upcomingMeetups;
-    });
-
-    if (upcomingMeetups.length > 0) {
-      return res.status(200).send({ status: 200, data: upcomingMeetups });
+      return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
   }
 
   /**
@@ -125,14 +157,6 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static getMeetupQuestions(req, res) {
-    const { id } = req.params;
-    const questionFound = db.questions.filter(question => question.meetup.toString() === id);
-    if (questionFound.length > 0) {
-      return res.status(200).send({ status: 200, data: [questionFound] });
-    }
-    return res.status(404).send({ status: 404, error: 'questions not found for this meetup' });
-  }
 
   /**
  * @description - this method respond to meetup RSVP
@@ -142,27 +166,27 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  static rsvpsMeetup(req, res) {
-    const { id } = req.params;
-    const meetupFound = findArrayById(db.meetups, id);
-    if (meetupFound) {
+  static async rsvpsMeetup(req, res) {
+    try {
+      const meetupId = req.params.id;
+      const token = req.headers.token || req.body.token;
+      const decodedToken = await decode(token);
+      const userId = decodedToken.id;
       const { response } = req.body;
-      const rsvp = {
-        id: db.rsvps.length + 1,
-        meetup: db.rsvps.id,
-        user: db.users[0].id,
-        response,
-      };
-      db.rsvps.push(rsvp);
-      return res.status(201).send({
-        status: 201,
-        data: [{ meetup: meetupFound.id, topic: meetupFound.topic, status: response }],
+
+      const rsvp = await Meetup.rsvp({ meetupId, userId, response });
+      const { rows } = rsvp;
+
+      if (rows) {
+        return res.status(201).send({ status: 201, data: [rows[0]], message: 'Your response has been saved' });
+      }
+      return res.status(404).send({
+        status: 404,
+        error: rsvp,
       });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({
-      status: 404,
-      error: 'meetup not found',
-    });
   }
 }
 

@@ -1,5 +1,5 @@
 import passwordHash from 'password-hash';
-import authentication from '../helpers/authentication/authenticate';
+import authentication from '../helpers/authenticate';
 import 'babel-polyfill';
 import User from '../models/userModel';
 
@@ -22,16 +22,17 @@ class UserController {
   static async signUp(req, res) {
     try {
       const { username, email, password } = req.body;
+      const isAdmin = req.body.isAdmin || false;
       const user = await User.create({
         email,
         username,
         password: passwordHash.generate(password),
-        isAdmin: false,
+        isAdmin,
       });
       const { rows, constraint } = user;
       if (rows) {
-        const token = authToken(rows[0].id);
-        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration wes successfull' });
+        const token = authToken(rows[0].id, rows[0].isadmin);
+        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
       }
       if (constraint === 'users_email_key') {
         return res.status(409).send({ status: 409, error: 'Email already exists' });
@@ -67,12 +68,13 @@ class UserController {
         });
       }
       if (passwordHash.verify(password.trim(), rows[0].password)) {
-        const token = authToken(rows[0].id);
-        return res.status(200).send({ status: 200, data: [{ token, user: rows[0], message: 'Login was successfull' }] });
+        const token = authToken(rows[0].id, rows[0].isadmin);
+        return res.status(200).send({ status: 200, data: [{ token, user: rows[0], message: 'Login was successful' }] });
       }
       return res.status(401).send({ status: 401, error: 'Invalid username or password' });
     } catch (err) {
-      return res.status(500).send({ status: 500, error: 'Unexpected database error occur' });
+      console.log(err);
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
   }
 }
