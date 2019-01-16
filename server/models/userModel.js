@@ -8,12 +8,14 @@ class User {
     isAdmin,
   }) {
     try {
-      await pool.connect();
+      const client = await pool.connect();
       const insertQuery = {
         text: 'INSERT INTO users(email, username, password, isAdmin) VALUES($1, $2, $3, $4) RETURNING *',
         values: [email.trim(), username.trim(), password.trim(), isAdmin],
       };
-      return await pool.query(insertQuery);
+      const res = await client.query(insertQuery);
+      client.release();
+      return res;
     } catch (err) {
       return err;
     }
@@ -21,12 +23,14 @@ class User {
 
   static async signIn({ username }) {
     try {
-      await pool.connect();
+      const client = await pool.connect();
       const selectQuery = {
         text: 'SELECT * FROM users WHERE username = $1 OR email = $1',
         values: [username.trim()],
       };
-      return await pool.query(selectQuery);
+      const res = await client.query(selectQuery);
+      client.release();
+      return res;
     } catch (err) {
       return err;
     }

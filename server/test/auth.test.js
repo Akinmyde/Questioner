@@ -6,95 +6,86 @@ import app from '../app';
 
 request.agent(app.listen());
 
+const user = {
+  email: 'test@gmail.com',
+  username: 'test',
+  password: 'test',
+};
+
 describe('POST /auth/signup', () => {
-  it('should respond with status 200', (done) => {
-    const user = {
-      email: 'test@gmail.com',
-      username: 'test',
-      password: 'test',
-    };
-    request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
-      .expect(201);
-    done();
+  it('should respond with status 201', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .expect(201);
+      expect(res.statusCode).toEqual(201);
+      expect(res.body.message).toEqual('Registration was successfull');
+    } catch (error) {
+      console.log(error);
+    }
   });
-  it('should respond with 409 and message email already exists', (done) => {
-    const user = {
-      email: 'test@gmail.com',
-      username: 'test',
-      password: 'test',
-    };
-    request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
-      .end((err, res) => {
-        expect(res.body).toEqual({ status: 409, error: 'Email already exists' });
-        done();
-      });
-    done();
+  it('should respond with 409 and message email already exists', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .expect(409);
+      expect(res.statusCode).toEqual(409);
+      expect(res.body).toEqual({ status: 409, error: 'Email already exists' });
+    } catch (error) {
+      console.log(error);
+    }
   });
-  it('should respond with 409 and message username already exists', (done) => {
-    const user = {
-      email: 'test1@gmail.com',
-      username: 'test',
-      password: 'test',
-    };
-    request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
-      .expect(409)
-      .end((err, res) => {
-        expect(res.body).toEqual({ status: 409, error: 'Username already exists' });
-        done();
-      });
-    done();
+  it('should respond with 409 and message username already exists', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/signup')
+        .send({ email: 'test1@gmail.com', username: 'test', password: 'test' })
+        .expect(409);
+      expect(res.statusCode).toEqual(409);
+      expect(res.body).toEqual({ status: 409, error: 'Username already exists' });
+    } catch (error) {
+      console.log(error);
+    }
   });
 });
-
 describe('POST /auth/login', () => {
   // Test for user login
-  it('should respond with 200', (done) => {
-    const user = {
-      username: 'test@gmail.com',
-      password: 'test',
-    };
-    request(app)
-      .post('/api/v1/auth/login')
-      .send(user)
-      .expect(200);
-    done();
+  it('should respond with 200', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/login')
+        .send({ username: 'test@gmail.com', password: 'test' })
+        .expect(200);
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.data[0].message).toEqual('Login was successful');
+    } catch (error) {
+      console.log(error);
+    }
   });
-
-  it('should respond with 404 and error There is no user with this credentials', (done) => {
-    const user = {
-      username: 'test123',
-      password: 'test12323',
-    };
-    request(app)
-      .post('/api/v1/auth/login')
-      .send(user)
-      .expect(404)
-      .end((err, res) => {
-        expect(res.body).toEqual({ status: 404, error: 'There is no user with this credentials' });
-        done();
-      });
-    done();
+  it('should respond with 404 and error There is no user with this credentials', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/login')
+        .send({ username: 'feesrfh@yahoo.com', password: 'yrvbiykjbnuikjh' })
+        .expect(404);
+      expect(res.statusCode).toEqual(404);
+      expect(res.body.error).toEqual('There is no user with this credentials');
+    } catch (error) {
+      console.log(error);
+    }
   });
-
-  it('should respond with 401 and error Invalid username or password', (done) => {
-    const user = {
-      username: 'test@gmail.com',
-      password: 'test1',
-    };
-    request(app)
-      .post('/api/v1/auth/login')
-      .send(user)
-      .expect(401)
-      .end((err, res) => {
-        expect(res.body).toEqual({ status: 401, error: 'Invalid username or password' });
-        done();
-      });
-    done();
+  it('should respond with 401 and error Invalid username or password', async () => {
+    try {
+      const res = await request(app)
+        .post('/api/v1/auth/login')
+        .send({ username: 'test@gmail.com', password: 'yrvbiykjbnuikjh' })
+        .expect(401);
+      expect(res.statusCode).toEqual(401);
+      expect(res.body.error).toEqual('Invalid username or password');
+    } catch (error) {
+      console.log(error);
+    }
   });
 });

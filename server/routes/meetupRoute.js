@@ -5,18 +5,18 @@ import Middleware from '../middlewares/index.middleswares';
 const meetupRouter = express.Router();
 
 
-meetupRouter.post('/api/v1/meetups', Middleware.createMeetupValidator, meetupController.createMeetup);
+meetupRouter.post('/api/v1/meetups', Middleware.isLogin, Middleware.createMeetupValidator, meetupController.createMeetup);
 
-meetupRouter.get('/api/v1/meetups', meetupController.getAllMeetup);
+meetupRouter.get('/api/v1/meetups', Middleware.isLogin, meetupController.getAllMeetup);
 
-meetupRouter.get('/api/v1/meetups/upcoming', meetupController.getUpcomingMeetups);
+meetupRouter.get('/api/v1/meetups/upcoming', Middleware.isLogin, meetupController.getUpcomingMeetups);
 
-meetupRouter.delete('/api/v1/meetups/:id', Middleware.validateParams, meetupController.deleteMeetup);
+meetupRouter.delete('/api/v1/meetups/:id', Middleware.isLogin, Middleware.validateParams, meetupController.deleteMeetup);
 
-meetupRouter.get('/api/v1/meetups/:id', Middleware.validateParams, meetupController.getMeetupById);
+meetupRouter.get('/api/v1/meetups/:id', Middleware.isLogin, Middleware.validateParams, meetupController.getMeetupById);
 
-meetupRouter.get('/api/v1/meetups/:id/questions', Middleware.validateParams, meetupController.getMeetupQuestions);
+// meetupRouter.get('/api/v1/meetups/:id/questions', Middleware.validateParams, meetupController.getMeetupQuestions);
 
-meetupRouter.post('/api/v1/meetups/:id/rsvps', Middleware.validateParams, Middleware.valideateRsvp, meetupController.rsvpsMeetup);
+meetupRouter.post('/api/v1/meetups/:id/rsvps', Middleware.isLogin, Middleware.validateParams, Middleware.valideateRsvp, meetupController.rsvpsMeetup);
 
 export default meetupRouter;

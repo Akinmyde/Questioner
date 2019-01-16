@@ -202,8 +202,9 @@ describe('Middleware test', () => {
   describe('Validate Create Question', () => {
     it('should return status code 400 if title not provided', (done) => {
       request(app)
-        .post('/api/v1/questions')
+        .post('/api/v1/meetups/1/questions')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           title: '',
           body: 'mybody test',
         })
@@ -220,8 +221,9 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if body not provided', (done) => {
       request(app)
-        .post('/api/v1/questions')
+        .post('/api/v1/meetups/1/questions')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           title: 'test title',
           body: '',
         })
@@ -238,8 +240,9 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if title is not a string', (done) => {
       request(app)
-        .post('/api/v1/questions')
+        .post('/api/v1/meetups/1/questions')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           title: ['test title'],
           body: 'testing',
         })
@@ -256,10 +259,11 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if question body is not a string', (done) => {
       request(app)
-        .post('/api/v1/questions')
+        .post('/api/v1/meetups/1/questions')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           title: 'test title',
-          body: ['testing'],
+          body: ['testing', 'test'],
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -279,6 +283,7 @@ describe('Middleware test', () => {
       request(app)
         .post('/api/v1/meetups')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           topic: '',
           location: 'test location',
           happeningOn: '1/1/2001',
@@ -298,6 +303,7 @@ describe('Middleware test', () => {
       request(app)
         .post('/api/v1/meetups')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           topic: 'test title',
           location: '',
           happeningOn: '1/1/2001',
@@ -313,29 +319,11 @@ describe('Middleware test', () => {
           return done();
         });
     });
-    it('should return status code 400 if date not provided', (done) => {
-      request(app)
-        .post('/api/v1/meetups')
-        .send({
-          topic: 'test title',
-          location: 'test location',
-          happeningOn: '',
-        })
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toEqual({ error: { happeningOn: 'meetup date is required' }, status: 400 });
-        })
-        .end((err) => {
-          if (err) return done(err);
-          return done();
-        });
-    });
     it('should return status code 400 if topic is not a string', (done) => {
       request(app)
         .post('/api/v1/meetups')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           topic: ['test title'],
           location: 'test location',
           happeningOn: '12-12-12',
@@ -355,6 +343,7 @@ describe('Middleware test', () => {
       request(app)
         .post('/api/v1/meetups')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           topic: 'test title',
           location: ['test location'],
           happeningOn: '12-12-12',
@@ -376,6 +365,7 @@ describe('Middleware test', () => {
     it('should return status 400 if params is invalid', (done) => {
       request(app)
         .get('/api/v1/meetups/abc')
+        .send({ token: 'dnjwruieh8hejkwriehtiohfiwheiu' })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
@@ -394,6 +384,7 @@ describe('Middleware test', () => {
       request(app)
         .post('/api/v1/questions/1/comments')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           body: '',
         })
         .set('Accept', 'application/json')
@@ -411,6 +402,7 @@ describe('Middleware test', () => {
       request(app)
         .post('/api/v1/questions/1/comments')
         .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           body: ['test body'],
         })
         .set('Accept', 'application/json')
@@ -430,7 +422,7 @@ describe('Middleware test', () => {
     it('should return status code 400 if response not provided', (done) => {
       request(app)
         .post('/api/v1/meetups/1/rsvps')
-        .send({ response: '' })
+        .send({ response: '', token: 'dnjwruieh8hejkwriehtiohfiwheiu' })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
@@ -446,7 +438,7 @@ describe('Middleware test', () => {
     it('should return status code 400 if response is not a string', (done) => {
       request(app)
         .post('/api/v1/meetups/1/rsvps')
-        .send({ response: ['yes'] })
+        .send({ response: ['yes'], token: 'dnjwruieh8hejkwriehtiohfiwheiu' })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)
@@ -462,7 +454,7 @@ describe('Middleware test', () => {
     it('should return status code 400 if response yes || no || maybe', (done) => {
       request(app)
         .post('/api/v1/meetups/1/rsvps')
-        .send({ response: 'yesss' })
+        .send({ response: 'yesss', token: 'dnjwruieh8hejkwriehtiohfiwheiu' })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(400)

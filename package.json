@@ -4,13 +4,12 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node server/app.js",
+    "start": "export NODE_ENV=production && babel-node server/app.js",
+    "migration": "babel-node server/migration/index.js",
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
-    "test": "npm run pretest && mocha server/test/**/*.test.js --require babel-register --exit",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 10000 --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "serve": "nodemon server/app.js --exec babel-node",
-    "migration": "babel-node server/models/migration.js",
-    "database": "babel-node server/models/database.js"
+    "serve": "nodemon server/app.js --exec babel-node"
   },
   "repository": {
     "type": "git",
@@ -39,7 +38,9 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "codeclimate-test-reporter": "^0.5.1",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
