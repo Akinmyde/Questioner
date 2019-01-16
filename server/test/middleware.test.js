@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-
+import 'babel-polyfill';
 import request from 'supertest';
 import expect from 'expect';
 import app from '../app';

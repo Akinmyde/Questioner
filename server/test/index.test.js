@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+import 'babel-polyfill';
 import request from 'supertest';
 import expect from 'expect';
 import app from '../app';
@@ -135,30 +136,6 @@ describe('Meetup Test', () => {
           .expect(409);
         expect(res.statusCode).toEqual(409);
         expect(res.body.error).toEqual('Question already exists');
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    it('should respond with status code 200 ', async () => {
-      try {
-        const res = await request(app)
-          .get('/api/v1/questions/1')
-          .send({ token: superUserToken })
-          .expect(200);
-        expect(res.statusCode).toEqual(200);
-        expect(res.body.message).toEqual('Question was retrieved');
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    it('should respond with status code 404 ', async () => {
-      try {
-        const res = await request(app)
-          .get('/api/v1/questions/2')
-          .send({ token: superUserToken })
-          .expect(404);
-        expect(res.statusCode).toEqual(404);
-        expect(res.body.error).toEqual('Question not found');
       } catch (error) {
         console.log(error);
       }
