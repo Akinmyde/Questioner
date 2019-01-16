@@ -1,7 +1,8 @@
-import db from '../models/index.models';
-import helpers from '../helpers/index.helpers';
+import authentication from '../helpers/authenticate';
+import Question from '../models/questionModel';
 
-const { dateFormater, findArrayById, regex } = helpers;
+
+const { decode } = authentication;
 
 /* This class contains the logic for Questions */
 class QuestionController {
@@ -13,28 +14,29 @@ class QuestionController {
  *
  * @returns {object} - status message and response
  */
-  static createQuestion(req, res) {
-    const id = db.questions.length + 1;
-    const createdOn = dateFormater();
-    const { title, body } = req.body;
-    const newQuestion = {
-      id,
-      createdOn,
-      user: db.users[0].id,
-      meetup: db.meetups[0].id,
-      title: regex(title),
-      body: body.trim(),
-    };
-    const findQuestion = db.questions
-      .find(question => question.title.toLowerCase() === newQuestion.title.toLowerCase());
-    if (!findQuestion) {
-      db.questions.push(newQuestion);
-      return res.status(201).send({
-        status: 201,
-        data: [newQuestion],
+  static async createQuestion(req, res) {
+    try {
+      const { title, body } = req.body;
+      const token = req.body.token || req.headers.token;
+      const meetup = req.params.id;
+      const decodedToken = await decode(token);
+      const createdBy = decodedToken.id;
+      const question = await Question.create({
+        createdBy, meetup, title, body,
       });
+
+      const { rows, constraint } = question;
+
+      if (constraint === 'questions_title_key') {
+        return res.status(409).send({ status: 409, error: 'Question already exists' });
+      }
+      if (rows) {
+        return res.status(201).send({ status: 201, data: [rows[0]], message: 'Question was created successfully' });
+      }
+      return res.status(404).send({ status: 404, error: 'Question not created' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(409).send({ status: 409, error: 'question already created' });
   }
 
   /**
@@ -45,24 +47,24 @@ class QuestionController {
 *
 * @returns {object} - status message and response
 */
-  static getQuestionById(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    if (questionFound) {
-      return res.status(200).send({
-        status: 200,
-        data: [{
-          title: questionFound.title,
-          body: questionFound.body,
-          votes: questionFound.vote,
-          createdOn: questionFound.createdOn,
-        }],
-      });
+
+  static async getQuestionById(req, res) {
+    try {
+      const { id } = req.params;
+      const meetup = await Question.getById(id);
+
+      const { rows } = meetup;
+      if (rows.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+          message: 'Question was retrieved',
+        });
+      }
+      return res.status(404).send({ status: 404, error: 'Question not found' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
   }
 
   /**
@@ -73,31 +75,24 @@ class QuestionController {
  *
  * @returns {object} - status message and response
  */
-  static upVoteQuestion(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    findArrayById(db.questions, id);
-    if (questionFound) {
-      questionFound.votes += 1;
-      questionFound.upvote += 1;
-      return res.status(200).send({
-        status: 200,
-        data: [
-          {
-            meetup: questionFound.meetup,
-            title: questionFound.title,
-            body: questionFound.body,
-            votes: questionFound.votes,
-            upvotes: questionFound.upvote,
-            downvote: questionFound.downvote,
-          },
-        ],
-      });
+  static async upVoteQuestion(req, res) {
+    try {
+      const { id } = req.params;
+
+      const question = await Question.upVote(id);
+
+      const { rows } = question;
+      if (rows.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+          message: 'Upvoted',
+        });
+      }
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
   }
 
   /**
@@ -108,30 +103,24 @@ class QuestionController {
 *
 * @returns {object} - status message and response
 */
-  static downVoteQuestion(req, res) {
-    const { id } = req.params;
-    const questionFound = findArrayById(db.questions, id);
-    if (questionFound) {
-      questionFound.votes -= 1;
-      questionFound.downvote += 1;
-      return res.status(200).send({
-        status: 200,
-        data: [
-          {
-            meetup: questionFound.meetup,
-            title: questionFound.title,
-            body: questionFound.body,
-            votes: questionFound.votes,
-            upvotes: questionFound.upvote,
-            downvote: questionFound.downvote,
-          },
-        ],
-      });
+  static async downVoteQuestion(req, res) {
+    try {
+      const { id } = req.params;
+
+      const question = await Question.downVote(id);
+
+      const { rows } = question;
+      if (rows.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+          message: 'Downvoted',
+        });
+      }
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
-    return res.status(404).send({
-      status: 404,
-      error: 'question not found',
-    });
   }
 }
 

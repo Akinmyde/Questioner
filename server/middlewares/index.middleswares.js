@@ -8,6 +8,17 @@ const constraints = {
 };
 
 export default class Middleware {
+  static isLogin(req, res, next) {
+    const token = req.body.token || req.headers.token;
+    if (!token || (token && validate.isEmpty(token))) {
+      return res.status(401).send({
+        status: 401,
+        error: 'Unauthorized',
+      });
+    }
+    return next();
+  }
+
   static validateParams(req, res, next) {
     const { id } = req.params;
     const verifyId = parseInt(id, 10);
@@ -90,7 +101,7 @@ export default class Middleware {
       error.title = 'title is required';
     }
 
-    if (title && !validate.isString(title)) {
+    if (title && (!validate.isString(title))) {
       error.title = 'title must be a string';
     }
 

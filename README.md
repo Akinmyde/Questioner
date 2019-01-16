@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/Akinmyde/Questioner.svg?branch=server)](https://travis-ci.com/Akinmyde/Questioner)
 [![Coverage Status](https://coveralls.io/repos/github/Akinmyde/Questioner/badge.svg?branch=server&kill_cache=1")](https://coveralls.io/github/Akinmyde/Questioner)
 <a href="https://codeclimate.com/github/Akinmyde/Questioner/maintainability"><img src="https://api.codeclimate.com/v1/badges/1293144f78e1201ccc00/maintainability" /></a>
-<a href="https://codeclimate.com/github/Akinmyde/Questioner/test_coverage"><img src="https://api.codeclimate.com/v1/badges/1293144f78e1201ccc00/test_coverage" /></a>
+
 # Questioner
 Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.
 
@@ -67,7 +67,7 @@ Find below, the links to the various page for the UI
 - Branch for each separate piece of work `$ git checkout -b <branch-name>`
 - Do the work, write good commit messages.
 - Push to your origin repository.
-- Create a new PR in GitHub.
+- Raise a PR on GitHub.
 - Wait for approval.
 
 #### Author
