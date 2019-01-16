@@ -4,10 +4,7 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/app.js",
+    "start": "babel-node server/app.js",
     "migration": "babel-node server/migration/index.js",
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 10000 --require babel-register --exit",
@@ -41,7 +38,6 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",

@@ -31,8 +31,7 @@ before(async () => {
     const res = await request(app)
       .get('/api/v1/meetups')
       .send({ token: superUserToken });
-    expect(res.statusCode).toEqual(404);
-    expect(res.body.error).toEqual('no meetup yet');
+    expect(res.statusCode).toEqual(204);
   } catch (error) {
     console.log(error);
   }

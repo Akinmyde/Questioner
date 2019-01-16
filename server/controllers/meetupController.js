@@ -61,7 +61,7 @@ class MeetupController {
         }
         return res.status(404).send({ status: 404, error: 'Meetup not found' });
       }
-      return res.status(404).send({ status: 404, error: 'Only an admin can delete a meetup' });
+      return res.status(401).send({ status: 401, error: 'Only an admin can delete a meetup' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
@@ -86,7 +86,7 @@ class MeetupController {
           message: 'All meetups was retrieved successfully',
         });
       }
-      return res.status(404).send({ status: 404, error: 'no meetup yet' });
+      return res.status(204).send({ status: 204, message: 'no meetup yet' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
@@ -157,14 +157,6 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
-  // static getMeetupQuestions(req, res) {
-  //   const { id } = req.params;
-  //   const questionFound = db.questions.filter(question => question.meetup.toString() === id);
-  //   if (questionFound.length > 0) {
-  //     return res.status(200).send({ status: 200, data: [questionFound] });
-  //   }
-  //   return res.status(404).send({ status: 404, error: 'questions not found for this meetup' });
-  // }
 
   /**
  * @description - this method respond to meetup RSVP
