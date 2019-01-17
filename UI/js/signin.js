@@ -3,10 +3,9 @@ const password = document.getElementById('password');
 const error = document.getElementsByClassName('error')[0];
 error.style.display = 'none';
 
-document.getElementById('login').addEventListener('click', (e) => {
+document.getElementById('login').addEventListener('click', () => {
   if (username.value === '' || password.value === '') {
     return (
-      e.preventDefault().
       error.innerHTML = 'Invalid username or password',
       error.style.display = 'block'
     )
@@ -16,9 +15,4 @@ document.getElementById('login').addEventListener('click', (e) => {
       error.style.display = 'block'
     )
   } 
-  // return (
-  //   error.innerHTML = 'Login was Successful',
-  //   error.style.display = 'block',
-  //   error.style.color = 'green'
-  // )
 });

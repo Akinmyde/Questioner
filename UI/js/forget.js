@@ -1,8 +1,7 @@
 const email = document.getElementById('email');
 const error = document.getElementsByClassName('error')[0];
 
-document.getElementById('forget').addEventListener('click', (e) => {
-  e.preventDefault();
+document.getElementById('forget').addEventListener('click', () => {
   if (email.value === '') {
     return (
       error.style.display = 'block',

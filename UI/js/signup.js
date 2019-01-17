@@ -4,8 +4,7 @@ const email = document.getElementById('email')
       confirmPassword = document.getElementById('confirmpassword')
       error = document.getElementsByClassName('error')[0];
 
-document.getElementById('signup').addEventListener('click', (e) => {
-  e.preventDefault()
+document.getElementById('signup').addEventListener('click', () => {
   error.style.display = 'block'
   if (email.value === '') {
     return error.innerHTML = 'Email is required';
