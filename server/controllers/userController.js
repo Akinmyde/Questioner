@@ -1,6 +1,5 @@
 import passwordHash from 'password-hash';
 import authentication from '../helpers/authenticate';
-import 'babel-polyfill';
 import User from '../models/userModel';
 
 const { authToken } = authentication;
@@ -73,7 +72,6 @@ class UserController {
       }
       return res.status(401).send({ status: 401, error: 'Invalid username or password' });
     } catch (err) {
-      console.log(err);
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
   }

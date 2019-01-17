@@ -78,7 +78,7 @@ class Meetup {
       const client = await pool.connect();
       const insertQuery = {
         text: 'INSERT INTO rsvps (meetup, user_id, response) VALUES($1, $2, $3) RETURNING *',
-        values: [meetupId, userId, response],
+        values: [meetupId, userId, regex(response)],
       };
       const res = await client.query(insertQuery);
       client.release();
