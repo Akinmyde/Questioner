@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 class Authenticate {
   static authToken(id, isAdmin) {
-    return jwt.sign({ id, isAdmin }, process.env.SECRET, { expiresIn: '3h' });
+    return jwt.sign({ id, isAdmin }, process.env.SECRET, { expiresIn: '3000h' });
   }
 
   static decode(token) {

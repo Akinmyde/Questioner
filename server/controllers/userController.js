@@ -4,9 +4,6 @@ import User from '../models/userModel';
 
 const { authToken } = authentication;
 
-
-// const { dateFormater } = helpers;
-
 /* This class contains the logic for Users */
 
 class UserController {
@@ -34,10 +31,10 @@ class UserController {
         return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
       }
       if (constraint === 'users_email_key') {
-        return res.status(409).send({ status: 409, error: 'Email already exists' });
+        return res.status(409).send({ status: 409, error: 'User already exists' });
       }
       if (constraint === 'users_username_key') {
-        return res.status(409).send({ status: 409, error: 'Username already exists' });
+        return res.status(409).send({ status: 409, error: 'User already exists' });
       }
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Unexpected database error occur' });
@@ -59,11 +56,10 @@ class UserController {
       const { username, password } = req.body;
       const user = await User.signIn({ username });
       const { rows, rowCount } = user;
-
       if (rowCount === 0) {
         return res.status(404).send({
           status: 404,
-          error: 'There is no user with this credentials',
+          error: 'Invalid username or password',
         });
       }
       if (passwordHash.verify(password.trim(), rows[0].password)) {

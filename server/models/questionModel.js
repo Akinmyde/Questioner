@@ -1,5 +1,5 @@
 import pool from './connection';
-import helpers from '../helpers/index.helpers';
+import helpers from '../helpers/helpers';
 
 const { regex } = helpers;
 

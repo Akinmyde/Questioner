@@ -18,7 +18,7 @@ class QuestionController {
     try {
       const { title, body } = req.body;
       const token = req.body.token || req.headers.token;
-      const meetup = req.params.id;
+      const meetup = req.body.id;
       const decodedToken = await decode(token);
       const createdBy = decodedToken.id;
       const question = await Question.create({
