@@ -35,7 +35,7 @@ export default class Middleware {
     const { username, password } = req.body;
     const error = {};
     if (!username || (username && validate.isEmpty(username))) {
-      error.username = 'username or email is required';
+      error.username = 'username is required';
     }
 
     if (username && !validate.isString(username)) {
@@ -95,8 +95,17 @@ export default class Middleware {
   }
 
   static createQuestionValidator(req, res, next) {
-    const { title, body } = req.body;
+    const { meetup, title, body } = req.body;
     const error = {};
+
+    if (!validate.isInteger(meetup)) {
+      error.meetup = 'Meetup id must be an integer';
+    }
+
+    if (!meetup) {
+      error.meetup = 'Meetup id is required';
+    }
+
     if (!title || (title && validate.isEmpty(title))) {
       error.title = 'title is required';
     }

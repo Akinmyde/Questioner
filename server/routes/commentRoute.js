@@ -1,5 +1,5 @@
 import express from 'express';
-import Middleware from '../middlewares/index.middleswares';
+import Middleware from '../middlewares';
 import commentControllers from '../controllers/commentController';
 
 const commentRoute = express.Router();

@@ -15,7 +15,7 @@ const connectionString = config[env];
 
 const pool = new Pool({
   connectionString,
-  connectionTimeoutMillis: 30000,
+  connectionTimeoutMillis: 3000,
   idleTimeoutMillis: 2000,
   max: 5,
   min: 4,
