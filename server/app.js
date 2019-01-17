@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import chalk from 'chalk';
 import morgan from 'morgan';
-import router from './routes/index.route';
+import router from './routes/index';
 
 const port = process.env.PORT || 3000;
 const app = express();

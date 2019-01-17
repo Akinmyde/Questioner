@@ -136,7 +136,7 @@ describe('Middleware test', () => {
         .expect('Content-Type', /json/)
         .expect(400)
         .expect((res) => {
-          expect(res.body).toEqual({ error: { username: 'username or email is required' }, status: 400 });
+          expect(res.body).toEqual({ error: { username: 'username is required' }, status: 400 });
         })
         .end((err) => {
           if (err) return done(err);
@@ -202,9 +202,10 @@ describe('Middleware test', () => {
   describe('Validate Create Question', () => {
     it('should return status code 400 if title not provided', (done) => {
       request(app)
-        .post('/api/v1/meetups/1/questions')
+        .post('/api/v1/questions')
         .send({
           token: 'dnjwruieh8hejkwriehtiohfiwheiu',
+          meetup: 1,
           title: '',
           body: 'mybody test',
         })
@@ -221,9 +222,10 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if body not provided', (done) => {
       request(app)
-        .post('/api/v1/meetups/1/questions')
+        .post('/api/v1/questions')
         .send({
           token: 'dnjwruieh8hejkwriehtiohfiwheiu',
+          meetup: 1,
           title: 'test title',
           body: '',
         })
@@ -240,9 +242,10 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if title is not a string', (done) => {
       request(app)
-        .post('/api/v1/meetups/1/questions')
+        .post('/api/v1/questions')
         .send({
           token: 'dnjwruieh8hejkwriehtiohfiwheiu',
+          meetup: 1,
           title: ['test title'],
           body: 'testing',
         })
@@ -259,8 +262,9 @@ describe('Middleware test', () => {
     });
     it('should return status code 400 if question body is not a string', (done) => {
       request(app)
-        .post('/api/v1/meetups/1/questions')
+        .post('/api/v1/questions')
         .send({
+          meetup: 1,
           token: 'dnjwruieh8hejkwriehtiohfiwheiu',
           title: 'test title',
           body: ['testing', 'test'],
@@ -270,6 +274,44 @@ describe('Middleware test', () => {
         .expect(400)
         .expect((res) => {
           expect(res.body).toEqual({ error: { body: 'question body must be a string' }, status: 400 });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return status code 400 if meetup id not provided', (done) => {
+      request(app)
+        .post('/api/v1/questions')
+        .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
+          title: 'jghjgkj',
+          body: 'mybody test',
+        })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ error: { meetup: 'Meetup id is required' }, status: 400 });
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return status code 400 if meetup id is not an integer', (done) => {
+      request(app)
+        .post('/api/v1/questions')
+        .send({
+          token: 'dnjwruieh8hejkwriehtiohfiwheiu',
+          title: 'sadsafsa',
+          body: 'mybody test',
+        })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toEqual({ error: { meetup: 'Meetup id is required' }, status: 400 });
         })
         .end((err) => {
           if (err) return done(err);

@@ -118,10 +118,14 @@ describe('Meetup Test', () => {
     it('should respond with status code 201 created', async () => {
       try {
         const res = await request(app)
-          .post('/api/v1/meetups/1/questions')
-          .send({ token: superUserToken, title: 'test title', body: 'test body' })
-          .expect(201);
-        expect(res.statusCode).toEqual(201);
+          .post('/api/v1/questions')
+          .send({
+            token: superUserToken,
+            meetup: 1,
+            title: 'test title',
+            body: 'test body',
+          });
+        expect(201);
         expect(res.body.message).toEqual('Question was created successfully');
       } catch (error) {
         console.log(error);
@@ -130,8 +134,13 @@ describe('Meetup Test', () => {
     it('should respond with status code not created', async () => {
       try {
         const res = await request(app)
-          .post('/api/v1/meetups/1/questions')
-          .send({ token: superUserToken, title: 'test title', body: 'test body' })
+          .post('/api/v1/questions')
+          .send({
+            token: superUserToken,
+            meetup: 1,
+            title: 'test title',
+            body: 'test body',
+          })
           .expect(409);
         expect(res.statusCode).toEqual(409);
         expect(res.body.error).toEqual('Question already exists');

@@ -32,7 +32,7 @@ describe('POST /auth/signup', () => {
         .send(user)
         .expect(409);
       expect(res.statusCode).toEqual(409);
-      expect(res.body).toEqual({ status: 409, error: 'Email already exists' });
+      expect(res.body).toEqual({ status: 409, error: 'User already exists' });
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +44,7 @@ describe('POST /auth/signup', () => {
         .send({ email: 'test1@gmail.com', username: 'test', password: 'test' })
         .expect(409);
       expect(res.statusCode).toEqual(409);
-      expect(res.body).toEqual({ status: 409, error: 'Username already exists' });
+      expect(res.body).toEqual({ status: 409, error: 'User already exists' });
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +71,7 @@ describe('POST /auth/login', () => {
         .send({ username: 'feesrfh@yahoo.com', password: 'yrvbiykjbnuikjh' })
         .expect(404);
       expect(res.statusCode).toEqual(404);
-      expect(res.body.error).toEqual('There is no user with this credentials');
+      expect(res.body.error).toEqual('Invalid username or password');
     } catch (error) {
       console.log(error);
     }
