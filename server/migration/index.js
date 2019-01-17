@@ -44,6 +44,14 @@ const tables = [
     downvotes integer DEFAULT 0,
     votes integer DEFAULT 0
   );`,
+  `DROP TABLE IF EXISTS Comments;
+  CREATE TABLE Comments (
+    id SERIAL PRIMARY KEY,
+    createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
+    createdby integer NOT NULL, 
+    question_id integer NOT NULL,
+    body VARCHAR (355) NOT NULL
+  )`,
 ];
 
-tables.forEach(query => pool.query(query, error => console.log(error)));
+tables.forEach(query => pool.query(query));

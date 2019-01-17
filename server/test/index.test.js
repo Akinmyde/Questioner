@@ -140,4 +140,41 @@ describe('Meetup Test', () => {
       }
     });
   });
+
+  describe('Create meetup', () => {
+    it('should respond with 200', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/meetups')
+          .set('Accept', 'application/json')
+          .send({
+            token: superUserToken,
+            topic: 'Andela Bootcamp123',
+            location: 'test',
+            happeningOn: 'Jan 4 2019',
+          });
+        expect(res.statusCode).toEqual(201);
+        expect(res.body.message).toEqual('Meetup was created successfully');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    it('should respond with 200', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/meetups')
+          .set('Accept', 'application/json')
+          .send({
+            token: superUserToken,
+            topic: 'Andela Bootcamp123',
+            location: 'test',
+            happeningOn: 'Jan 4 2019',
+          });
+        expect(res.statusCode).toEqual(409);
+        expect(res.body.error).toEqual('Meetup already exists');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
 });

@@ -1,4 +1,7 @@
 import pool from './connection';
+import helpers from '../helpers/index.helpers';
+
+const { regex } = helpers;
 
 class Question {
   static async create({
@@ -11,7 +14,7 @@ class Question {
       const client = await pool.connect();
       const insertQuery = {
         text: 'INSERT INTO questions (createdby, meetup, title, body) VALUES($1, $2, $3, $4) RETURNING *',
-        values: [createdBy, meetup, title, body],
+        values: [createdBy, meetup, regex(title), regex(body)],
       };
       const res = await client.query(insertQuery);
       client.release();

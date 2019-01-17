@@ -7,7 +7,7 @@
     "start": "babel-node server/app.js",
     "migration": "babel-node server/migration/index.js",
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 10000 --require babel-register --exit",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 20000 --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon server/app.js --exec babel-node"
   },
