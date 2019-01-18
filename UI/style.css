@@ -324,6 +324,13 @@ a {
 }
 
 .flex.meetup-card > div {
+  width: 27%;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 0px;
+}
+
+.flex.no-pad > div {
   padding-left: 0px;
   padding-right: 0px;
   border-radius: 0px;
