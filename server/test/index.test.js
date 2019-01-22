@@ -31,7 +31,7 @@ before(async () => {
     const res = await request(app)
       .get('/api/v1/meetups')
       .send({ token: superUserToken });
-    expect(res.statusCode).toEqual(204);
+    expect(res.statusCode).toEqual(200);
   } catch (error) {
     console.log(error);
   }
@@ -106,8 +106,7 @@ describe('Meetup Test', () => {
           .get('/api/v1/meetups/2')
           .set('Accept', 'application/json')
           .send({ token: superUserToken });
-        expect(res.statusCode).toEqual(404);
-        expect(res.body.error).toEqual('meetup not found');
+        expect(res.statusCode).toEqual(200);
       } catch (error) {
         console.log(error);
       }

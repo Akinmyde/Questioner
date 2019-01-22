@@ -14,7 +14,7 @@ describe('Middleware test', () => {
         .send({
           email: '',
           username: 'test',
-          password: 'testing',
+          password: 'testingv6t7',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -33,7 +33,7 @@ describe('Middleware test', () => {
         .send({
           email: 'test@gmail.com',
           username: '',
-          password: 'testing',
+          password: 'testingtyu',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -71,7 +71,7 @@ describe('Middleware test', () => {
         .send({
           email: 'test@gmail.com',
           username: 'testmaster',
-          password: [''],
+          password: ['ghjgjkjl'],
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -90,7 +90,7 @@ describe('Middleware test', () => {
         .send({
           email: ['test@gmail.com'],
           username: 'testmaster',
-          password: 'test',
+          password: 'testings324',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Middleware test', () => {
         .send({
           email: 'test@gmail.com',
           username: ['testmaster'],
-          password: 'test',
+          password: 'testxfdwwq',
         })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)

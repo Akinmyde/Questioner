@@ -31,10 +31,10 @@ class UserController {
         return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
       }
       if (constraint === 'users_email_key') {
-        return res.status(409).send({ status: 409, error: 'User already exists' });
+        return res.status(409).send({ status: 409, error: 'Username already exists' });
       }
       if (constraint === 'users_username_key') {
-        return res.status(409).send({ status: 409, error: 'User already exists' });
+        return res.status(409).send({ status: 409, error: 'Email already exists' });
       }
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Unexpected database error occur' });
@@ -57,8 +57,8 @@ class UserController {
       const user = await User.signIn({ username });
       const { rows, rowCount } = user;
       if (rowCount === 0) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(401).send({
+          status: 401,
           error: 'Invalid username or password',
         });
       }

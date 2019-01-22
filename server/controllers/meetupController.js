@@ -86,7 +86,7 @@ class MeetupController {
           message: 'All meetups was retrieved successfully',
         });
       }
-      return res.status(204).send({ status: 204, message: 'no meetup yet' });
+      return res.send({ status: 204, message: 'no meetup yet' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
@@ -113,7 +113,7 @@ class MeetupController {
           message: 'Meetup was retrieved',
         });
       }
-      return res.status(404).send({ status: 404, error: 'meetup not found' });
+      return res.send({ status: 204, message: 'meetup not found' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
@@ -143,7 +143,7 @@ class MeetupController {
       if (upcomingMeetups.length > 0) {
         return res.status(200).send({ status: 200, data: upcomingMeetups, message: 'Upcoming meetups retrieved' });
       }
-      return res.status(404).send({ status: 404, error: 'no upcoming meetups' });
+      return res.status(204).send({ status: 204, error: 'no upcoming meetups' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }

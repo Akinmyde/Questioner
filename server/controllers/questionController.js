@@ -33,7 +33,7 @@ class QuestionController {
       if (rows) {
         return res.status(201).send({ status: 201, data: [rows[0]], message: 'Question was created successfully' });
       }
-      return res.status(404).send({ status: 404, error: 'Question not created' });
+      return res.status(403).send({ status: 403, error: 'Question not created' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     }
