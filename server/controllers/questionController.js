@@ -26,28 +26,20 @@ class QuestionController {
       const { meetup } = req.body;
       const decodedToken = await decode(token);
       const createdBy = decodedToken.id;
-
       const findMeetupQuery = {
         text: 'SELECT FROM meetups WHERE id = $1',
         values: [meetup],
       };
       const meetupFound = await client.query(findMeetupQuery);
-
       if (meetupFound.rowCount === 0) {
-        return res.status(404).send({
-          status: 404,
-          error: 'There is no meetup associated with that Id',
-        });
+        return res.status(404).send({ status: 404, error: 'There is no meetup associated with that Id' });
       }
-
       const createQuestionQuery = {
         text: 'INSERT INTO questions (createdby, meetup, title, body) VALUES($1, $2, $3, $4) RETURNING *',
         values: [createdBy, meetup, regex(title), regex(body)],
       };
       const question = await client.query(createQuestionQuery);
-
       const { rows } = question;
-
       if (rows) {
         return res.status(201).send({ status: 201, data: [rows[0]], message: 'Question was created successfully' });
       }
@@ -75,9 +67,7 @@ class QuestionController {
         text: 'SELECT * FROM questions WHERE ID = $1',
         values: [id],
       };
-
       const questionFound = await client.query(getQuestionByIdQuery);
-
       const { rows } = questionFound;
       if (rows.length > 0) {
         return res.status(200).send({
@@ -147,26 +137,20 @@ class QuestionController {
         values: [id],
       };
       const questionFound = await client.query(getQuestionQuery);
-
       if (questionFound.rowCount === 0) {
         return res.status(404).send({ status: 404, error: 'Question not found' });
       }
-
       questionFound.rows[0].upvotes += 1;
       if (questionFound.rows[0].downvotes <= 0) {
         questionFound.rows[0].downvotes = 0;
       } else {
         questionFound.rows[0].downvotes -= 1;
       }
-
-
       const upvoteQuery = {
         text: 'UPDATE questions  SET upvotes = $1, downvotes = $2 WHERE id = $3 RETURNING *',
         values: [questionFound.rows[0].upvotes, questionFound.rows[0].downvotes, id],
       };
-
       const upvote = await client.query(upvoteQuery);
-
       const { rows } = upvote;
       if (rows.length > 0) {
         return res.status(200).send({ status: 200, data: rows, message: 'Upvoted' });
@@ -196,26 +180,20 @@ class QuestionController {
         values: [id],
       };
       const questionFound = await client.query(getQuestionQuery);
-
       if (questionFound.rowCount === 0) {
         return res.status(404).send({ status: 404, error: 'Question not found' });
       }
-
       questionFound.rows[0].downvotes += 1;
       if (questionFound.rows[0].upvotes <= 0) {
         questionFound.rows[0].upvotes = 0;
       } else {
         questionFound.rows[0].upvotes -= 1;
       }
-
-
       const downvoteQuery = {
         text: 'UPDATE questions  SET upvotes = $1, downvotes = $2 WHERE id = $3 RETURNING *',
         values: [questionFound.rows[0].upvotes, questionFound.rows[0].downvotes, id],
       };
-
       const downvote = await client.query(downvoteQuery);
-
       const { rows } = downvote;
       if (rows.length > 0) {
         return res.status(200).send({ status: 200, data: rows, message: 'Downvoted' });

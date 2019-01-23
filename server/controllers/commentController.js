@@ -32,16 +32,9 @@ class CommentController {
       const comment = await client.query(insertQuery);
       const { rows } = comment;
       if (rows) {
-        return res.status(201).send({
-          status: 201,
-          data: rows,
-          message: 'comment was created',
-        });
+        return res.status(201).send({ status: 201, data: rows, message: 'comment was created' });
       }
-      return res.status(204).send({
-        status: 204,
-        message: 'comment not created',
-      });
+      return res.status(204).send({ status: 204, message: 'comment not created' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error ' });
     } finally {
@@ -68,17 +61,13 @@ class CommentController {
       const question = await client.query(questionQuery);
       if (question.rows.length > 0) {
         const commentQuery = {
-          text: 'SELECT * FROM comments WHERE question_id = $1',
+          text: 'SELECT * FROM comments WHERE questionid = $1',
           values: [id],
         };
         const comment = await client.query(commentQuery);
         const { rows } = comment;
         if (rows.length > 0) {
-          return res.status(200).send({
-            status: 200,
-            data: rows,
-            message: 'All comment was retrieved successfully',
-          });
+          return res.status(200).send({ status: 200, data: rows, message: 'All comment was retrieved successfully' });
         }
         return res.send({ status: 204, error: 'no comment for this question yet' });
       }

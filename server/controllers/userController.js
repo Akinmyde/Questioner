@@ -25,17 +25,11 @@ class UserController {
         text: 'INSERT INTO users(email, username, password, isAdmin) VALUES($1, $2, $3, $4) RETURNING email, username, registered, lastlogin, isadmin',
         values: [email.trim(), username.trim(), hashedPassword, false],
       };
-
       const user = await client.query(signUpUserQuery);
-
       const { rows } = user;
       if (rows) {
         const token = encode(rows[0].id, rows[0].isadmin);
-        return res.status(201).send({
-          status: 201,
-          data: [{ token, user: rows[0] }],
-          message: 'Registration was successfull',
-        });
+        return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
       }
       return res.status(204).send({ status: 204, error: 'User account not created, try again' });
     } catch (err) {
@@ -70,14 +64,9 @@ class UserController {
         values: [username.trim()],
       };
       const user = await client.query(loginQuery);
-
       const { rows, rowCount } = user;
-
       if (rowCount === 0) {
-        return res.status(401).send({
-          status: 401,
-          error: 'Invalid username or password',
-        });
+        return res.status(401).send({ status: 401, error: 'Invalid username or password' });
       }
       if (passwordHash.verify(password.trim(), rows[0].password)) {
         const token = encode(rows[0].id, rows[0].isadmin);
@@ -87,8 +76,7 @@ class UserController {
         };
         const updatedUser = await client.query(updateQuery);
         return res.status(200).send({ status: 200, data: [{ token, user: updatedUser.rows[0], message: 'Login was successful' }] });
-      }
-      return res.status(401).send({ status: 401, error: 'Invalid username or password' });
+      } return res.status(401).send({ status: 401, error: 'Invalid username or password' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {

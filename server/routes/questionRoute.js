@@ -4,15 +4,14 @@ import Middleware from '../middlewares';
 
 const questionRoute = express.Router();
 
-questionRoute.post('/questions', Middleware.isLogin, Middleware.createQuestionValidator, questionController.createQuestion);
+questionRoute.post('/', Middleware.isLogin, Middleware.createQuestionValidator, questionController.createQuestion);
 
-questionRoute.get('/questions/:id', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionById);
+questionRoute.get('/:id', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionById);
 
-questionRoute.get('/meetups/:id/questions', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionByMeetup);
 
-questionRoute.patch('/questions/:id/upvote', Middleware.isLogin, Middleware.validateParams, questionController.upVoteQuestion);
+questionRoute.patch('/:id/upvote', Middleware.isLogin, Middleware.validateParams, questionController.upVoteQuestion);
 
-questionRoute.patch('/questions/:id/downvote', Middleware.isLogin, Middleware.validateParams, questionController.downVoteQuestion);
+questionRoute.patch('/:id/downvote', Middleware.isLogin, Middleware.validateParams, questionController.downVoteQuestion);
 
 
 export default questionRoute;

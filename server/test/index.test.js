@@ -33,7 +33,7 @@ before(() => {
   it('should return no meetup yet', async () => {
     try {
       const res = await request(app)
-        .get('/api/v1/meetups/')
+        .get('/api/v1/meetups')
         .set('Accept', 'application/json')
         .send({ token: superUserToken });
       expect(res.statusCode).toEqual(200);
