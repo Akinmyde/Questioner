@@ -1,4 +1,4 @@
-import pool from '../models/connection';
+import pool from '../config/connection';
 
 const tables = [
   `DROP TABLE IF EXISTS Users;
@@ -12,16 +12,16 @@ const tables = [
     password VARCHAR(250) NOT NULL,
     registered TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
     updateOn TIMESTAMP DEFAULT NULL,
-    lastLogin TIMESTAMP DEFAULT NULL,
+    lastLogin TIMESTAMP DEFAULT CURRENT_DATE,
     isAdmin BOOLEAN
   );`,
   `DROP TABLE IF EXISTS Meetups;
     CREATE TABLE Meetups (
     id SERIAL PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
-    topic VARCHAR (355) UNIQUE NOT NULL,
+    topic VARCHAR (355) NOT NULL,
     location VARCHAR (355) NOT NULL,
-    happeningOn VARCHAR (20) NOT NULL,
+    happeningOn DATE NOT NULL,
     images VARCHAR (355)[],
     tags VARCHAR (355)[]
   );`,
@@ -29,27 +29,26 @@ const tables = [
   CREATE TABLE Rsvps (
   id SERIAL PRIMARY KEY,
   meetup integer NOT NULL,
-  user_id integer NOT NULL,
+  userid integer NOT NULL,
   response VARCHAR (355) NOT NULL
   );`,
   `DROP TABLE IF EXISTS Questions;
     CREATE TABLE Questions (
     id SERIAL PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
-    createdby integer,
-    meetup integer,
-    title VARCHAR (100) UNIQUE NOT NULL,
+    createdby integer NOT NULL,
+    meetup integer NOT NULL,
+    title VARCHAR (100) NOT NULL,
     body VARCHAR (355) NOT NULL,
     upvotes integer DEFAULT 0,
-    downvotes integer DEFAULT 0,
-    votes integer DEFAULT 0
+    downvotes integer DEFAULT 0
   );`,
   `DROP TABLE IF EXISTS Comments;
   CREATE TABLE Comments (
     id SERIAL PRIMARY KEY,
     createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
-    createdby integer NOT NULL, 
-    question_id integer NOT NULL,
+    createdby integer NOT NULL,
+    questionid integer NOT NULL,
     body VARCHAR (355) NOT NULL
   )`,
 ];
