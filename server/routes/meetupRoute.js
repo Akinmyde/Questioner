@@ -20,4 +20,6 @@ meetupRouter.post('/:id/rsvps', Middleware.isLogin, Middleware.validateParams, M
 
 meetupRouter.get('/:id/questions', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionByMeetup);
 
+meetupRouter.post('/:id/tags', Middleware.isLogin, Middleware.validateParams, Middleware.isArray, meetupController.meetupTags);
+
 export default meetupRouter;
