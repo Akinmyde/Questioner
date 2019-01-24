@@ -1,6 +1,6 @@
 import isEmpty from 'lodash.isempty';
 import validate from 'validate.js';
-
+import { cloudinaryDelete } from '../config/cloudinary';
 import authentication from '../helpers/authenticate';
 
 const { decode } = authentication;
@@ -51,6 +51,16 @@ export default class Middleware {
           error: 'Array field should not be empty',
         });
       }
+    }
+    return next();
+  }
+
+  static validateImage(req, res, next) {
+    const { files, file, typeError } = req;
+    const images = files || file;
+    if (typeError) {
+      images.forEach(image => cloudinaryDelete(image.public_id));
+      return res.status(403).send({ error: typeError });
     }
     return next();
   }
