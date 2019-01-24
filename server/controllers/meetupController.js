@@ -1,9 +1,9 @@
 import authentication from '../helpers/authenticate';
 import pool from '../config/connection';
-import helpers from '../helpers/helpers';
+import helpers from '../helpers/validation';
+import { cloudinaryDelete } from '../config/cloudinary';
 
 const { regex } = helpers;
-
 const { decode } = authentication;
 
 /* This class contains the logic for Meetups */
@@ -234,7 +234,40 @@ class MeetupController {
         }
         return res.status(404).send({ status: 404, error: 'Meetup not found' });
       }
-      return res.status(401).send({ status: 401, error: 'Only an admin can add tags a meetup' });
+      return res.status(401).send({ status: 401, error: 'Only an admin can add tags to a meetup' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  static async meetupImage(req, res) {
+    const client = await pool.connect();
+    try {
+      const { files, file } = req;
+      const images = files || file;
+      const token = req.headers.token || req.body.token;
+      const decodedToken = await decode(token);
+
+      const { isAdmin } = decodedToken;
+      if (isAdmin) {
+        const imageArray = [];
+        images.forEach(image => imageArray.push(image.secure_url));
+        const { id } = req.params;
+        const addImageQuery = {
+          text: 'UPDATE meetups SET images = $1 WHERE id = $2 RETURNING *',
+          values: [imageArray, id],
+        };
+        const tagsResult = await client.query(addImageQuery);
+        const { rowCount, rows } = tagsResult;
+        if (rowCount === 1) {
+          return res.status(201).send({ status: 201, data: rows, message: 'Images was added successfully' });
+        }
+        images.forEach(image => cloudinaryDelete(image.public_id));
+        return res.status(404).send({ status: 404, error: 'Meetup not found' });
+      }
+      return res.status(401).send({ status: 401, error: 'Only an admin can add images to a meetup' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {

@@ -1,6 +1,6 @@
 import authentication from '../helpers/authenticate';
 import pool from '../config/connection';
-import helpers from '../helpers/helpers';
+import helpers from '../helpers/validation';
 
 const { regex } = helpers;
 
