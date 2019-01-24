@@ -211,6 +211,36 @@ class MeetupController {
       await client.release();
     }
   }
+
+  static async meetupTags(req, res) {
+    const client = await pool.connect();
+    try {
+      const token = req.headers.token || req.body.token;
+      const decodedToken = await decode(token);
+
+      const { isAdmin } = decodedToken;
+
+      if (isAdmin) {
+        const { id } = req.params;
+        const { tags } = req.body;
+        const addTagQuery = {
+          text: 'UPDATE meetups SET tags = $1 WHERE id = $2 RETURNING *',
+          values: [tags, id],
+        };
+        const tagsResult = await client.query(addTagQuery);
+        const { rowCount, rows } = tagsResult;
+        if (rowCount === 1) {
+          return res.status(201).send({ status: 201, data: rows, message: 'Tags was added successfully' });
+        }
+        return res.status(404).send({ status: 404, error: 'Meetup not found' });
+      }
+      return res.status(401).send({ status: 401, error: 'Only an admin can add tags a meetup' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
 }
 
 export default MeetupController;

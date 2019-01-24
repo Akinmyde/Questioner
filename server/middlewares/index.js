@@ -36,6 +36,25 @@ export default class Middleware {
     return next();
   }
 
+  static isArray(req, res, next) {
+    const arrayValues = req.body.tags || req.body.images;
+    if (!validate.isArray(arrayValues) || validate.isEmpty(arrayValues)) {
+      return res.status(400).send({
+        status: 400,
+        error: 'Field is required and must be an array',
+      });
+    }
+    for (let i = 0; i < arrayValues.length; i += 1) {
+      if (validate.isEmpty(arrayValues[i])) {
+        return res.status(400).send({
+          status: 400,
+          error: 'Array field should not be empty',
+        });
+      }
+    }
+    return next();
+  }
+
   static validateParams(req, res, next) {
     const { id } = req.params;
     const verifyId = parseInt(id, 10);

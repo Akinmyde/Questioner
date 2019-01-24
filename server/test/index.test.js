@@ -29,20 +29,18 @@ before(async () => {
   }
 });
 
-before(() => {
-  it('should return no meetup yet', async () => {
-    try {
-      const res = await request(app)
-        .get('/api/v1/meetups')
-        .set('Accept', 'application/json')
-        .send({ token: superUserToken });
-      expect(res.statusCode).toEqual(200);
-      expect(res.body.status).toEqual(204);
-      expect(res.body.message).toEqual('no meetup yet');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+before(async () => {
+  try {
+    const res = await request(app)
+      .get('/api/v1/meetups')
+      .set('Accept', 'application/json')
+      .send({ token: superUserToken });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.status).toEqual(204);
+    expect(res.body.message).toEqual('no meetup yet');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 describe('Meetup Test', () => {
@@ -106,6 +104,39 @@ describe('Meetup Test', () => {
     });
   });
 
+  describe('Add Tag', () => {
+    it('should respond with 200', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/meetups/1/tags')
+          .set('Accept', 'application/json')
+          .send({
+            token: superUserToken,
+            tags: ['Developer', 'Programmer', 'Epic', 'Bootcamp'],
+          });
+        expect(res.statusCode).toEqual(201);
+        expect(res.body.message).toEqual('Tags was added successfully');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    it('should respond with 404 and meetup not found', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/meetups/2/tags')
+          .set('Accept', 'application/json')
+          .send({
+            token: superUserToken,
+            tags: ['Developer', 'Programmer', 'Epic', 'Bootcamp'],
+          });
+        expect(res.statusCode).toEqual(404);
+        expect(res.body.error).toEqual('Meetup not found');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+
   describe('Question server', () => {
     it('should respond with status code 201 created', async () => {
       try {
@@ -123,25 +154,55 @@ describe('Meetup Test', () => {
         console.log(error);
       }
     });
-    // it('should respond with status code not created', async () => {
-    //   try {
-    //     const res = await request(app)
-    //       .post('/api/v1/questions')
-    //       .send({
-    //         token: superUserToken,
-    //         meetup: 1,
-    //         title: 'test title',
-    //         body: 'test body',
-    //       })
-    //       .expect(409);
-    //     expect(res.statusCode).toEqual(409);
-    //     expect(res.body.error).toEqual('Question already exists');
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
   });
   describe('Middleware test', () => {
+    describe('Validate isArray', () => {
+      it('should return status code 400', (done) => {
+        request(app)
+          .post('/api/v1/meetups/1/tags')
+          .send({ token: superUserToken })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body).toEqual({ status: 400, error: 'Field is required and must be an array' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400', (done) => {
+        request(app)
+          .post('/api/v1/meetups/1/tags')
+          .send({ token: superUserToken, tags: 'tag1' })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body).toEqual({ status: 400, error: 'Field is required and must be an array' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and message array field should not be empty', (done) => {
+        request(app)
+          .post('/api/v1/meetups/1/tags')
+          .send({ token: superUserToken, tags: ['Tag1', 'Tag2', ''] })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body).toEqual({ status: 400, error: 'Array field should not be empty' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+    });
     describe('Validate User Signup', () => {
       it('should return status code 400 if email not provided', (done) => {
         request(app)
