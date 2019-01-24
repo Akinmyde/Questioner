@@ -32,19 +32,19 @@ describe('POST /auth/signup', () => {
         .send(user)
         .expect(409);
       expect(res.statusCode).toEqual(409);
-      expect(res.body).toEqual({ status: 409, error: 'Username already exists' });
+      expect(res.body).toEqual({ status: 409, error: 'Email already exists' });
     } catch (error) {
       console.log(error);
     }
   });
-  it('should respond with 409 and message email already exists', async () => {
+  it('should respond with 409 and message username already exists', async () => {
     try {
       const res = await request(app)
         .post('/api/v1/auth/signup')
         .send({ email: 'test1@gmail.com', username: 'test', password: 'test' })
         .expect(409);
       expect(res.statusCode).toEqual(409);
-      expect(res.body).toEqual({ status: 409, error: 'Email already exists' });
+      expect(res.body).toEqual({ status: 409, error: 'Username already exists' });
     } catch (error) {
       console.log(error);
     }

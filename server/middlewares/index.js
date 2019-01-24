@@ -1,6 +1,10 @@
 import isEmpty from 'lodash.isempty';
 import validate from 'validate.js';
 
+import authentication from '../helpers/authenticate';
+
+const { decode } = authentication;
+
 const constraints = {
   from: {
     email: true,
@@ -10,12 +14,25 @@ const constraints = {
 export default class Middleware {
   static isLogin(req, res, next) {
     const token = req.body.token || req.headers.token;
-    if (!token || (token && validate.isEmpty(token))) {
+
+    try {
+      if (validate.isEmpty(token)) {
+        return res.status(401).send({
+          status: 401,
+          error: 'Unauthorized',
+        });
+      }
+      const decodedToken = decode(token);
+      if (decodedToken.id) {
+        return next();
+      }
+    } catch (err) {
       return res.status(401).send({
         status: 401,
         error: 'Unauthorized',
       });
     }
+
     return next();
   }
 
@@ -34,20 +51,13 @@ export default class Middleware {
   static validateUserSignin(req, res, next) {
     const { username, password } = req.body;
     const error = {};
-    if (!username || (username && validate.isEmpty(username))) {
-      error.username = 'username is required';
+
+    if (!validate.isString(username) || validate.isEmpty(username)) {
+      error.username = 'username is required and must be a string';
     }
 
-    if (username && !validate.isString(username)) {
-      error.username = 'email must be a string';
-    }
-
-    if (!password || (password && validate.isEmpty(password))) {
-      error.password = 'password is required';
-    }
-
-    if (password && !validate.isString(password)) {
-      error.password = 'password must be a string';
+    if (!validate.isString(password) || validate.isEmpty(password)) {
+      error.password = 'password is required and must be a string';
     }
 
     if (isEmpty(error)) {
@@ -63,25 +73,17 @@ export default class Middleware {
   static validateUserSignup(req, res, next) {
     const { email, username, password } = req.body;
     const error = {};
-    if (!email || (email && (validate({ from: email }, constraints)))) {
-      validate.validators.email.message = 'not a valid email';
+    if (!email || validate({ from: email }, constraints)) {
+      validate.validators.email.message = 'email is required and must be valid';
       error.email = validate.validators.email.message;
     }
 
-    if (!username || (username && validate.isEmpty(username))) {
-      error.username = 'username is required';
+    if (!validate.isString(username) || validate.isEmpty(username)) {
+      error.username = 'username is required and must be a string';
     }
 
-    if (username && !validate.isString(username)) {
-      error.username = 'username must be a string';
-    }
-
-    if (!password || (password && validate.isEmpty(password))) {
-      error.password = 'password is required';
-    }
-
-    if (password && !validate.isString(password)) {
-      error.password = 'password must be a string';
+    if (!validate.isString(password) || validate.isEmpty(password)) {
+      error.password = 'password is required and must be a string';
     }
 
     if (isEmpty(error)) {
@@ -106,20 +108,12 @@ export default class Middleware {
       error.meetup = 'Meetup id is required';
     }
 
-    if (!title || (title && validate.isEmpty(title))) {
-      error.title = 'title is required';
+    if (!validate.isString(title) || validate.isEmpty(title)) {
+      error.title = 'title is required and must be a string';
     }
 
-    if (title && (!validate.isString(title))) {
-      error.title = 'title must be a string';
-    }
-
-    if (!body || (body && validate.isEmpty(body))) {
-      error.body = 'question body is required';
-    }
-
-    if (body && !validate.isString(body)) {
-      error.body = 'question body must be a string';
+    if (!validate.isString(body) || validate.isEmpty(body)) {
+      error.body = 'question body is required and must be a string';
     }
 
     if (isEmpty(error)) {
@@ -135,24 +129,17 @@ export default class Middleware {
   static createMeetupValidator(req, res, next) {
     const { topic, location, happeningOn } = req.body;
     const error = {};
-    if (!topic || (topic && validate.isEmpty(topic))) {
-      error.topic = 'topic is required';
+
+    if (!validate.isString(topic) || validate.isEmpty(topic)) {
+      error.topic = 'topic is required and must be a string';
     }
 
-    if (topic && !validate.isString(topic)) {
-      error.topic = 'topic must be a string';
+    if (!validate.isString(location) || validate.isEmpty(location)) {
+      error.location = 'location is required and must be a string';
     }
 
-    if (!location || (location && validate.isEmpty(location))) {
-      error.location = 'location is required';
-    }
-
-    if (location && !validate.isString(location)) {
-      error.location = 'location must be a string';
-    }
-
-    if (!happeningOn || (happeningOn && validate.isEmpty(happeningOn))) {
-      error.happeningOn = 'meetup date is required';
+    if (!validate.isString(happeningOn)) {
+      error.happeningOn = 'happeningOn is required and must be a Date';
     }
 
     if (isEmpty(error)) {
@@ -168,17 +155,10 @@ export default class Middleware {
   static addCommentValidator(req, res, next) {
     const { body } = req.body;
 
-    if (!body || (body && validate.isEmpty(body))) {
+    if (!validate.isString(body) || validate.isEmpty(body)) {
       return res.status(400).send({
         status: 400,
-        error: 'comment body is required',
-      });
-    }
-
-    if (body && !validate.isString(body)) {
-      return res.status(400).send({
-        status: 400,
-        error: 'comment body must be a string',
+        error: 'comment body is required and must be a string',
       });
     }
     return next();
@@ -186,17 +166,11 @@ export default class Middleware {
 
   static valideateRsvp(req, res, next) {
     const { response } = req.body;
-    if (!response || (response && validate.isEmpty(response))) {
-      return res.status(400).send({
-        status: 400,
-        error: 'response is required',
-      });
-    }
 
-    if (response && !validate.isString(response)) {
+    if (!validate.isString(response) || validate.isEmpty(response)) {
       return res.status(400).send({
         status: 400,
-        error: 'response must be a string',
+        error: 'response is required and must be a string',
       });
     }
 

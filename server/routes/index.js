@@ -10,13 +10,13 @@ router.get('/', (req, res) => {
   res.status(200).send('Welcome to my questioner app endpoint');
 });
 
-router.use(meetupRouter);
+router.use('/meetups', meetupRouter);
 
-router.use(questionRouter);
+router.use('/questions', questionRouter);
 
-router.use(userRoute);
+router.use('/auth', userRoute);
 
-router.use(commentRoute);
+router.use('/questions', commentRoute);
 
 router.all('*', (req, res) => {
   res.status(404).send({ status: 404, error: 'Sorry, the page you tried cannot be found' });

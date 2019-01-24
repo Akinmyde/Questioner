@@ -4,8 +4,8 @@ import commentControllers from '../controllers/commentController';
 
 const commentRoute = express.Router();
 
-commentRoute.post('/api/v1/questions/:id/comments', Middleware.isLogin, Middleware.validateParams, Middleware.addCommentValidator, commentControllers.addComment);
+commentRoute.post('/:id/comments', Middleware.isLogin, Middleware.validateParams, Middleware.addCommentValidator, commentControllers.addComment);
 
-commentRoute.get('/api/v1/questions/:id/comments', Middleware.isLogin, commentControllers.getAllComment);
+commentRoute.get('/:id/comments', Middleware.isLogin, Middleware.validateParams, commentControllers.getAllComment);
 
 export default commentRoute;
