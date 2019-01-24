@@ -29,20 +29,18 @@ before(async () => {
   }
 });
 
-before(() => {
-  it('should return no meetup yet', async () => {
-    try {
-      const res = await request(app)
-        .get('/api/v1/meetups')
-        .set('Accept', 'application/json')
-        .send({ token: superUserToken });
-      expect(res.statusCode).toEqual(200);
-      expect(res.body.status).toEqual(204);
-      expect(res.body.message).toEqual('no meetup yet');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+before(async () => {
+  try {
+    const res = await request(app)
+      .get('/api/v1/meetups')
+      .set('Accept', 'application/json')
+      .send({ token: superUserToken });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.status).toEqual(204);
+    expect(res.body.message).toEqual('no meetup yet');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 describe('Meetup Test', () => {
