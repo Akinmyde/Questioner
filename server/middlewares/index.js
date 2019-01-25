@@ -99,6 +99,32 @@ export default class Middleware {
     });
   }
 
+  static validateUserProfile(req, res, next) {
+    const { firstName, lastName, phoneNumber } = req.body;
+    const error = {};
+
+    if (!validate.isString(firstName) || validate.isEmpty(firstName)) {
+      error.firstName = 'firstName is required and must be a string';
+    }
+
+    if (!validate.isString(lastName) || validate.isEmpty(lastName)) {
+      error.lastName = 'lastName is required and must be a string';
+    }
+
+    if (!validate.isString(phoneNumber) || validate.isEmpty(phoneNumber)) {
+      error.phoneNumber = 'phoneNumber is required and must be valid';
+    }
+
+    if (isEmpty(error)) {
+      return next();
+    }
+
+    return res.status(400).send({
+      status: 400,
+      error,
+    });
+  }
+
   static validateUserSignup(req, res, next) {
     const { email, username, password } = req.body;
     const error = {};

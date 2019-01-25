@@ -1,8 +1,10 @@
 import passwordHash from 'password-hash';
 import authentication from '../helpers/authenticate';
 import pool from '../config/connection';
+import helpers from '../helpers/validation';
 
-const { encode } = authentication;
+const { regex } = helpers;
+const { encode, decode } = authentication;
 
 /* This class contains the logic for Users */
 
@@ -22,7 +24,7 @@ class UserController {
       let hashedPassword = password.trim();
       hashedPassword = passwordHash.generate(password);
       const signUpUserQuery = {
-        text: 'INSERT INTO users(email, username, password, isAdmin) VALUES($1, $2, $3, $4) RETURNING email, username, registered, lastlogin, isadmin',
+        text: 'INSERT INTO users(email, username, password, isAdmin) VALUES($1, $2, $3, $4) RETURNING id, email, username, registered, lastlogin, isadmin',
         values: [email.trim(), username.trim(), hashedPassword, false],
       };
       const user = await client.query(signUpUserQuery);
@@ -77,6 +79,32 @@ class UserController {
         const updatedUser = await client.query(updateQuery);
         return res.status(200).send({ status: 200, data: [{ token, user: updatedUser.rows[0], message: 'Login was successful' }] });
       } return res.status(401).send({ status: 401, error: 'Invalid username or password' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  static async profile(req, res) {
+    const client = await pool.connect();
+    try {
+      const { firstName, lastName, phoneNumber } = req.body;
+      const token = req.body.token || req.headers.token;
+      const decodedToken = await decode(token);
+      const userId = decodedToken.id;
+
+      const updateUserQuery = {
+        text: 'UPDATE users SET firstname = $1, lastname = $2, phonenumber = $3, updatedon = CURRENT_DATE WHERE id = $4 RETURNING firstname, lastname, phonenumber, updatedon',
+        values: [regex(firstName), regex(lastName), regex(phoneNumber), userId],
+      };
+      const updatedUser = await client.query(updateUserQuery);
+      const { rows, rowCount } = updatedUser;
+
+      if (rowCount === 1) {
+        return res.status(200).send({ status: 200, data: rows, message: 'User profile was updated' });
+      }
+      return res.send({ status: 204, error: 'User profile not updated, try again' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {
