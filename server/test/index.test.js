@@ -17,33 +17,53 @@ const superUser = {
 
 let superUserToken;
 
-before(async () => {
-  try {
-    const res = await request(app)
-      .post('/api/v1/auth/signup')
-      .send(superUser);
-    res.body.data[0].isadmin = true;
-    superUserToken = encode(res.body.data[0].id, res.body.data[0].isadmin);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-before(async () => {
-  try {
-    const res = await request(app)
-      .get('/api/v1/meetups')
-      .set('Accept', 'application/json')
-      .send({ token: superUserToken });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.status).toEqual(204);
-    expect(res.body.message).toEqual('no meetup yet');
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 describe('Meetup Test', () => {
+  describe('Before', () => {
+    it('should create a user', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/auth/signup')
+          .send(superUser);
+        res.body.data[0].isadmin = true;
+        superUserToken = encode(res.body.data[0].user.id, res.body.data[0].isadmin);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    it('should return no meetup found', async () => {
+      try {
+        const res = await request(app)
+          .get('/api/v1/meetups')
+          .set('Accept', 'application/json')
+          .send({ token: superUserToken });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.status).toEqual(204);
+        expect(res.body.message).toEqual('no meetup yet');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+  describe('Update Profile', () => {
+    it('should response with status code 200 and user profile was updated', async () => {
+      try {
+        const res = await request(app)
+          .put('/api/v1/auth/profile')
+          .set('Accept', 'application/json')
+          .send({
+            token: superUserToken,
+            firstName: 'TestFirstName',
+            lastName: 'TestLastName',
+            phoneNumber: '080123456789',
+          });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.status).toEqual(200);
+        expect(res.body.message).toEqual('User profile was updated');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
   describe('Create meetup', () => {
     it('should respond with 200', async () => {
       try {
@@ -156,6 +176,128 @@ describe('Meetup Test', () => {
     });
   });
   describe('Middleware test', () => {
+    describe('Validate Profile', () => {
+      it('should return status code 400', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({ token: superUserToken })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and firstname error', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({
+            token: superUserToken,
+            firstName: '',
+            lastName: 'TestLastName',
+            phoneNumber: '080123456789',
+          })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual({ firstName: 'firstName is required and must be a string' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and firstname error', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({
+            token: superUserToken,
+            firstName: ['TestFirstName'],
+            lastName: 'TestLastName',
+            phoneNumber: '080123456789',
+          })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual({ firstName: 'firstName is required and must be a string' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and lastname error', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({
+            token: superUserToken,
+            firstName: 'TestFirstName',
+            lastName: '',
+            phoneNumber: '080123456789',
+          })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual({ lastName: 'lastName is required and must be a string' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and lastname error', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({
+            token: superUserToken,
+            firstName: 'TestFirstName',
+            lastName: ['TestLastName'],
+            phoneNumber: '080123456789',
+          })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual({ lastName: 'lastName is required and must be a string' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and phonenumber error', (done) => {
+        request(app)
+          .put('/api/v1/auth/profile')
+          .send({
+            token: superUserToken,
+            firstName: 'TestFirstName',
+            lastName: 'TestLastName',
+            phoneNumber: '',
+          })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual({ phoneNumber: 'phoneNumber is required and must be valid' });
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+    });
     describe('Validate isArray', () => {
       it('should return status code 400', (done) => {
         request(app)

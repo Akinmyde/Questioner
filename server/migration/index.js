@@ -11,7 +11,7 @@ const tables = [
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(250) NOT NULL,
     registered TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
-    updateOn TIMESTAMP DEFAULT NULL,
+    updatedOn TIMESTAMP DEFAULT NULL,
     lastLogin TIMESTAMP DEFAULT CURRENT_DATE,
     isAdmin BOOLEAN
   );`,
