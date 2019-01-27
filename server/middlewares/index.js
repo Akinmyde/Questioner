@@ -125,6 +125,25 @@ export default class Middleware {
     });
   }
 
+  static validateForgetPassword(req, res, next) {
+    const { email } = req.body;
+    if (!email || validate({ from: email }, constraints)) {
+      return res.status(400).send({ status: 400, error: 'email is required and must be valid' });
+    }
+    return next();
+  }
+
+  static validateResetPassword(req, res, next) {
+    const { password } = req.body;
+    if (!validate.isString(password) || validate.isEmpty(password)) {
+      return res.status(400).send({ status: 400, error: 'password is required and must be a string' });
+    }
+    if (password.length < 8) {
+      return res.status(400).send({ status: 400, error: 'Password lenght is too short, it should be at least 8 character long' });
+    }
+    return next();
+  }
+
   static validateUserSignup(req, res, next) {
     const { email, username, password } = req.body;
     const error = {};

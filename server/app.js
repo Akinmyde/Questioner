@@ -11,7 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/api/v1', router);
-
+app.all('*', (req, res) => {
+  res.status(404).send({ status: 404, error: 'Sorry, the page you tried cannot be found' });
+});
 app.listen(port, () => {
   console.log(`listening on port ${chalk.blue(port)}`);
 });
