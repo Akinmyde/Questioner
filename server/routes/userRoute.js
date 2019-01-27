@@ -11,5 +11,9 @@ userRoute.post('/login', Middleware.validateUserSignin, userController.signIn);
 
 userRoute.put('/profile', Middleware.isLogin, Middleware.validateUserProfile, userController.profile);
 
+userRoute.post('/forget', Middleware.validateForgetPassword, userController.forgetPassword);
+
+userRoute.patch('/reset/:token', Middleware.validateResetPassword, userController.resetPassword);
+
 
 export default userRoute;

@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Akinmyde/Questioner#readme",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "@sendgrid/mail": "^6.3.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",

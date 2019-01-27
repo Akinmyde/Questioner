@@ -44,6 +44,34 @@ describe('Meetup Test', () => {
       }
     });
   });
+  describe('Forget Password', () => {
+    it('should response with status code 200 if email is valid', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/auth/forget')
+          .set('Accept', 'application/json')
+          .send({ email: 'superuser@yahoo.com' });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.status).toEqual(200);
+        expect(res.body.message).toEqual('Check you email for the next step');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    it('should response with status code 404 if email is not valid', async () => {
+      try {
+        const res = await request(app)
+          .post('/api/v1/auth/forget')
+          .set('Accept', 'application/json')
+          .send({ email: 'unknownemail@yahoo.com' });
+        expect(res.statusCode).toEqual(404);
+        expect(res.body.status).toEqual(404);
+        expect(res.body.error).toEqual('User not found');
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
   describe('Update Profile', () => {
     it('should response with status code 200 and user profile was updated', async () => {
       try {
@@ -176,6 +204,104 @@ describe('Meetup Test', () => {
     });
   });
   describe('Middleware test', () => {
+    describe('Validate forget password', () => {
+      it('should return status code 400 and message email is required and must be valid', (done) => {
+        request(app)
+          .post('/api/v1/auth/forget')
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('email is required and must be valid');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 and message email is required and must be valid', (done) => {
+        request(app)
+          .post('/api/v1/auth/forget')
+          .send({ email: '' })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('email is required and must be valid');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 if email is not valid', (done) => {
+        request(app)
+          .post('/api/v1/auth/forget')
+          .send({ email: 'j@j' })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('email is required and must be valid');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+    });
+    describe('Password Reset', () => {
+      it('should return status code 400 if password not provided', (done) => {
+        request(app)
+          .patch('/api/v1/auth/reset/bjkdbfjkbkj')
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('password is required and must be a string');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 if password is empty', (done) => {
+        request(app)
+          .patch('/api/v1/auth/reset/bjkdbfjkbkj')
+          .send({ password: '' })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('password is required and must be a string');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+      it('should return status code 400 if password is less than 8 char', (done) => {
+        request(app)
+          .patch('/api/v1/auth/reset/bjkdbfjkbkj')
+          .send({ password: 'test' })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .expect((res) => {
+            expect(res.body.status).toEqual(400);
+            expect(res.body.error).toEqual('Password lenght is too short, it should be at least 8 character long');
+          })
+          .end((err) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+    });
     describe('Validate Profile', () => {
       it('should return status code 400', (done) => {
         request(app)

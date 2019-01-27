@@ -2,6 +2,7 @@ import passwordHash from 'password-hash';
 import authentication from '../helpers/authenticate';
 import pool from '../config/connection';
 import helpers from '../helpers/validation';
+import notification from '../helpers/notification';
 
 const { regex } = helpers;
 const { encode, decode } = authentication;
@@ -31,6 +32,7 @@ class UserController {
       const { rows } = user;
       if (rows) {
         const token = encode(rows[0].id, rows[0].isadmin);
+        await notification.signUp(email);
         return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
       }
       return res.status(204).send({ status: 204, error: 'User account not created, try again' });
@@ -105,6 +107,62 @@ class UserController {
         return res.status(200).send({ status: 200, data: rows, message: 'User profile was updated' });
       }
       return res.send({ status: 204, error: 'User profile not updated, try again' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  static async forgetPassword(req, res) {
+    const client = await pool.connect();
+    try {
+      const { email } = req.body;
+      const findUserQuery = {
+        text: 'SELECT email from users WHERE email = $1',
+        values: [email],
+      };
+      const user = await client.query(findUserQuery);
+      const { rowCount } = user;
+
+      if (rowCount === 1) {
+        const url = `${req.protocol}://${req.get('host')}/api/v1/auth/reset/`;
+        notification.forgetPassword(email, url);
+        return res.status(200).send({ status: 200, message: 'Check you email for the next step' });
+      }
+      return res.status(404).send({ status: 404, error: 'User not found' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  static async resetPassword(req, res) {
+    const client = await pool.connect();
+    try {
+      const { token } = req.params;
+      const decodedToken = await decode(token);
+      const { email } = decodedToken;
+
+      if (email) {
+        const { password } = req.body;
+        let hashedPassword = password.trim();
+        hashedPassword = await passwordHash.generate(password);
+        const updateUserQuery = {
+          text: 'UPDATE users SET password = $1, updatedon = CURRENT_DATE WHERE email = $2',
+          values: [hashedPassword, email],
+        };
+        const user = await client.query(updateUserQuery);
+        const { rowCount } = user;
+
+        if (rowCount === 1) {
+          notification.passwordReset(email);
+          return res.status(200).send({ status: 200, message: 'Your password was changed' });
+        }
+        return res.status(204).send({ status: 204, error: 'Password not change, please try again' });
+      }
+      return res.status(404).send({ status: 404, error: 'link is invalid or it may has expired' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {
