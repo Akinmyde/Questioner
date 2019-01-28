@@ -9,7 +9,8 @@ module.exports = {
         "displayAlert": true,
         "toggleModal": true,
         "toggleMenu": true,
-        "localStorage": true
+        "localStorage": true,
+        "Headers": true
     },
     "rules": {
         "linebreak-style": 0
