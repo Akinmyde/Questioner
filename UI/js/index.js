@@ -24,13 +24,11 @@ showMenu.addEventListener('click', (e) => {
   showMenu.style.display = 'none';
   hideMenu.style.display = 'block';
   menuItem.style.display = 'block';
-})
+});
 
 hideMenu.addEventListener('click', (e) => {
   e.preventDefault();
   showMenu.style.display = 'block';
   hideMenu.style.display = 'none';
   menuItem.style.display = 'none';
-})
-
-
+});
