@@ -1,28 +1,43 @@
-const email = document.getElementById('email')
-      username = document.getElementById('username')
-      password = document.getElementById('password')
-      confirmPassword = document.getElementById('confirmpassword')
-      error = document.getElementsByClassName('error')[0];
+const email = document.getElementById('email');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmpassword');
+const error = document.getElementsByClassName('error')[0];
 
-document.getElementById('signup').addEventListener('click', () => {
-  error.style.display = 'block'
+document.getElementById('signup').addEventListener('click', (e) => {
+  e.preventDefault();
+  error.style.display = 'block';
   if (email.value === '') {
-    return error.innerHTML = 'Email is required';
-  } 
-  if (username.value === '') {
-    return error.innerHTML = 'Username is required';
-  } 
-  if (password.value === '') {
-    return error.innerHTML = 'Password is required';
-  } 
-  if (confirmPassword.value === '') {
-    return error.innerHTML = 'Please confirm password';
-  } 
-  if (confirmPassword.value !== password.value) {
-    return  error.innerHTML = 'Password must be the same';
-  } 
-  return (
-    error.innerHTML = 'Accout was created, check your email for the next step.',
-    error.style.color = 'green'
-  )
-})
+    error.innerHTML = 'Email is required';
+  } else if (username.value === '') {
+    error.innerHTML = 'Username is required';
+  } else if (password.value === '') {
+    error.innerHTML = 'Password is required';
+  } else if ((password.value).length < 8) {
+    error.innerHTML = 'Please Should be at least 8 characters';
+  } else if (confirmPassword.value === '') {
+    error.innerHTML = 'Please confirm password';
+  } else if (confirmPassword.value !== password.value) {
+    error.innerHTML = 'Password must be the same';
+  } else {
+    const url = 'https://akinmyde-questioner.herokuapp.com/api/v1/auth/signup';
+    const user = { email: email.value, username: username.value, password: password.value };
+    const fetchData = {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: { 'Content-Type': 'application/json' },
+    };
+    fetch(url, fetchData)
+      .then(res => res.json())
+      .then((result) => {
+        if (result.error) {
+          error.innerHTML = result.error;
+        }
+        const { data } = result;
+        localStorage.setItem('user', data);
+        const { token } = data;
+        window.location.href = 'user.html';
+      });
+  }
+  return error;
+});

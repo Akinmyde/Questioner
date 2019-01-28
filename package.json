@@ -10,7 +10,8 @@
     "eslint-plugin-import": "^2.15.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "./node_modules/.bin/eslint --fix"
   },
   "repository": {
     "type": "git",
