@@ -35,7 +35,7 @@ class MeetupController {
         if (rows) {
           return res.status(201).send({ status: 201, data: [rows[0]], message: 'Meetup was created successfully' });
         }
-        return res.status(204).send({ status: 204, error: 'Meetup not created' });
+        return res.status(200).send({ status: 204, error: 'Meetup not created' });
       }
       return res.status(401).send({ status: 401, error: 'Only an admin can create a meetup' });
     } catch (err) {
