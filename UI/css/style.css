@@ -16,7 +16,6 @@ input[type=email], input[type=password], input[type=text],  input[type=date], te
 .alert {
   padding: 10px;
   background-color: #e99494;
-  border-left: 6px solid #f44336;
   color: white;
 }
 
