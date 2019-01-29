@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Questioner | Signup Form</title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="css/loader.css">
     </head>
     <body>
         <header>
@@ -18,13 +19,20 @@
                     <a href=""></a>
                     <a href="index.html#contact">Contact</a>
                     <a href="index.html#about">About</a>
-                    <a href="meetup.html">Meetups</a>
+                    <a href="meetups.html">Meetups</a>
                     <a class="active" href="sign-up.html">Sign up</a>
                 </div>
             </div>
         </header>
+        <div id="overlay">
+            <div id="loader"></div>
+        </div>
         <form method="POST">
             <div class="container">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <span class="error"></span>
+                </div>
                 <div class="imgcontainer">
                     <i class="fas fa-user-circle fa-5x"></i>
                 </div>
@@ -49,7 +57,7 @@
                 </div>
                 
                 <a href="user.html"><button id="signup" type="button">Sign up</button></a>
-                <div class="center font12">Already have an Account? <a href="sign-in.html">Sign in</a></div><br/>
+                <div class="center font12">Already have an Account? <a href="login.html">Sign in</a></div><br/>
                 <div class="error font12">
                 </div>
             </div>
