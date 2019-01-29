@@ -11,7 +11,6 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
         location,
         images,
       } = meetup;
-      // meetup-single.html
       const card = `<a class="meetup-link" id="${id}" href="#">
     <div>
       <img class="image" src="${images[0]}" alt="image">

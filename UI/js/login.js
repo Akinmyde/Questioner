@@ -1,7 +1,6 @@
-const email = document.getElementById('email');
+/* eslint-disable no-useless-return */
 const username = document.getElementById('username');
 const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirmpassword');
 const error = document.getElementsByClassName('error')[0];
 const alert = document.getElementsByClassName('alert')[0];
 const loader = document.getElementById('overlay');
@@ -9,13 +8,9 @@ const loader = document.getElementById('overlay');
 loader.style.display = 'none';
 alert.style.display = 'none';
 
-document.getElementById('signup').addEventListener('click', (e) => {
+document.getElementById('login').addEventListener('click', (e) => {
   e.preventDefault();
-  if (email.value === '') {
-    alert.style.display = 'block';
-    error.innerHTML = 'Email is required';
-    return;
-  } if (username.value === '') {
+  if (username.value === '') {
     alert.style.display = 'block';
     error.innerHTML = 'Username is required';
     return;
@@ -23,25 +18,14 @@ document.getElementById('signup').addEventListener('click', (e) => {
     alert.style.display = 'block';
     error.innerHTML = 'Password is required';
     return;
-  } if ((password.value).length < 8) {
-    alert.style.display = 'block';
-    error.innerHTML = 'Please Should be at least 8 characters';
-    return;
-  } if (confirmPassword.value === '') {
-    alert.style.display = 'block';
-    error.innerHTML = 'Please confirm password';
-    return;
-  } if (confirmPassword.value !== password.value) {
-    alert.style.display = 'block';
-    error.innerHTML = 'Password must be the same';
-    return;
   } if (!navigator.onLine) {
     alert.style.display = 'block';
     error.innerHTML = 'Error connecting to the internet';
     return;
-  } loader.style.display = 'block';
-  const url = 'https://akinmyde-questioner.herokuapp.com/api/v1/auth/signup';
-  const user = { email: email.value, username: username.value, password: password.value };
+  }
+  loader.style.display = 'block';
+  const url = 'https://akinmyde-questioner.herokuapp.com/api/v1/auth/login';
+  const user = { username: username.value, password: password.value };
   const fetchData = {
     method: 'POST',
     body: JSON.stringify(user),

@@ -10,7 +10,8 @@ module.exports = {
         "toggleModal": true,
         "toggleMenu": true,
         "localStorage": true,
-        "Headers": true
+        "navigator": true,
+        "sessionStorage": true,
     },
     "rules": {
         "linebreak-style": 0
