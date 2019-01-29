@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Questioner | Forget Password</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/loader.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     </head>
     <body>
@@ -23,8 +24,15 @@
                 </div>
             </div>
         </header>
+        <div id="overlay">
+            <div id="loader"></div>
+        </div>
         <form method="POST" action="dashboard.html">
             <div class="container">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <span class="error"></span>
+                </div><br>
                 <label for="email">Email</label>
                 <input id="email" type="email" placeholder="JohnDeo@gmail.com" required><br/>
                 <a href="login.html">
