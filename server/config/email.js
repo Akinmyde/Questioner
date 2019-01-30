@@ -11,7 +11,7 @@ const sendEmail = async (to, subject, message) => {
     if (env === 'development' || env === 'test') {
       const account = await nodemailer.createTestAccount();
       // create reusable transporter object using the default SMTP transport
-      transporter = nodemailer.createTransport({
+      transporter = await nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
         secure: false, // true for 465, false for other ports
@@ -21,7 +21,7 @@ const sendEmail = async (to, subject, message) => {
         },
       });
     } else {
-      transporter = nodemailer.createTransport({
+      transporter = await nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user: process.env.EMAIL_USERNAME,
