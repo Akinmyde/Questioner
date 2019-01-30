@@ -25,8 +25,8 @@ class UserController {
       let hashedPassword = password.trim();
       hashedPassword = passwordHash.generate(password);
       const signUpUserQuery = {
-        text: 'INSERT INTO users(email, username, password, isAdmin) VALUES($1, $2, $3, $4) RETURNING id, email, username, registered, lastlogin, isadmin',
-        values: [email.trim(), username.trim(), hashedPassword, false],
+        text: 'INSERT INTO users(email, username, password) VALUES($1, $2, $3) RETURNING id, email, username, registered, lastlogin',
+        values: [email.trim(), username.trim(), hashedPassword],
       };
       const user = await client.query(signUpUserQuery);
       const { rows } = user;
@@ -97,7 +97,7 @@ class UserController {
       const userId = decodedToken.id;
 
       const updateUserQuery = {
-        text: 'UPDATE users SET firstname = $1, lastname = $2, phonenumber = $3, updatedon = CURRENT_DATE WHERE id = $4 RETURNING firstname, lastname, phonenumber, updatedon',
+        text: 'UPDATE users SET firstname = $1, lastname = $2, phonenumber = $3, updateOn = CURRENT_DATE WHERE id = $4 RETURNING firstname, lastname, phonenumber, updateon',
         values: [regex(firstName), regex(lastName), regex(phoneNumber), userId],
       };
       const updatedUser = await client.query(updateUserQuery);
@@ -108,6 +108,7 @@ class UserController {
       }
       return res.send({ status: 204, error: 'User profile not updated, try again' });
     } catch (err) {
+      console.log(err);
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {
       await client.release();

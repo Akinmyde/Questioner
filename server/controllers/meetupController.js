@@ -21,13 +21,14 @@ class MeetupController {
     try {
       const { topic, location, happeningOn } = req.body;
       const token = req.body.token || req.headers.token;
+      const defaultImage = ['https://res.cloudinary.com/codeace/image/upload/v1548425091/Questioner/new_logo.png'];
       const decodedToken = await decode(token);
       const { isAdmin } = decodedToken;
 
       if (isAdmin) {
         const createMeetupQuery = {
-          text: 'INSERT INTO meetups(topic, location, happeningOn) VALUES($1, $2, $3) RETURNING *',
-          values: [regex(topic), regex(location), happeningOn],
+          text: 'INSERT INTO meetups(topic, location, happeningOn, images) VALUES($1, $2, $3, $4) RETURNING *',
+          values: [regex(topic), regex(location), happeningOn, defaultImage],
         };
         const meetup = await client.query(createMeetupQuery);
         const { rows } = meetup;
@@ -122,7 +123,7 @@ class MeetupController {
     try {
       const { id } = req.params;
       const getByIdQuery = {
-        text: 'SELECT * FROM meetups WHERE ID = $1',
+        text: 'SELECT * FROM meetups WHERE id = $1',
         values: [id],
       };
       const meetup = await client.query(getByIdQuery);

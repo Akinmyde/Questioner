@@ -9,6 +9,7 @@ import router from './routes/index';
 const port = process.env.PORT || 3000;
 const app = express();
 
+
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,8 +21,10 @@ app.all('*', (req, res) => {
   res.status(404).send({ status: 404, error: 'Sorry, the page you tried cannot be found' });
 });
 
-app.listen(port, () => {
-  console.log(`listening on port ${chalk.blue(port)}`);
-});
+if (!module.parent) {
+  app.listen(port, () => {
+    console.log(`listening on port ${chalk.blue(port)}`);
+  });
+}
 
 export default app;
