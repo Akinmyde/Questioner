@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node server/app.js",
-    "migration": "babel-node server/migration/index.js",
-    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migration",
+    "migrate": "babel-node server/migration/migrate.js",
+    "seed": "babel-node server/migration/seed.js",
+    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migrate",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/test/**/*.test.js --timeout 20000 --require babel-register --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "serve": "nodemon server/app.js --exec babel-node"
@@ -23,7 +24,6 @@
   "homepage": "https://github.com/Akinmyde/Questioner#readme",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@sendgrid/mail": "^6.3.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
@@ -38,6 +38,7 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "multer-storage-cloudinary": "^2.2.1",
+    "nodemailer": "^5.1.1",
     "password-hash": "^1.2.2",
     "pg": "^7.7.1",
     "validate.js": "^0.12.0"

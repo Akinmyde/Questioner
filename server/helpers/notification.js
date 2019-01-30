@@ -5,7 +5,7 @@ import template from './template';
 class Notification {
   static signUp(email) {
     const subject = 'Welcome to Questioner!!!';
-    const message = template('<p>We are trilled to have you...</p> <p>At Questioner, we know the importance of Meetups and Questions. That\'s is why we are here to help you prioritize questions for your meetup. With Questioner, you don\'t need to worry about the trending question/questions for your meetup we already got that covered for you</p>');
+    const message = template('<p>We are thrilled to have you...</p> <p>At Questioner, we know the importance of Meetups and Questions. That\'s is why we are here to help you prioritize questions for your meetup. With Questioner, you don\'t need to worry about the trending question/questions for your meetup we already got that covered for you</p>');
 
     sendEmail(email, subject, message);
   }

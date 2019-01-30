@@ -45,6 +45,7 @@ class QuestionController {
       }
       return res.status(204).send({ status: 204, error: 'Question not created' });
     } catch (err) {
+      // console.log(err);
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {
       await client.release();
