@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Questioner | Comment</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/loader.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+    crossorigin="anonymous">
 </head>
+
 <body>
   <header>
     <div class="header">
@@ -23,36 +27,23 @@
       </div>
     </div>
   </header>
-  <div class="flex full">
-      <div id="question" class="space">
-        <h4><a href="meetup-single.html">Meetup: Andela's Bootcamp</a></h4>
-        <h6 class="font12">Location: @Epic Tower</h6>
-        <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
-        <span class="text-holder">
-          <ul class="details font12">
-            <li>Feb 29 2017</li>
-            <li>30 Comments</li>
-          </ul>
-          <a href="comment.html"><button id="showAddComment" type="button" class="font12 sm">Add Comment</button></a>
-        </span>
-      </div>
+  <div id="overlay">
+      <div id="loader"></div>
+  </div>
+  <div class="flex full no-pad">
+    <div id="question" class="space"></div>
   </div>
   <div id="comments" class="flex full flex-buttom-space">
-    <div class="center no-border" >
+    <div class="center no-border">
       <h1 id="title">Comments</h1>
-    </div>
-    <div class="space">
-      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
-      <p class="font12">by Akinremi Olumide</p>
-      <span class="text-holder">Feb 29 2017</span>
-    </div>
-    <div class="space">
-      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
-      <p class="font12">by Akinremi Olumide</p>
-      <span class="text-holder">Feb 29 2017</span>
     </div>
   </div>
   <div class="container" id="add-comment">
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <span class="error"></span>
+    </div>
+    <br>
     <label for="title">Comment</label>
     <textarea id="commentMessage" cols="54" rows="4"></textarea>
     <div class="center">
@@ -64,6 +55,7 @@
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
   </footer>
   <script src="js/comment.js"></script>
-  <script src="js//index.js"></script>
+  <script src="js/index.js"></script>
 </body>
+
 </html>

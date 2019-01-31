@@ -7,6 +7,7 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
   .then((results) => {
     loader.style.display = 'none';
     const { data } = results;
+    sessionStorage.setItem('meetupObj', JSON.stringify(data));
     data.forEach((meetup) => {
       const {
         id,

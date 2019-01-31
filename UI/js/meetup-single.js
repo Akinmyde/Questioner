@@ -14,7 +14,6 @@ const upVote = document.getElementsByClassName('upvote');
 const downVote = document.getElementsByClassName('downvote');
 const questions = document.getElementById('questions');
 const addQuestion = document.getElementById('add-question');
-const title = document.getElementById('title');
 const questionTitle = document.getElementById('questiontitle');
 const body = document.getElementById('body');
 const token = localStorage.getItem('token');
@@ -22,10 +21,10 @@ let meetupId = sessionStorage.getItem('meetupid');
 const loader = document.getElementById('overlay');
 const alert = document.getElementsByClassName('alert')[0];
 const error = document.getElementsByClassName('error')[0];
+const link = document.getElementsByTagName('a');
 let url;
 
 alert.style.display = 'none';
-loader.style.display = 'block';
 addQuestion.style.display = 'none';
 if (!meetupId) {
   window.location.href = 'meetups.html';
@@ -73,51 +72,41 @@ const vote = (reqPath, className) => {
   }
 };
 
-const meetupView = () => {
-  url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}`;
-  apiCall(url, 'GET').then((data) => {
-    loader.style.display = 'none';
-    const meetupCard = `<img class="image card-image" src="${data[0].images[0]}">
-    <h4><a href="meetup-single.html">${data[0].topic}</a></h4>
-    <h6 class="font12">@${data[0].location}</h6>
+let meetupData = JSON.parse(sessionStorage.getItem('meetupObj'));
+meetupData = meetupData.find(data => data.id === meetupId);
+const meetupCard = `<img class="image card-image" src="${meetupData.images[0]}">
+    <h4><a href="meetup-single.html">${meetupData.topic}</a></h4>
+    <h6 class="font12">@${meetupData.location}</h6>
     <span class="text-holder">
       <ul class="details font12">
-        <li>${new Date(data[0].happeningon).toDateString()}</li>
+        <li>${new Date(meetupData.happeningon).toDateString()}</li>
         <li>30 Questions</li>
       </ul>
       <button type="button" class="font12 sm" id="btnshow">Add Question</button>
     </span>`;
-    meetupContainer.insertAdjacentHTML('afterbegin', meetupCard);
-
-    document.getElementById('btnshow').addEventListener('click', (e) => {
-      e.preventDefault();
-      title.innerHTML = 'Add Question';
-      questions.style.display = 'none';
-      addQuestion.style.display = 'block';
-      return;
-    });
-  });
-};
+meetupContainer.insertAdjacentHTML('afterbegin', meetupCard);
 
 const questionsView = () => {
   url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}/questions`;
   apiCall(url, 'GET').then((data) => {
-    if (!data) {
+    loader.style.display = 'none';
+    if (typeof (data) !== 'object') {
       const emptyCard = `<div class="space">
-            <h4>No questions yet</h4>`;
+            <h4>${data}</h4>`;
       questionContainer.insertAdjacentHTML('beforeend', emptyCard);
       return;
     }
+    sessionStorage.setItem('questionObj', JSON.stringify(data));
     data.forEach((question) => {
       const questionCard = `<div class="space">
-            <h4><a id="${question.id}" href="">${question.title}</a></h4>
+            <h4><a class="question-link" id="${question.id}" href="">${question.title}</a></h4>
             <p class="font16">${question.body}</p>
             <span class="text-holder">
               <ul class="details">
               <li>${new Date(question.createdon).toDateString()}</li>
               <li><a id="${question.id}" class="upvote" href=""><i class="fas fa-thumbs-up"></i><span class="num">${question.upvotes}</span></a></li>
               <li><a id="${question.id}" class="downvote" href=""><i class="fas fa-thumbs-down"></i><span class="num">${question.downvotes}</span></a></li>
-              <li><a class="comment" href="comment.html"><i class="fas fa-comment"></i></span></a></li>
+              <li><a class="comment question-link" href=""><i class="fas fa-comment"></i></span></a></li>
               </ul>
             </span>
           </div>`;
@@ -126,15 +115,28 @@ const questionsView = () => {
     });
     vote('upvote', upVote);
     vote('downvote', downVote);
+    // Get question id
+    for (let i = 0; i < link.length; i += 1) {
+      if (link[i].className === 'question-link') {
+        link[i].addEventListener('click', (e) => {
+          e.preventDefault();
+          sessionStorage.setItem('questionid', parseInt(link[i].id, 10));
+          window.location.href = 'comment.html';
+        });
+      }
+    }
   });
 };
 
 isLogin();
-meetupView();
 questionsView();
 
+document.getElementById('btnshow').addEventListener('click', () => {
+  questions.style.display = 'none';
+  addQuestion.style.display = 'block';
+});
+
 document.getElementById('btncancel').addEventListener('click', () => {
-  title.innerHTML = 'Questions';
   questions.style.display = 'block';
   addQuestion.style.display = 'none';
 });
@@ -154,14 +156,8 @@ document.getElementById('btnadd').addEventListener('click', () => {
   const newQuestion = { meetup: meetupId, title: questionTitle.value, body: body.value };
   apiCall(url, 'POST', newQuestion).then((data) => {
     if (data) {
-      // location.reload();
+      location.reload();
       return;
     }
-    return;
-  })
-    .catch((err) => {
-      error.innerHTML = 'An error occur, try later';
-      alert.style.display = 'block';
-      console.log(err);
-    });
+  });
 });
