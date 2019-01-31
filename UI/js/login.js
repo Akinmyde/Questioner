@@ -1,4 +1,13 @@
 /* eslint-disable no-useless-return */
+const isLogin = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    window.location.href = 'user.html';
+  }
+};
+
+isLogin();
+
 const username = document.getElementById('username');
 const password = document.getElementById('password');
 const error = document.getElementsByClassName('error')[0];
@@ -41,7 +50,7 @@ document.getElementById('login').addEventListener('click', (e) => {
         return;
       }
       const { data } = result;
-      localStorage.setItem('user', data);
+      localStorage.setItem('token', data[0].token);
       window.location.href = 'user.html';
     });
 });

@@ -1,3 +1,12 @@
+const isLogin = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    window.location.href = 'user.html';
+  }
+};
+
+isLogin();
+
 const email = document.getElementById('email');
 const username = document.getElementById('username');
 const password = document.getElementById('password');
