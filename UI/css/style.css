@@ -17,6 +17,7 @@ input[type=email], input[type=password], input[type=text],  input[type=date], te
   padding: 10px;
   background-color: #e99494;
   color: white;
+  display: none;
 }
 
 .closebtn {
@@ -279,7 +280,7 @@ a {
   background-size: cover;
   margin: 0;
   height: 600px;
-  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../UI/image/bgimage.jpeg);
+  background-image: linear-gradient(to right, rgb(0, 0, 0,0.7), rgb(0, 0, 255,0.7)), url(../image/bgimage.jpeg);
   display: flex;
   justify-content: center;
   align-items: center;

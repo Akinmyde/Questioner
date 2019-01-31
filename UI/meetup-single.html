@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questioner | Meetup</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/loader.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
@@ -21,52 +22,23 @@
       </div>
     </div>
   </header>
+  <div id="overlay">
+    <div id="loader"></div>
+</div>
   <div class="flex full no-pad">
-    <div id="meetup">
-      <img class="image card-image" src="image/andela.jpg">
-      <h4><a href="meetup-single.html">Andela's Bootcamp</a></h4>
-      <h6 class="font12">@Epic Tower</h6>
-      <span class="text-holder">
-        <ul class="details font12">
-          <li>Feb 29 2017</li>
-          <li>30 Questions</li>
-        </ul>
-        <button type="button" class="font12 sm" id="btnshow">Add Question</button>
-      </span>
-    </div>
+    <div id="meetup"></div>
   </div>
   <div id="questions" class="flex full flex-buttom-space">
     <div class="center no-border">
       <h1 id="title">Questions</h1>
     </div>
-    <div class="space">
-      <h4><a href="">What do i need to do to succeed in the bootcamp</a></h4>
-      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
-      <p class="font16">by Akinremi Olumide</p>
-      <span class="text-holder">
-        <ul class="details">
-          <li>Feb 29 2017</li>
-          <li><a class="upvote" href="#"><i class="fas fa-thumbs-up"></i><span class="num"> 100</span></a></li>
-          <li><a class="downvote" href="#"><i class="fas fa-thumbs-down"></i><span class="num"> 5</span></a></li>
-          <li><a class="comment" href="comment.html"><i class="fas fa-comment"></i> 5</span></a></li>
-        </ul>
-      </span>
-    </div>
-    <div class="space">
-      <h4><a href="">Please i need to know more about the bootcamp</a></h4>
-      <p class="font16">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quod accusamus repudiandae impedit quasi quidem assumenda consectetur ab, beatae sit ea provident obcaecati, maxime neque ipsa ut sunt consequatur. Tenetur!</p>
-      <p class="font16">by Akinremi Olumide</p>
-      <span class="text-holder">
-        <ul class="details">
-          <li>Feb 29 2017</li>
-          <li><a class="upvote" href="#"><i class="fas fa-thumbs-up"></i><span class="num"> 100</span></a></li>
-          <li><a class="downvote" href="#"><i class="fas fa-thumbs-down"></i><span class="num"> 5</span></a></li>
-          <li><a class="comment" href="comment.html"><i class="fas fa-comment"></i> 5</span></a></li>
-        </ul>
-      </span>
-    </div>
   </div>
   <div class="container" id="add-question">
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <span class="error"></span>
+    </div>
+    <br>
     <label for="title">Title</label>
     <input id="questiontitle" type="text">
     <label for="title">Body</label>
@@ -79,7 +51,7 @@
   <footer>
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
   </footer>
-  <script src="js/meetup.js"></script>
+  <script src="js/meetup-single.js"></script>
   <script src="js/index.js"></script>
 </body>
 </html>
