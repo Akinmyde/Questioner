@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-useless-return */
 const isLogin = () => {
   const token = localStorage.getItem('token');
@@ -34,10 +35,10 @@ document.getElementById('login').addEventListener('click', (e) => {
   }
   loader.style.display = 'block';
   const url = 'https://akinmyde-questioner.herokuapp.com/api/v1/auth/login';
-  const user = { username: username.value, password: password.value };
+  const newUser = { username: username.value, password: password.value };
   const fetchData = {
     method: 'POST',
-    body: JSON.stringify(user),
+    body: JSON.stringify(newUser),
     headers: { 'Content-Type': 'application/json' },
   };
   fetch(url, fetchData)
@@ -50,7 +51,12 @@ document.getElementById('login').addEventListener('click', (e) => {
         return;
       }
       const { data } = result;
+      const { user } = data[0];
       localStorage.setItem('token', data[0].token);
-      window.location.href = 'user.html';
+      localStorage.setItem('user', JSON.stringify(user));
+      if (user.isadmin) {
+        return window.location.replace('admin.html');
+      }
+      return window.location.replace('user.html');
     });
 });
