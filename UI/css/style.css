@@ -276,7 +276,6 @@ a {
 }
 
 #banner {
-  /* background: url(../UI/image/bgimage.jpg) no-repeat center; */
   background-size: cover;
   margin: 0;
   height: 600px;
@@ -286,6 +285,7 @@ a {
   align-items: center;
   color: whitesmoke;
   font-size: xx-large;
+  text-align: center;
 }
 
 .banner-button {
@@ -353,13 +353,21 @@ a {
   font-size: 16px;
 }
 
-.delete {
+.delete, #no {
   color: red;
   font-size: 16px
 }
 
-.upvote {
+#no, #yes, #notsure {
+  padding-right: 10px;
+}
+
+.upvote, #yes {
   color: green;
+  font-size: 16px
+}
+
+#not-sure {
   font-size: 16px
 }
 
@@ -414,6 +422,9 @@ a {
   h6 {
     font-size: 12px
   }
+  footer {
+    padding: 10px 0px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -438,6 +449,9 @@ a {
   }
   .flex > div {
     flex: 100%;
+  }
+  footer {
+    padding: 0px 0px;
   }
 } 
 
