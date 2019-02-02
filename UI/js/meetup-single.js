@@ -77,6 +77,11 @@ meetupData = meetupData.find(data => data.id === meetupId);
 const meetupCard = `<img class="image card-image" src="${meetupData.images[0]}">
     <h4><a href="meetup-single.html">${meetupData.topic}</a></h4>
     <h6 class="font12">@${meetupData.location}</h6>
+    <h4>RSVP
+      <a title="yes" id="yes" class="rsvp" href=""><i class="fas fa-check"></i></a>
+      <a title="no" id="no" class="rsvp" href=""><i class="fas fa-times"></i></a>
+      <a title="maybe" id="maybe" class="rsvp" href=""><i class="fas fa-not-equal"></i></a>
+    </h4>
     <span class="text-holder">
       <ul class="details font12">
         <li>${new Date(meetupData.happeningon).toDateString()}</li>
@@ -161,3 +166,24 @@ document.getElementById('btnadd').addEventListener('click', () => {
     }
   });
 });
+
+const rsvp = document.getElementsByClassName('rsvp');
+for (let i = 0; i < rsvp.length; i += 1) {
+  rsvp[i].addEventListener('click', (e) => {
+    e.preventDefault();
+    const response = rsvp[i].id;
+    const rsvpUrl = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}/rsvps`;
+    const fetchData = {
+      method: 'POST',
+      body: JSON.stringify({ response }),
+      headers: { 'Content-Type': 'application/json', token },
+    };
+    loader.style.display = 'block';
+    fetch(rsvpUrl, fetchData)
+      .then(res => res.json())
+      .then((resp) => {
+        console.log(resp);
+        loader.style.display = 'none';
+      });
+  });
+}
