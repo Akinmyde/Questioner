@@ -4,7 +4,7 @@
   "description": "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node server/app.js",
+    "start": "export NODE_ENV=production && babel-node server/app.js",
     "migrate": "babel-node server/migration/migrate.js",
     "seed": "babel-node server/migration/seed.js",
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run migrate",

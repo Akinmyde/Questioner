@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendEmail = async (to, subject, message) => {
   try {
-    const env = process.env.NODE_ENV || 'production';
+    const env = process.env.NODE_ENV || 'development';
     if (env === 'development' || env === 'test') {
       const account = await nodemailer.createTestAccount();
       // create reusable transporter object using the default SMTP transport

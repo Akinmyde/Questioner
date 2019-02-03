@@ -44,6 +44,73 @@ describe('Meetup Test', () => {
       }
     });
   });
+  describe('Invalid Route', () => {
+    it('should return 404 if route does not exist', (done) => {
+      request(app)
+        .post('/api/v1/rubbish')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.status).toEqual(404);
+          expect(res.body.error).toEqual('Sorry, the page you tried cannot be found');
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return 404 if route does not exist', (done) => {
+      request(app)
+        .get('/api/v1/rubbish')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.status).toEqual(404);
+          expect(res.body.error).toEqual('Sorry, the page you tried cannot be found');
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return 404 if route does not exist', (done) => {
+      request(app)
+        .put('/api/v1/rubbish')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.status).toEqual(404);
+          expect(res.body.error).toEqual('Sorry, the page you tried cannot be found');
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return 404 if route does not exist', (done) => {
+      request(app)
+        .patch('/api/v1/rubbish')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.status).toEqual(404);
+          expect(res.body.error).toEqual('Sorry, the page you tried cannot be found');
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+    it('should return 404 if route does not exist', (done) => {
+      request(app)
+        .delete('/api/v1/rubbish/rubbish')
+        .expect(404)
+        .expect((res) => {
+          expect(res.body.status).toEqual(404);
+          expect(res.body.error).toEqual('Sorry, the page you tried cannot be found');
+        })
+        .end((err) => {
+          if (err) return done(err);
+          return done();
+        });
+    });
+  });
   describe('Forget Password', () => {
     it('should response with status code 200 if email is valid', async () => {
       try {
