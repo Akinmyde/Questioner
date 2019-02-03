@@ -107,6 +107,37 @@ class CommentController {
       await client.release();
     }
   }
+
+  /**
+ * @description - this method get all comment by user id
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ * */
+  static async getCommentByUserId(req, res) {
+    const client = await pool.connect();
+    try {
+      const token = req.body.token || req.headers.token;
+      const decodedToken = await decode(token);
+      const userId = decodedToken.id;
+      const selectQuery = {
+        text: 'SELECT COUNT (*) FROM comments WHERE createdby = $1',
+        values: [userId],
+      };
+      const comments = await client.query(selectQuery);
+      const { rows } = comments;
+      if (rows.length > 0) {
+        return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' });
+      }
+      return res.send({ status: 204, data: [], error: 'no comment yet' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
 }
 
 export default CommentController;

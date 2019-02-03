@@ -8,6 +8,8 @@ questionRoute.post('/', Middleware.isLogin, Middleware.createQuestionValidator, 
 
 questionRoute.get('/', Middleware.isLogin, questionController.getAllQuestion);
 
+questionRoute.get('/user', Middleware.isLogin, questionController.getQuestionByUserId);
+
 questionRoute.get('/:id', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionById);
 
 
