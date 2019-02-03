@@ -348,12 +348,7 @@ a {
   border-radius: 0px;
 }
 
-.location {
-  color: blue;
-  font-size: 16px;
-}
-
-.delete, #no {
+.delete, .downvote, #no {
   color: red;
   font-size: 16px
 }
@@ -371,12 +366,7 @@ a {
   font-size: 16px
 }
 
-.downvote {
-  color: red;
-  font-size: 16px
-}
-
-.comment {
+.comment, .edit, .location {
   color: blue;
   font-size: 16px
 }

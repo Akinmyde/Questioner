@@ -6,17 +6,46 @@ const date = document.getElementById('date');
 const loader = document.getElementById('overlay');
 const alert = document.getElementsByClassName('alert')[0];
 const token = localStorage.getItem('token');
-const totalmeetups = document.getElementById('totalmeetups');
+const totalMeetups = document.getElementById('totalmeetups');
+const totalComments = document.getElementById('totalcomments');
+const totalQuestions = document.getElementById('totalquestions');
+const isAdmin = localStorage.getItem('isAdmin');
 
+if (!isAdmin) {
+  window.location.href = 'index.html';
+}
+const getFetchData = {
+  method: 'GET',
+  headers: { 'Content-Type': 'application/json', token },
+};
 loader.style.display = 'block';
 fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
   .then(resp => resp.json())
   .then((results) => {
     loader.style.display = 'none';
     const { data } = results;
-    totalmeetups.innerHTML = data.length;
+    totalMeetups.innerHTML = data.length;
   });
-// loader.style.display = 'none';
+fetch('https://akinmyde-questioner.herokuapp.com/api/v1/comments', getFetchData)
+  .then(resp => resp.json())
+  .then((result) => {
+    const { data } = result;
+    if (data[0].count > 0) {
+      totalComments.innerHTML = data[0].count;
+    } else {
+      totalComments.innerHTML = 0;
+    }
+  });
+fetch('https://akinmyde-questioner.herokuapp.com/api/v1/questions', getFetchData)
+  .then(resp => resp.json())
+  .then((result) => {
+    const { data } = result;
+    if (data[0].count > 0) {
+      totalQuestions.innerHTML = data[0].count;
+    } else {
+      totalQuestions.innerHTML = 0;
+    }
+  });
 error.style.display = 'block';
 document.getElementById('btnmeetup').addEventListener('click', (e) => {
   e.preventDefault();
@@ -55,8 +84,8 @@ document.getElementById('btnmeetup').addEventListener('click', (e) => {
   fetch(url, fetchData)
     .then(res => res.json())
     .then((result) => {
-      const number = parseInt(totalmeetups.innerHTML, 10);
-      totalmeetups.innerHTML = number + 1;
+      const number = parseInt(totalMeetups.innerHTML, 10);
+      totalMeetups.innerHTML = number + 1;
       loader.style.display = 'none';
       error.innerHTML = result.message;
       alert.style.display = 'block';
