@@ -1,19 +1,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-useless-return */
-const isLogin = () => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'user.html';
-  }
-};
-
-isLogin();
-
 const username = document.getElementById('username');
 const password = document.getElementById('password');
 const error = document.getElementsByClassName('error')[0];
 const alert = document.getElementsByClassName('alert')[0];
 const loader = document.getElementById('overlay');
+const token = localStorage.getItem('token');
+const isAdmin = localStorage.getItem('isAdmin');
+
+if (token) {
+  if (isAdmin) {
+    window.location.href = 'admin.html';
+  } else {
+    window.location.href = 'user.html';
+  }
+}
 
 loader.style.display = 'none';
 alert.style.display = 'none';
@@ -53,8 +54,8 @@ document.getElementById('login').addEventListener('click', (e) => {
       const { data } = result;
       const { user } = data[0];
       localStorage.setItem('token', data[0].token);
-      localStorage.setItem('user', JSON.stringify(user));
       if (user.isadmin) {
+        localStorage.setItem('isAdmin', user.isadmin);
         return window.location.replace('admin.html');
       }
       return window.location.replace('user.html');

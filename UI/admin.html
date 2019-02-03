@@ -21,8 +21,8 @@
       <a href="" class="show-menu"><i class="fas fa-bars"></i></a>
       <a href="" class="hide-menu"><i class="fas fa-times"></i></a>
       <div class="header-right">
-        <a href=""></a>
-        <a class="active" id="dashboard" href="#">Dashboard</a>
+        <a href="meetups.html">Meetups</a>
+        <a class="active" id="login" href="#">Sign out</a>
       </div>
     </div>
   </header>
@@ -33,8 +33,12 @@
     <div>
       <p class="lg font22"><i class="fas fa-user-plus"> All Meetups</i><br><span id="totalmeetups"></span></p>
     </div>
-    <div><p class="lg font22"><i class="fas fa-comment"> All comments<br/>40</i></p></div>
-    <div><p class="lg font22"><i class="fas fa-users"> All Questions <br/>30</i></p></div>
+    <div>
+      <p class="lg font22"><i class="fas fa-user-plus"> All Comments</i><br><span id="totalcomments"></span></p>
+    </div>
+    <div>
+      <p class="lg font22"><i class="fas fa-user-plus"> All Questions</i><br><span id="totalquestions"></span></p>
+    </div>
   </div>
   <div class="container" id="create">
     <div class="alert">
@@ -62,8 +66,10 @@
   <footer>
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
   </footer>
+  <script src="js/secure.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/sign-out.js"></script>
 </body>
 
 </html>

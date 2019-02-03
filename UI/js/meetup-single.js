@@ -1,12 +1,6 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-useless-return */
 // check if user is loggedin
-const isLogin = () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    window.location.href = 'login.html';
-  }
-};
 
 const meetupContainer = document.getElementById('meetup');
 const questionContainer = document.getElementById('questions');
@@ -91,19 +85,19 @@ const meetupCard = `<img class="image card-image" src="${meetupData.images[0]}">
     </span>`;
 meetupContainer.insertAdjacentHTML('afterbegin', meetupCard);
 
-const questionsView = () => {
-  url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}/questions`;
-  apiCall(url, 'GET').then((data) => {
-    loader.style.display = 'none';
-    if (typeof (data) !== 'object') {
-      const emptyCard = `<div class="space">
+// const questionsView = () => {
+url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}/questions`;
+apiCall(url, 'GET').then((data) => {
+  loader.style.display = 'none';
+  if (typeof (data) !== 'object') {
+    const emptyCard = `<div class="space">
             <h4>${data}</h4>`;
-      questionContainer.insertAdjacentHTML('beforeend', emptyCard);
-      return;
-    }
-    sessionStorage.setItem('questionObj', JSON.stringify(data));
-    data.forEach((question) => {
-      const questionCard = `<div class="space">
+    questionContainer.insertAdjacentHTML('beforeend', emptyCard);
+    return;
+  }
+  sessionStorage.setItem('questionObj', JSON.stringify(data));
+  data.forEach((question) => {
+    const questionCard = `<div class="space">
             <h4><a class="question-link" id="${question.id}" href="">${question.title}</a></h4>
             <p class="font16">${question.body}</p>
             <span class="text-holder">
@@ -115,26 +109,25 @@ const questionsView = () => {
               </ul>
             </span>
           </div>`;
-      questionContainer.insertAdjacentHTML('beforeend', questionCard);
-      return;
-    });
-    vote('upvote', upVote);
-    vote('downvote', downVote);
-    // Get question id
-    for (let i = 0; i < link.length; i += 1) {
-      if (link[i].className === 'question-link') {
-        link[i].addEventListener('click', (e) => {
-          e.preventDefault();
-          sessionStorage.setItem('questionid', parseInt(link[i].id, 10));
-          window.location.href = 'comment.html';
-        });
-      }
-    }
+    questionContainer.insertAdjacentHTML('beforeend', questionCard);
+    return;
   });
-};
+  vote('upvote', upVote);
+  vote('downvote', downVote);
+  // Get question id
+  for (let i = 0; i < link.length; i += 1) {
+    if (link[i].className === 'question-link') {
+      link[i].addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.setItem('questionid', parseInt(link[i].id, 10));
+        window.location.href = 'comment.html';
+      });
+    }
+  }
+});
+// };
 
-isLogin();
-questionsView();
+// questionsView();
 
 document.getElementById('btnshow').addEventListener('click', () => {
   questions.style.display = 'none';

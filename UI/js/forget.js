@@ -3,6 +3,16 @@ const email = document.getElementById('email');
 const error = document.getElementsByClassName('error')[0];
 const alert = document.getElementsByClassName('alert')[0];
 const loader = document.getElementById('overlay');
+const token = localStorage.getItem('token');
+const isAdmin = localStorage.getItem('isAdmin');
+
+if (token) {
+  if (isAdmin) {
+    window.location.href = 'admin.html';
+  } else {
+    window.location.href = 'user.html';
+  }
+}
 
 loader.style.display = 'none';
 alert.style.display = 'none';

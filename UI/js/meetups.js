@@ -1,10 +1,10 @@
 const container = document.getElementsByClassName('meetup-card')[0];
 const link = document.getElementsByTagName('a');
 const loader = document.getElementById('overlay');
-const user = JSON.parse(localStorage.getItem('user'));
+const user = localStorage.getItem('isAdmin');
 let isAdmin;
 if (user) {
-  isAdmin = user.isadmin;
+  isAdmin = user;
 } else {
   isAdmin = false;
 }
@@ -40,6 +40,7 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
             <ul class="details">
               <li>${new Date(meetup.happeningon).toDateString()}</li>
               <li title="delete"><a href="" id="${meetup.id}" class="delete"><i class="fas fa-trash"></i></a></li>
+              <li title="edit"><a class="edit" href="" id="${meetup.id}"><i class="fas fa-edit"></i></a></li>
             </ul>
           </span>
         </div>
