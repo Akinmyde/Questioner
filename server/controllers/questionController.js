@@ -53,6 +53,34 @@ class QuestionController {
   }
 
   /**
+* @description - this method get all questions
+*
+* @param {object} req - The request payload sent to the router
+* @param {object} res - The response payload sent back from the controller
+*
+* @returns {object} - status message and response
+*/
+  static async getAllQuestion(req, res) {
+    const client = await pool.connect();
+    try {
+      const allQuestionsQuery = {
+        text: 'SELECT COUNT(*) FROM questions',
+        values: [],
+      };
+      const questions = await client.query(allQuestionsQuery);
+      const { rows } = questions;
+      if (rows.length > 0) {
+        return res.status(200).send({ status: 200, data: rows, message: 'All questions was retrieved' });
+      }
+      return res.send({ status: 204, data: [], error: 'no questions yet' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
 * @description - this method get a question by it's id
 *
 * @param {object} req - The request payload sent to the router

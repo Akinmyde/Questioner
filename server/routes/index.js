@@ -16,6 +16,6 @@ router.use('/questions', questionRoute);
 
 router.use('/auth', userRoute);
 
-router.use('/questions', commentRoute);
+router.use('/', commentRoute);
 
 export default router;
