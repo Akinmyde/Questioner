@@ -31,10 +31,8 @@ class MeetupController {
           values: [regex(topic), regex(location), happeningOn, defaultImage],
         };
         const meetup = await client.query(createMeetupQuery);
-        const { rows } = meetup;
-
-        if (rows) {
-          return res.status(201).send({ status: 201, data: [rows[0]], message: 'Meetup was created successfully' });
+        if (meetup.rows) {
+          return res.status(201).send({ status: 201, data: [meetup.rows[0]], message: 'Meetup was created successfully' });
         }
         return res.status(200).send({ status: 204, error: 'Meetup not created' });
       }
@@ -191,8 +189,7 @@ class MeetupController {
       const { response } = req.body;
       const rsvpQuery = { text: 'INSERT INTO rsvps (meetup, userid, response) VALUES($1, $2, $3) RETURNING *', values: [meetupId, userId, regex(response)] };
       const rsvp = await client.query(rsvpQuery);
-      const { rows } = rsvp;
-      if (rows) { return res.status(201).send({ status: 201, data: [rows[0]], message: 'Your response has been saved' }); }
+      if (rsvp.rows) { return res.status(201).send({ status: 201, data: [rsvp.rows[0]], message: 'Your response has been saved' }); }
       return res.status(204).send({ status: 204, error: 'Response not saved, try again' });
     } catch (err) { return res.status(500).send({ status: 500, error: 'Internal server error' }); } finally { await client.release(); }
   }
