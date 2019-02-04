@@ -234,30 +234,19 @@ class MeetupController {
       const images = files || file;
       const token = req.headers.token || req.body.token;
       const decodedToken = await decode(token);
-
       const { isAdmin } = decodedToken;
       if (isAdmin) {
         const imageArray = [];
         images.forEach(image => imageArray.push(image.secure_url));
         const { id } = req.params;
-        const addImageQuery = {
-          text: 'UPDATE meetups SET images = $1 WHERE id = $2 RETURNING *',
-          values: [imageArray, id],
-        };
+        const addImageQuery = { text: 'UPDATE meetups SET images = $1 WHERE id = $2 RETURNING *', values: [imageArray, id] };
         const tagsResult = await client.query(addImageQuery);
         const { rowCount, rows } = tagsResult;
-        if (rowCount === 1) {
-          return res.status(201).send({ status: 201, data: rows, message: 'Images was added successfully' });
-        }
+        if (rowCount === 1) { return res.status(201).send({ status: 201, data: rows, message: 'Images was added successfully' }); }
         images.forEach(image => cloudinaryDelete(image.public_id));
         return res.status(404).send({ status: 404, error: 'Meetup not found' });
-      }
-      return res.status(401).send({ status: 401, error: 'Only an admin can add images to a meetup' });
-    } catch (err) {
-      return res.status(500).send({ status: 500, error: 'Internal server error' });
-    } finally {
-      await client.release();
-    }
+      } return res.status(401).send({ status: 401, error: 'Only an admin can add images to a meetup' });
+    } catch (err) { return res.status(500).send({ status: 500, error: 'Internal server error' }); } finally { await client.release(); }
   }
 }
 

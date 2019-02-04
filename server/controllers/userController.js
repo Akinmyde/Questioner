@@ -22,8 +22,7 @@ class UserController {
     const client = await pool.connect();
     try {
       const { username, email, password } = req.body;
-      let hashedPassword = password.trim();
-      hashedPassword = passwordHash.generate(password);
+      const hashedPassword = passwordHash.generate(password.trim());
       const signUpUserQuery = { text: 'INSERT INTO users(email, username, password) VALUES($1, $2, $3) RETURNING id, email, username, registered, lastlogin', values: [email.trim(), username.trim(), hashedPassword] };
       const user = await client.query(signUpUserQuery);
       const { rows } = user;
@@ -31,8 +30,7 @@ class UserController {
         const token = encode(rows[0].id, rows[0].isadmin);
         await notification.signUp(email);
         return res.status(201).send({ status: 201, data: [{ token, user: rows[0] }], message: 'Registration was successfull' });
-      }
-      return res.status(204).send({ status: 204, error: 'User account not created, try again' });
+      } return res.status(204).send({ status: 204, error: 'User account not created, try again' });
     } catch (err) {
       const { constraint } = err;
       if (constraint === 'users_email_key') { return res.status(409).send({ status: 409, error: 'Email already exists' }); }
