@@ -82,14 +82,10 @@ class CommentController {
 *
 * @returns {object} - status message and response
 */
-  static async getAllCommnet(req, res) {
+  static async AllComment(req, res) {
     const client = await pool.connect();
     try {
-      const allCommentsQuery = {
-        text: 'SELECT COUNT(*) FROM comments',
-        values: [],
-      };
-      const comments = await client.query(allCommentsQuery);
+      const comments = await client.query('SELECT COUNT(*) FROM comments');
       const { rows } = comments;
       if (rows.length > 0) {
         return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' });
@@ -110,21 +106,19 @@ class CommentController {
  *
  * @returns {object} - status message and response
  * */
-  static async getCommentByUserId(req, res) {
+  static async getUsersComments(req, res) {
     const client = await pool.connect();
     try {
-      const token = req.body.token || req.headers.token;
+      const token = req.headers.token || req.body.token;
       const decodedToken = await decode(token);
-      const userId = decodedToken.id;
+      const { id } = decodedToken;
       const selectQuery = {
         text: 'SELECT COUNT (*) FROM comments WHERE createdby = $1',
-        values: [userId],
+        values: [id],
       };
       const comments = await client.query(selectQuery);
       const { rows } = comments;
-      if (rows.length > 0) {
-        return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' });
-      }
+      if (rows.length > 0) { return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' }); }
       return res.send({ status: 204, data: [], error: 'no comment yet' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
