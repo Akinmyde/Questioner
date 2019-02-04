@@ -181,36 +181,20 @@ class MeetupController {
       const meetupId = req.params.id;
       const meetupQuery = { text: 'SELECT FROM meetups WHERE id = $1', values: [meetupId] };
       const meetup = await client.query(meetupQuery);
-      if (meetup.rowCount === 0) {
-        return res.status(404).send({ status: 404, error: 'Meetup not found' });
-      }
+      if (meetup.rowCount === 0) { return res.status(404).send({ status: 404, error: 'Meetup not found' }); }
       const token = req.headers.token || req.body.token;
       const decodedToken = await decode(token);
       const userId = decodedToken.id;
-      const userResponseQuery = {
-        text: 'SELECT FROM rsvps WHERE meetup = $1 AND userid = $2',
-        values: [meetupId, userId],
-      };
+      const userResponseQuery = { text: 'SELECT FROM rsvps WHERE meetup = $1 AND userid = $2', values: [meetupId, userId] };
       const userResponse = await client.query(userResponseQuery);
-      if (userResponse.rowCount === 1) {
-        return res.status(409).send({ status: 409, error: 'You have already responded to this meetup' });
-      }
+      if (userResponse.rowCount === 1) { return res.status(409).send({ status: 409, error: 'You have already responded to this meetup' }); }
       const { response } = req.body;
-      const rsvpQuery = {
-        text: 'INSERT INTO rsvps (meetup, userid, response) VALUES($1, $2, $3) RETURNING *',
-        values: [meetupId, userId, regex(response)],
-      };
+      const rsvpQuery = { text: 'INSERT INTO rsvps (meetup, userid, response) VALUES($1, $2, $3) RETURNING *', values: [meetupId, userId, regex(response)] };
       const rsvp = await client.query(rsvpQuery);
       const { rows } = rsvp;
-      if (rows) {
-        return res.status(201).send({ status: 201, data: [rows[0]], message: 'Your response has been saved' });
-      }
+      if (rows) { return res.status(201).send({ status: 201, data: [rows[0]], message: 'Your response has been saved' }); }
       return res.status(204).send({ status: 204, error: 'Response not saved, try again' });
-    } catch (err) {
-      return res.status(500).send({ status: 500, error: 'Internal server error' });
-    } finally {
-      await client.release();
-    }
+    } catch (err) { return res.status(500).send({ status: 500, error: 'Internal server error' }); } finally { await client.release(); }
   }
 
   static async meetupTags(req, res) {
