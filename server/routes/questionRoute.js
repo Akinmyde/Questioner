@@ -6,6 +6,10 @@ const questionRoute = express.Router();
 
 questionRoute.post('/', Middleware.isLogin, Middleware.createQuestionValidator, questionController.createQuestion);
 
+questionRoute.get('/', Middleware.isLogin, questionController.getAllQuestion);
+
+questionRoute.get('/user', Middleware.isLogin, questionController.getQuestionByUserId);
+
 questionRoute.get('/:id', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionById);
 
 

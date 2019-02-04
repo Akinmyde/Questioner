@@ -43,35 +43,89 @@ class CommentController {
   }
 
   /**
- * @description - this method get all comment
+ * @description - this method get all comment by question id
  *
  * @param {object} req - The request payload sent to the router
  * @param {object} res - The response payload sent back from the controller
  *
  * @returns {object} - status message and response
  */
-  static async getAllComment(req, res) {
+  static async getCommentByQuestion(req, res) {
     const client = await pool.connect();
     try {
       const { id } = req.params;
-      const questionQuery = {
-        text: 'SELECT * FROM questions WHERE ID = $1',
-        values: [id],
-      };
+      const questionQuery = { text: 'SELECT * FROM questions WHERE ID = $1', values: [id] };
       const question = await client.query(questionQuery);
       if (question.rows.length > 0) {
-        const commentQuery = {
-          text: 'SELECT * FROM comments WHERE questionid = $1',
-          values: [id],
-        };
+        const commentQuery = { text: 'SELECT * FROM comments WHERE questionid = $1', values: [id] };
         const comment = await client.query(commentQuery);
         const { rows } = comment;
         if (rows.length > 0) {
-          return res.status(200).send({ status: 200, data: rows, message: 'All comment was retrieved successfully' });
+          return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved successfully' });
         }
         return res.send({ status: 204, error: 'no comment for this question yet' });
       }
       return res.status(404).send({ status: 404, error: 'There are no comment for that id' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+
+  /**
+* @description - this method get all comment
+*
+* @param {object} req - The request payload sent to the router
+* @param {object} res - The response payload sent back from the controller
+*
+* @returns {object} - status message and response
+*/
+  static async getAllCommnet(req, res) {
+    const client = await pool.connect();
+    try {
+      const allCommentsQuery = {
+        text: 'SELECT COUNT(*) FROM comments',
+        values: [],
+      };
+      const comments = await client.query(allCommentsQuery);
+      const { rows } = comments;
+      if (rows.length > 0) {
+        return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' });
+      }
+      return res.send({ status: 204, data: [], error: 'no comment yet' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
+  /**
+ * @description - this method get all comment by user id
+ *
+ * @param {object} req - The request payload sent to the router
+ * @param {object} res - The response payload sent back from the controller
+ *
+ * @returns {object} - status message and response
+ * */
+  static async getCommentByUserId(req, res) {
+    const client = await pool.connect();
+    try {
+      const token = req.body.token || req.headers.token;
+      const decodedToken = await decode(token);
+      const userId = decodedToken.id;
+      const selectQuery = {
+        text: 'SELECT COUNT (*) FROM comments WHERE createdby = $1',
+        values: [userId],
+      };
+      const comments = await client.query(selectQuery);
+      const { rows } = comments;
+      if (rows.length > 0) {
+        return res.status(200).send({ status: 200, data: rows, message: 'All comments was retrieved' });
+      }
+      return res.send({ status: 204, data: [], error: 'no comment yet' });
     } catch (err) {
       return res.status(500).send({ status: 500, error: 'Internal server error' });
     } finally {
