@@ -10,10 +10,10 @@ questionRoute.get('/', Middleware.isLogin, questionController.getAllQuestion);
 
 questionRoute.get('/user', Middleware.isLogin, questionController.getQuestionByUserId);
 
-questionRoute.get('/:id', Middleware.isLogin, Middleware.validateParams, questionController.getQuestionById);
+questionRoute.get('/:id', Middleware.isLogin, Middleware.validateParams, questionController.QuestionById);
 
 
-questionRoute.patch('/:id/upvote', Middleware.isLogin, Middleware.validateParams, questionController.upVoteQuestion);
+questionRoute.patch('/:id/upvote', Middleware.isLogin, Middleware.validateParams, questionController.upVote);
 
 questionRoute.patch('/:id/downvote', Middleware.isLogin, Middleware.validateParams, questionController.downVoteQuestion);
 
