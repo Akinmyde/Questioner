@@ -173,6 +173,7 @@ class MeetupController {
  *
  * @returns {object} - status message and response
  */
+  // eslint-disable-next-line consistent-return
   static async rsvpsMeetup(req, res) {
     const client = await pool.connect();
     try {
@@ -189,8 +190,7 @@ class MeetupController {
       const { response } = req.body;
       const rsvpQuery = { text: 'INSERT INTO rsvps (meetup, userid, response) VALUES($1, $2, $3) RETURNING *', values: [meetupId, userId, regex(response)] };
       const rsvp = await client.query(rsvpQuery);
-      if (rsvp.rows) { return res.status(201).send({ status: 201, data: [rsvp.rows[0]], message: 'Your response has been saved' }); }
-      return res.status(204).send({ status: 204, error: 'Response not saved, try again' });
+      if (rsvp.rows) { res.status(201).send({ status: 201, data: [rsvp.rows[0]], message: 'Your response has been saved' }); } else { return res.status(204).send({ status: 204, error: 'Response not saved, try again' }); }
     } catch (err) { return res.status(500).send({ status: 500, error: 'Internal server error' }); } finally { await client.release(); }
   }
 
