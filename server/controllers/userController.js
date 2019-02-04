@@ -18,6 +18,7 @@ class UserController {
 *
 * @returns {object} - status message and response
 */
+  // eslint-disable-next-line consistent-return
   static async signUp(req, res) {
     const client = await pool.connect();
     try {
@@ -33,9 +34,7 @@ class UserController {
       } return res.status(204).send({ status: 204, error: 'User account not created, try again' });
     } catch (err) {
       const { constraint } = err;
-      if (constraint === 'users_email_key') { return res.status(409).send({ status: 409, error: 'Email already exists' }); }
-      if (constraint === 'users_username_key') { return res.status(409).send({ status: 409, error: 'Username already exists' }); }
-      return res.status(500).send({ status: 500, error: 'Internal server error' });
+      if (constraint === 'users_email_key') { res.status(409).send({ status: 409, error: 'Email already exists' }); } else if (constraint === 'users_username_key') { res.status(409).send({ status: 409, error: 'Username already exists' }); } else { return res.status(500).send({ status: 500, error: 'Internal server error' }); }
     } finally { await client.release(); }
   }
 
