@@ -76,22 +76,15 @@ class QuestionController {
 *
 * @returns {object} - status message and response
 */
-  static async getQuestionById(req, res) {
+  static async QuestionById(req, res) {
     const client = await pool.connect();
     try {
       const { id } = req.params;
-      const getQuestionByIdQuery = {
-        text: 'SELECT * FROM questions WHERE ID = $1',
-        values: [id],
-      };
-      const questionFound = await client.query(getQuestionByIdQuery);
+      const getQuery = { text: 'SELECT * FROM questions WHERE ID = $1', values: [id] };
+      const questionFound = await client.query(getQuery);
       const { rows } = questionFound;
       if (rows.length > 0) {
-        return res.status(200).send({
-          status: 200,
-          data: rows,
-          message: 'Question was retrieved',
-        });
+        return res.status(200).send({ status: 200, data: rows, message: 'Question was retrieved' });
       }
       return res.status(404).send({ status: 404, error: 'Question not found' });
     } catch (err) {
