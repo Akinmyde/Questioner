@@ -16,6 +16,7 @@
     transform: rotate(220deg)
   }
 }
+
 #loader:after {
   animation: animate2 1.5s ease-in-out infinite;
   clip: rect(0, 80px, 80px, 40px);
@@ -52,3 +53,5 @@
   z-index: 2;
   cursor: pointer;
 }
+
+/* Creadit goes to codepen.io */

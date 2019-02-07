@@ -43,6 +43,12 @@ button {
   font-size: 18px;
 }
 
+.btn-modal {
+  background-color: #000000;
+  padding: 3px;
+  width: 100px;
+}
+
 .sm {
   width: 18%
 }

@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-useless-return */
 const addCommentView = document.getElementById('add-comment');
 const title = document.getElementById('title');
 const questionContainer = document.getElementById('question');
@@ -7,67 +5,56 @@ const commentContainer = document.getElementById('comments');
 const token = localStorage.getItem('token');
 const commentMessage = document.getElementById('commentMessage');
 const loader = document.getElementById('overlay');
-const alert = document.getElementsByClassName('alert')[0];
-const error = document.getElementsByClassName('error')[0];
 let meetupId = sessionStorage.getItem('meetupid');
 let questionId = sessionStorage.getItem('questionid');
 const url = `https://akinmyde-questioner.herokuapp.com/api/v1/questions/${questionId}/comments`;
 let totalComment = 0;
-alert.style.display = 'none';
+const closeButton = document.querySelector('.close-button');
+const msg = document.querySelector('.msg');
+const modalContent = document.querySelector('.modal-content');
+const modal = document.querySelector('.modal');
+
+const toggleModal = (msgText, bckColor, forColor) => {
+  msg.innerHTML = msgText;
+  msg.style.color = forColor || '#721c24';
+  modal.classList.toggle('show-modal');
+  modalContent.style.background = bckColor || '#f8d7da';
+};
+const removeModal = (e) => {
+  if (e.target === modal) { toggleModal(''); }
+};
+
+const commentCard = data => `<div class="space">
+  <p class="font16">${data.body}</p>
+  <p class="font12">by Akinremi Olumide</p>
+  <span class="text-holder">${new Date(data.createdon).toDateString()}</span>
+  </div>`;
+
 addCommentView.style.display = 'none';
+
 if (!meetupId) {
   window.location.href = 'meetups.html';
 }
 meetupId = parseInt(meetupId, 10);
 questionId = parseInt(questionId, 10);
-const apiCall = (reqUrl, reqMethod, payload) => {
-  let fetchData;
-  if (!payload) {
-    fetchData = {
-      method: reqMethod,
-      body: payload,
-      headers: { 'Content-Type': 'application/json', token },
-    };
-  } else {
-    fetchData = {
-      method: reqMethod,
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json', token },
-    };
-  }
-  return fetch(reqUrl, fetchData)
-    .then(res => res.json())
-    .then((result) => {
-      if (result.error) {
-        return result.error;
-      }
-      const { data } = result;
-      return data;
-    })
-    .catch(err => console.log(err));
+
+let fetchData = {
+  method: 'GET',
+  headers: { 'Content-Type': 'application/json', token },
 };
 
-apiCall(url, 'GET').then((data) => {
-  let commentCard;
-  loader.style.display = 'none';
-  if (typeof (data) === 'object') {
-    totalComment = data.length;
-    sessionStorage.setItem('totalcomment', totalComment);
-    data.forEach((comment) => {
-      commentCard = `<div class="space">
-  <p class="font16">${comment.body}</p>
-  <p class="font12">by Akinremi Olumide</p>
-  <span class="text-holder">${new Date(comment.createdon).toDateString()}</span>
-  </div>`;
-      commentContainer.insertAdjacentHTML('beforeend', commentCard);
-    });
-    return;
-  }
-  commentCard = `<div class="space">
-  <p class="font16">${data}</p></div>`;
-  commentContainer.insertAdjacentHTML('beforeend', commentCard);
-  return;
-});
+fetch(url, fetchData).then(resp => resp.json())
+  .then((result) => {
+    loader.style.display = 'none';
+    const { data } = result;
+    if (data) {
+      totalComment = data.length;
+      sessionStorage.setItem('totalcomment', totalComment);
+      return data.forEach(comment => commentContainer.insertAdjacentHTML('beforeend', commentCard(comment)));
+    }
+    return commentContainer.insertAdjacentHTML('beforeend', `<div class="space">
+   <p class="font16">No question yet</p></div>`);
+  });
 
 let meetupData = JSON.parse(sessionStorage.getItem('meetupObj'));
 meetupData = meetupData.find(data => data.id === meetupId);
@@ -102,15 +89,29 @@ document.getElementById('btncancel').addEventListener('click', (e) => {
 document.getElementById('btnadd').addEventListener('click', (e) => {
   e.preventDefault();
   if (commentMessage.value === '') {
-    error.innerHTML = 'Comment message is required';
-    alert.style.display = 'block';
-    return;
+    toggleModal('Comment message is required');
+  } else {
+    const newComment = { body: commentMessage.value };
+    fetchData = {
+      method: 'POST',
+      body: JSON.stringify(newComment),
+      headers: { 'Content-Type': 'application/json', token },
+    };
+    fetch(url, fetchData).then(res => res.json())
+      .then((result) => {
+        const { data } = result;
+        if (data) {
+          commentContainer.style.display = 'block';
+          addCommentView.style.display = 'none';
+          toggleModal('your comment has been added', 'rgb(64, 141, 64)', 'white');
+          return commentContainer.insertAdjacentHTML('beforeend', commentCard(data[0]));
+        }
+        return toggleModal('There was an error, try again');
+      });
   }
-  const newComment = { body: commentMessage.value };
-  apiCall(url, 'POST', newComment).then((data) => {
-    if (data) {
-      location.reload();
-      return;
-    }
-  });
 });
+
+closeButton.addEventListener('click', () => {
+  toggleModal('');
+});
+window.addEventListener('click', removeModal);

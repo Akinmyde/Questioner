@@ -8,11 +8,18 @@
   <title>Questioner | Comment</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="css/loader.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/modal.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
     crossorigin="anonymous">
 </head>
 
 <body>
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <p class="msg"></p>
+    </div>
+  </div>
   <header>
     <div class="header">
       <a href="index.html" class="logo"><img class="image sm" src="image/new_logo.png"></a>
@@ -29,7 +36,7 @@
     </div>
   </header>
   <div id="overlay">
-      <div id="loader"></div>
+    <div id="loader"></div>
   </div>
   <div class="flex full no-pad">
     <div id="question" class="space"></div>
@@ -40,15 +47,11 @@
     </div>
   </div>
   <div class="container" id="add-comment">
-    <div class="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <span class="error"></span>
-    </div>
     <br>
     <label for="title">Comment</label>
     <textarea id="commentMessage" cols="54" rows="4"></textarea>
     <div class="center">
-      <button type="button" id="btnadd" class="font12 md">Add Question</button>
+      <button type="button" id="btnadd" class="font12 md">Add Comment</button>
       <button type="button" id="btncancel" class="font12 md">Cancel</button>
     </div>
   </div>
@@ -61,4 +64,5 @@
   <script src="js/index.js"></script>
   <script src="js/sign-out.js"></script>
 </body>
+
 </html>
