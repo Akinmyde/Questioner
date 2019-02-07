@@ -3,16 +3,27 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Questioner | Meetup</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Questioner | Meetups</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-  <link rel="stylesheet" type="text/css" href="css/loader.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/loader.css" />
+  <link rel="stylesheet" type="text/css" href="css/modal.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
     crossorigin="anonymous">
 </head>
 
 <body>
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <p class="msg"></p>
+      <div>
+          <button class="btn-modal btn-yes">Yes</button>
+          <button class="btn-modal btn-no">No</button>
+      </div>
+    </div>
+  </div>
   <header>
     <div class="header">
       <a href="index.html" class="logo"><img class="image sm" src="image/new_logo.png"></a>
@@ -26,40 +37,18 @@
         <a id="dashboard" href="user.html">Dashboard</a>
         <a class="active" id="login" href="login.html">Sign in</a>
       </div>
+    </div>
   </header>
   <div id="overlay">
     <div id="loader"></div>
   </div>
-  <div class="flex full no-pad">
-    <div id="meetup"></div>
-  </div>
-  <div id="questions" class="flex full flex-buttom-space">
-    <div class="center no-border">
-      <h1 id="title">Questions</h1>
-    </div>
-  </div>
-  <div class="container" id="add-question">
-    <div class="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <span class="error"></span>
-    </div>
-    <br>
-    <label for="title">Title</label>
-    <input id="questiontitle" type="text">
-    <label for="title">Body</label>
-    <textarea id="body" cols="54" rows="4"></textarea>
-    <div class="center">
-      <button type="button" id="btnadd" class="font12 md">Add Question</button>
-      <button type="button" id="btncancel" class="font12 md">Cancel</button>
-    </div>
-  </div>
+  <div id="test" class="flex meetup-card"></div>
   <footer>
     <p class="center">© Questioner 2018 | Terms &amp; Conditions | Privacy Policy</p>
   </footer>
-  <script src="js/secure.js"></script>
-  <script src="js/menu.js"></script>
-  <script src="js/meetup-single.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/meetups.js"></script>
   <script src="js/sign-out.js"></script>
 </body>
 

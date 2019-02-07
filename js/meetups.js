@@ -2,6 +2,23 @@ const container = document.getElementsByClassName('meetup-card')[0];
 const link = document.getElementsByTagName('a');
 const loader = document.getElementById('overlay');
 const user = localStorage.getItem('isAdmin');
+const modal = document.querySelector('.modal');
+const closeButton = document.querySelector('.close-button');
+const msg = document.querySelector('.msg');
+const modalContent = document.querySelector('.modal-content');
+const yes = document.querySelector('.btn-yes');
+const no = document.querySelector('.btn-no');
+
+const toggleModal = (msgText, bckColor, forColor) => {
+  msg.innerHTML = msgText;
+  msg.style.color = forColor || '#721c24';
+  modal.classList.toggle('show-modal');
+  modalContent.style.background = bckColor || '#f8d7da';
+};
+const removeModal = (e) => {
+  if (e.target === modal) { toggleModal(''); }
+};
+
 let isAdmin;
 if (user) {
   isAdmin = user;
@@ -46,7 +63,6 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
         </div>
       </a>`;
       }
-
       container.insertAdjacentHTML('afterbegin', card);
     });
 
@@ -66,25 +82,36 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
       for (let i = 0; i < deleteMeetup.length; i += 1) {
         deleteMeetup[i].addEventListener('click', (e) => {
           e.preventDefault();
-          const meetupId = deleteMeetup[i].id;
-          const url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}`;
-          const token = localStorage.getItem('token');
-          const fetchData = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json', token },
-          };
-          loader.style.display = 'block';
-          fetch(url, fetchData)
-            .then(res => res.json())
-            .then((resp) => {
-              console.log(resp);
-              deleteMeetup[i].parentNode.parentNode.parentNode.parentNode.style.display = 'none';
-              loader.style.display = 'none';
-            });
+          toggleModal('Are you sure you want to delete', 'white', 'black');
+          yes.addEventListener('click', () => {
+            const meetupId = deleteMeetup[i].id;
+            const url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}`;
+            const token = localStorage.getItem('token');
+            const fetchData = {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json', token },
+            };
+            loader.style.display = 'block';
+            fetch(url, fetchData)
+              .then(res => res.json())
+              .then((resp) => {
+                if (resp.data) {
+                  toggleModal('');
+                  deleteMeetup[i].parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+                  loader.style.display = 'none';
+                }
+              });
+          });
         });
       }
     }
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .catch((err) => { console.log(err); });
+
+closeButton.addEventListener('click', () => {
+  toggleModal('');
+});
+no.addEventListener('click', () => {
+  toggleModal('');
+});
+window.addEventListener('click', removeModal);
