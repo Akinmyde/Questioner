@@ -6,6 +6,25 @@ Crowd-source questions for a meetup. Questioner helps the meetup organizer prior
 
 ## Getting Started
 
+### Features
+
+* Sign up to Questioner
+* Login to access features
+* Create a meetup
+* Get all meetups
+* Get a single meetup
+* Get all questions
+* Delete a single meetup
+* Get all upcoming meetup
+* Create a question
+* Upvote a question
+* Downvote a question
+* Respond to meetup rsvp
+* Create a comment
+
+### API Docs
+* [Swagger](https://app.swaggerhub.com/apis/CodeAce/Questioner/1.0.0)
+
 ### Prerequisites
 
 These are the required tools get started
@@ -29,25 +48,10 @@ npm start
 
 Find below, the links to the various page for the UI
 
-* [Home Page](https://akinmyde.github.io/Questioner/UI/)
-* [User Dashboard](https://akinmyde.github.io/Questioner/UI/user.html)
-* [Admin Dashboard](https://akinmyde.github.io/Questioner/UI/admin.html)
+* [Home Page](https://akinmyde.github.io/Questioner)
+* [User Dashboard](https://akinmyde.github.io/Questioner/user.html)
+* [Admin Dashboard](https://akinmyde.github.io/Questioner/admin.html)
 
-### Features
-- Create meetup: `POST https://akinmyde-questioner.herokuapp.com/api/v1/meetups`
-- Get all meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups`
-- Get a single meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>`
-- Delete a single meetup: `DELETE https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>`
-- Get all upcoming meetup: `GET https://akinmyde-questioner.herokuapp.com/api/v1/meetups/upcoming`
-- Create question for a meetup: `POST https://akinmyde-questioner.herokuapp.com/api/v1/questions`
-- Downvote a question: `PATCH https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/downvote`
-- Upvote a question: `PATCH https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/upvote`
-- Respond to meetup rsvp: `POST https://akinmyde-questioner.herokuapp.com/api/v1/meetups/<meetupId>/rsvps`
-- Add a comment to a question: `POST https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/comments`
-- Get all comment related to a question: `GET https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>/comments`
-- Get a single question: `GET https://akinmyde-questioner.herokuapp.com/api/v1/questions/<questionId>`
-- Sign up: `POST https://akinmyde-questioner.herokuapp.com/api/v1/auth/signup`
-- Sign in: `POST https://akinmyde-questioner.herokuapp.com/api/v1/auth/login`
 
 #### Dependencies
 - Express JS: Web application framework for Node.js.
@@ -66,7 +70,7 @@ Find below, the links to the various page for the UI
 - Branch for each separate piece of work `$ git checkout -b <branch-name>`
 - Do the work, write good commit messages.
 - Push to your origin repository.
-- Create a new PR in GitHub.
+- Raise a PR.
 - Wait for approval.
 
 #### Author

@@ -19,9 +19,27 @@
       <span class="close-button">&times;</span>
       <p class="msg"></p>
       <div>
-          <button class="btn-modal btn-yes">Yes</button>
-          <button class="btn-modal btn-no">No</button>
+        <button class="btn-modal btn-yes">Yes</button>
+        <button class="btn-modal btn-no">No</button>
       </div>
+    </div>
+  </div>
+  <div class="edit-modal">
+    <div class="container" id="create">
+      <span class="close-image">&times;</span>
+      <br>
+      <form class="box" method="post" action="" enctype="multipart/form-data">
+        <div class="upload-btn-wrapper">
+          <button class="btn-upload">Add Image</button>
+          <input id="upload" accept="image/*" type="file" name="myfile" />
+        </div>
+        <div id="uploaded-image">
+          <img id="image" class="image" src="image/andela.jpg">
+          <div>
+            <button id="upload-image">Upload Image</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <header>

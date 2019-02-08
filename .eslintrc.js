@@ -12,6 +12,7 @@ module.exports = {
         "localStorage": true,
         "navigator": true,
         "sessionStorage": true,
+        "event": true,
     },
     "rules": {
         "linebreak-style": 0

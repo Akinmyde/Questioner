@@ -4,6 +4,29 @@ body {
   margin: 0;
 }
 
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-upload {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 input[type=email], input[type=password], input[type=text],  input[type=date], textarea {
   width: 100%;
   padding: 12px 20px;
