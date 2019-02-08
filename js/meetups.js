@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 const container = document.getElementsByClassName('meetup-card')[0];
 const link = document.getElementsByTagName('a');
 const loader = document.getElementById('overlay');
@@ -8,6 +9,8 @@ const msg = document.querySelector('.msg');
 const modalContent = document.querySelector('.modal-content');
 const yes = document.querySelector('.btn-yes');
 const no = document.querySelector('.btn-no');
+const token = localStorage.getItem('token');
+const headers = { 'Content-Type': 'application/json', token };
 
 const toggleModal = (msgText, bckColor, forColor) => {
   msg.innerHTML = msgText;
@@ -16,7 +19,9 @@ const toggleModal = (msgText, bckColor, forColor) => {
   modalContent.style.background = bckColor || '#f8d7da';
 };
 const removeModal = (e) => {
-  if (e.target === modal) { toggleModal(''); }
+  if (e.target === modal) {
+    toggleModal('');
+  }
 };
 
 let isAdmin;
@@ -30,7 +35,9 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
   .then(resp => resp.json())
   .then((results) => {
     loader.style.display = 'none';
-    const { data } = results;
+    const {
+      data,
+    } = results;
     sessionStorage.setItem('meetupObj', JSON.stringify(data));
     data.forEach((meetup) => {
       let card;
@@ -76,9 +83,9 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
         });
       }
     }
-    // Delete meetup
     if (isAdmin) {
       const deleteMeetup = document.getElementsByClassName('delete');
+      // Delete meetup
       for (let i = 0; i < deleteMeetup.length; i += 1) {
         deleteMeetup[i].addEventListener('click', (e) => {
           e.preventDefault();
@@ -86,10 +93,9 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
           yes.addEventListener('click', () => {
             const meetupId = deleteMeetup[i].id;
             const url = `https://akinmyde-questioner.herokuapp.com/api/v1/meetups/${meetupId}`;
-            const token = localStorage.getItem('token');
             const fetchData = {
               method: 'DELETE',
-              headers: { 'Content-Type': 'application/json', token },
+              headers,
             };
             loader.style.display = 'block';
             fetch(url, fetchData)
@@ -106,7 +112,9 @@ fetch('https://akinmyde-questioner.herokuapp.com/api/v1/meetups')
       }
     }
   })
-  .catch((err) => { console.log(err); });
+  .catch((err) => {
+    console.log(err);
+  });
 
 closeButton.addEventListener('click', () => {
   toggleModal('');

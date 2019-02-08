@@ -1,4 +1,4 @@
-.modal {
+.modal, .edit-modal {
   position: fixed;
   left: 0;
   top: 0;
@@ -27,14 +27,14 @@
   width: 21rem;
   border-radius: 0.5rem;
 }
-.close-button {
+.close-button, .close-image {
   float: right;
   width: 1.5rem;
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
   border-radius: 0.25rem;
-  background-color: lightgray;
+  background-color: rgb(184, 50, 50);
 }
 .close-button:hover {
   background-color: darkgray;
