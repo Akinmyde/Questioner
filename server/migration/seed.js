@@ -11,7 +11,7 @@ INSERT INTO meetups(topic, location, happeningOn, images)
   VALUES('React Meetup', 'Epic tower', 'Dec 11 2019', '{https://res.cloudinary.com/codeace/image/upload/v1548769488/Questioner/nchmsdloff13tnuu1e3q.jpg}');
 
 INSERT INTO meetups(topic, location, happeningOn, images) 
-  VALUES('Andela Bootcamp', 'NG Hub', 'Dec 11 2019', '{https://res.cloudinary.com/codeace/image/upload/v1548768190/Questioner/bkdf1kfijvto1kvutnhz.jpg}');
+  VALUES('Andela Bootcamp', 'NG Hub', 'Mar 11 2019', '{https://res.cloudinary.com/codeace/image/upload/v1548768190/Questioner/bkdf1kfijvto1kvutnhz.jpg}');
 
 INSERT INTO meetups(topic, location, happeningOn, images) 
   VALUES('Question Meetup', 'Epic tower', 'Dec 11 2019', '{https://res.cloudinary.com/codeace/image/upload/v1548364902/Questioner/koujaop3flbdmpbruxrf.jpg}');
