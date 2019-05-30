@@ -2,10 +2,14 @@ import passwordHash from 'password-hash';
 import pool from '../config/connection';
 
 const password = passwordHash.generate('testing');
+const password1 = passwordHash.generate('12345678');
 
 const seedQuery = `
 INSERT INTO users(email, username, password, isadmin)
   VALUES('testing@gmail.com', 'testing', '${password}', true);
+
+INSERT INTO users(email, username, password, isadmin)
+  VALUES('test@gmail.com', 'test', '${password1}', false);
 
 INSERT INTO meetups(topic, location, happeningOn, images) 
   VALUES('React Meetup', 'Epic tower', 'Dec 11 2019', '{https://res.cloudinary.com/codeace/image/upload/v1548769488/Questioner/nchmsdloff13tnuu1e3q.jpg}');
@@ -33,6 +37,12 @@ INSERT INTO comments (createdby, questionid, body)
 
 INSERT INTO comments (createdby, questionid, body)
   VALUES(1, 2, 'just the right questions');
+
+INSERT INTO Rsvps (id, meetup, userid, response)
+  VALUES(1, 1, 2, 'yes');
+
+INSERT INTO Rsvps (id, meetup, userid, response)
+  VALUES(2, 2, 2, 'yes');
 `;
 
 const seed = async () => {
