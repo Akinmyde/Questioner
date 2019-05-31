@@ -13,6 +13,8 @@ meetupRouter.get('/', meetupController.getAllMeetup);
 
 meetupRouter.get('/upcoming', Middleware.isLogin, meetupController.getUpcomingMeetups);
 
+meetupRouter.get('/rsvps', Middleware.isLogin, meetupController.getRsvps);
+
 meetupRouter.delete('/:id', Middleware.isLogin, Middleware.validateParams, meetupController.deleteMeetup);
 
 meetupRouter.get('/:id', Middleware.isLogin, Middleware.validateParams, meetupController.getMeetupById);

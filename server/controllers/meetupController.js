@@ -194,6 +194,23 @@ class MeetupController {
     } catch (err) { return res.status(500).send({ status: 500, error: 'Internal server error' }); } finally { await client.release(); }
   }
 
+  static async getRsvps(req, res) {
+    const client = await pool.connect();
+    try {
+      const token = req.headers.token || req.body.token;
+      const decodedToken = await decode(token);
+      const userId = decodedToken.id;
+      const query = { text: 'SELECT * FROM Rsvps INNER JOIN meetups ON meetups.id = Rsvps.meetup WHERE Rsvps.userid = $1', values: [userId] };
+      const response = await client.query(query);
+      if (response.rows) return res.send({ status: 200, data: response.rows });
+      return res.send({ status: 204, message: 'Nothing was found' });
+    } catch (err) {
+      return res.status(500).send({ status: 500, error: 'Internal server error' });
+    } finally {
+      await client.release();
+    }
+  }
+
   static async meetupTags(req, res) {
     const client = await pool.connect();
     try {
